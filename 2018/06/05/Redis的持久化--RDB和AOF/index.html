@@ -7,13 +7,17 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="一、RDB1、RDB是指在指定的时间间隔内，将内存中的数据集快照写入磁盘。也就是Snapshot快照，它恢复时是将快照文件直接读到内存中。 2、Redis会单独创建（Fork）一个子进程来进行持久化，会先将数据写到一个临时文件中，待持久化的过程结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程不进行任何IO操作，这就确保了极高的性能。如果需要进行大规模数据的恢复，且对于数据的完整性">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Redis的持久化--RDB和AOF/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、RDB1、RDB是指在指定的时间间隔内，将内存中的数据集快照写入磁盘。也就是Snapshot快照，它恢复时是将快照文件直接读到内存中。 2、Redis会单独创建（Fork）一个子进程来进行持久化，会先将数据写到一个临时文件中，待持久化的过程结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程不进行任何IO操作，这就确保了极高的性能。如果需要进行大规模数据的恢复，且对于数据的完整性">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-17T08:50:12.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="一、RDB1、RDB是指在指定的时间间隔内，将内存中的数据集快照写入磁盘。也就是Snapshot快照，它恢复时是将快照文件直接读到内存中。 2、Redis会单独创建（Fork）一个子进程来进行持久化，会先将数据写到一个临时文件中，待持久化的过程结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程不进行任何IO操作，这就确保了极高的性能。如果需要进行大规模数据的恢复，且对于数据的完整性">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Redis的持久化--RDB和AOF" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Redis的持久化--RDB和AOF" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/05/Redis的持久化--RDB和AOF/" class="article-date">
   <time datetime="2018-06-05T14:25:26.323Z" itemprop="datePublished">2018-06-05</time>
@@ -135,187 +137,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Redis集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/05/Redis集群/" class="article-date">
-  <time datetime="2018-06-05T14:14:58.014Z" itemprop="datePublished">2018-06-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Redis集群的搭建"><a href="#Redis集群的搭建" class="headerlink" title="Redis集群的搭建"></a>Redis集群的搭建</h1><h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p><strong>由于当集群中的某一台redis主机挂了，需要其他主机投票，当某台主机的得票数达到半数以上，其成为主机的要求，所有至少需要三台机器；又由于redis服务器要保证高可用，需要满足拥有16384个槽，若一台机器挂了，槽不完整，整个集群都不可用，所有每个主机需要一个备份机，及一共需要6台主机。</strong></p>
-<p>搭建伪分布式集群，可以在一台主机上运行多个redis实例。需要修改redis得端口号：7001-7006；</p>
-<p>步骤：</p>
-<p><strong>1、复制多份redis实例到文件夹redis-cluster下</strong></p>
-<p><strong>2、修改配置文件redis.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">修改端口：</span><br><span class="line"></span><br><span class="line"># Accept connections on the specified port, default is 6379 (IANA #815344).</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line">port 7001</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">改为后台启动</span><br><span class="line">################################# GENERAL #####################################</span><br><span class="line"></span><br><span class="line"># By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">打开集群模式：</span><br><span class="line">################################ REDIS CLUSTER  ###############################</span><br><span class="line">#</span><br><span class="line"># ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"># WARNING EXPERIMENTAL: Redis Cluster is considered to be stable code, however</span><br><span class="line"># in order to mark it as &quot;mature&quot; we need to wait for a non trivial percentage</span><br><span class="line"># of users to deploy it in production.</span><br><span class="line"># ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">#</span><br><span class="line"># Normal Redis instances can&apos;t be part of a Redis Cluster; only nodes that are</span><br><span class="line"># started as cluster nodes can. In order to start a Redis instance as a</span><br><span class="line"># cluster node enable the cluster support uncommenting the following:</span><br><span class="line">#</span><br><span class="line">  cluster-enabled yes</span><br></pre></td></tr></table></figure>
-<p><strong>3、复制多分redis实例</strong>：</p>
-<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_13-57-28.png" alt="image"></p>
-<p><strong>4、修改redis.conf文件（如步骤2中），端口分别位7002、7003、7004、7005、7006；</strong></p>
-<p><strong>5、启动所有实例；</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cd redis01</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd redis02</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd redis03</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis04</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis05</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis06</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">~                                                                                                                                                                                                                </span><br><span class="line">~</span><br></pre></td></tr></table></figure>
-<p>查看进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-cluster]# ps -ef|grep redis</span><br><span class="line">root      3261     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7001 [cluster]</span><br><span class="line">root      3265     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7002 [cluster]</span><br><span class="line">root      3269     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7003 [cluster]</span><br><span class="line">root      3273     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7004 [cluster]</span><br><span class="line">root      3277     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7005 [cluster]</span><br><span class="line">root      3279     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7006 [cluster]</span><br><span class="line">root      3285  3026  0 06:19 pts/1    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost redis-cluster]# ll</span><br></pre></td></tr></table></figure>
-<p><strong>6、使用ruby脚本搭建集群。需要ruby的运行环境。</strong></p>
-<p><strong>安装ruby</strong></p>
-<pre><code>yum install ruby
+  
+    <a href="/2018/06/05/Redis集群/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
 
-yum install rubygems
-
-(gem install redis-3.0.0.gem)
-</code></pre><p>7、运行：</p>
-<pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-47-01.png" alt="image"></p>
-<pre><code>yes
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-49-19.png" alt="image"></p>
-<p><strong>至此，集群搭建完成；那么如何连接集群？</strong></p>
-<p><strong>随便进入一个redis实例内：</strong></p>
-<p><strong>执行命令：-c参数不能缺少</strong></p>
-<pre><code>./redis-cli -p 7006 -c
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-55-34.png" alt="image"></p>
-<p><strong>一些集群的命令：</strong></p>
-<pre><code>cluster info
-cluster nodes
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/05/Redis集群/" data-id="cji1rot2c0000a0u4w8y9cjtz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-test2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/05/test2/" class="article-date">
-  <time datetime="2018-06-05T13:36:40.000Z" itemprop="datePublished">2018-06-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/05/test2/">test2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/05/test2/" data-id="cji1qd1kd0002w8u4xixcaot6" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/05/test/" class="article-date">
-  <time datetime="2018-06-05T13:16:02.000Z" itemprop="datePublished">2018-06-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/05/test/">test</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="这是我的第一篇博客"><a href="#这是我的第一篇博客" class="headerlink" title="这是我的第一篇博客"></a>这是我的第一篇博客</h1><h2 id="谢谢"><a href="#谢谢" class="headerlink" title="谢谢"></a>谢谢</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/05/test/" data-id="cji1qd1k50000w8u4caud5usb" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/05/hello-world/" class="article-date">
-  <time datetime="2018-06-05T12:50:40.469Z" itemprop="datePublished">2018-06-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/05/hello-world/" data-id="cji1qd1ka0001w8u4ct0h26c4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
