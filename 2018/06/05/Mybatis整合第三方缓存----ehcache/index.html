@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&amp;quot;http://ww">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&amp;quot;http://ww">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-14T09:19:40.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&amp;quot;http://ww">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mybatis整合第三方缓存----ehcache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" class="article-date">
+  <time datetime="2018-06-05T14:27:45.628Z" itemprop="datePublished">2018-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1、加入jar包"><a href="#1、加入jar包" class="headerlink" title="1、加入jar包"></a>1、加入jar包</h3><ul>
+<li style="list-style: none"><input type="checkbox" checked> ehcache-core.jar</li>
+<li style="list-style: none"><input type="checkbox" checked> mybatis-ehcache-1.3.jar</li>
+</ul>
+<h3 id="2、配置文件ehcache-xml"><a href="#2、配置文件ehcache-xml" class="headerlink" title="2、配置文件ehcache.xml"></a>2、配置文件ehcache.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;ehcache xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line"> xsi:noNamespaceSchemaLocation=&quot;../config/ehcache.xsd&quot;&gt;</span><br><span class="line"> &lt;!-- 磁盘保存路径 --&gt;</span><br><span class="line"> &lt;diskStore path=&quot;D:\44\ehcache&quot; /&gt;</span><br><span class="line"> </span><br><span class="line"> &lt;defaultCache </span><br><span class="line">   maxElementsInMemory=&quot;10000&quot; </span><br><span class="line">   maxElementsOnDisk=&quot;10000000&quot;</span><br><span class="line">   eternal=&quot;false&quot; </span><br><span class="line">   overflowToDisk=&quot;true&quot; </span><br><span class="line">   timeToIdleSeconds=&quot;120&quot;</span><br><span class="line">   timeToLiveSeconds=&quot;120&quot; </span><br><span class="line">   diskExpiryThreadIntervalSeconds=&quot;120&quot;</span><br><span class="line">   memoryStoreEvictionPolicy=&quot;LRU&quot;&gt;</span><br><span class="line"> &lt;/defaultCache&gt;</span><br><span class="line">&lt;/ehcache&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3、在mapper文件中引入第三方缓存"><a href="#3、在mapper文件中引入第三方缓存" class="headerlink" title="3、在mapper文件中引入第三方缓存"></a>3、在mapper文件中引入第三方缓存</h3><p>EmployeeMapper.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line"> &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.atguigu.mybatis.dao.EmployeeMapper&quot;&gt;</span><br><span class="line">&lt;cache type=&quot;org.mybatis.caches.ehcache.EhcacheCache&quot;&gt;&lt;/cache&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<p>DepartmentMapper.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line"> &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.atguigu.mybatis.dao.DepartmentMapper&quot;&gt;</span><br><span class="line">&lt;!-- 引用缓存：namespace：指定和哪个名称空间下的缓存一样 --&gt;</span><br><span class="line">&lt;cache-ref namespace=&quot;com.atguigu.mybatis.dao.EmployeeMapp&quot;&gt;&lt;/cache&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/" data-id="cji1s47at0000t0u44q2dpocz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/Redis的事务/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/Redis的持久化--RDB和AOF/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/05/Redis集群/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
