@@ -74,7 +74,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: 
+        search: false
     }
 </script>
 
@@ -110,46 +110,6 @@
 
 
         
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
-                        
-                        <li>友情链接</li>
-                        
-                        
-                        <li>关于我</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
 
         <div id="switch-area" class="switch-area">
             <div class="switch-wrap">
@@ -170,22 +130,10 @@
                     <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" href="mailto:123@123.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" href="#" title="GitHub"></a>
-                            
-                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
-                            
                         </ul>
                     </nav>
                 </section>
                 
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        
-                    </div>
-                </section>
                 
                 
                 
@@ -202,12 +150,6 @@
                 </section>
                 
 
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">专注于前端</div>
-                </section>
                 
             </div>
         </div>
@@ -245,12 +187,6 @@
             </nav>
             <nav class="header-nav">
                         <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:123@123.com" title="Email"></a>
-                            
-                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
-                            
-                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
                             
                         </ul>
             </nav>
@@ -436,101 +372,6 @@
 
 
   
-    <article id="post-Redis的持久化--RDB和AOF" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/06/05/Redis的持久化--RDB和AOF/" class="article-date">
-      <time datetime="2018-06-05T14:25:26.323Z" itemprop="datePublished">2018-06-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="Redis的持久化"><a href="#Redis的持久化" class="headerlink" title="Redis的持久化"></a>Redis的持久化</h1><h1 id="一、RDB"><a href="#一、RDB" class="headerlink" title="一、RDB"></a>一、RDB</h1><h2 id="1、RDB"><a href="#1、RDB" class="headerlink" title="1、RDB"></a>1、RDB</h2><p>是指在指定的时间间隔内，将内存中的数据集快照写入磁盘。也就是Snapshot快照，它恢复时是将快照文件直接读到内存中。</p>
-<h2 id="2、Redis"><a href="#2、Redis" class="headerlink" title="2、Redis"></a>2、Redis</h2><p>会单独创建（Fork）一个子进程来进行持久化，会先将数据写到一个临时文件中，待持久化的过程结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程不进行任何IO操作，这就确保了极高的性能。如果需要进行大规模数据的恢复，且对于数据的完整性不是十分的敏感，那RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化的数据可能丢失。</p>
-<h2 id="3、Fork"><a href="#3、Fork" class="headerlink" title="3、Fork"></a>3、Fork</h2><p>的作用复制一个与当前进程一样的进程。新进程的所有数据（变量、环境变量、程序计数器等）数值和原进程一致，但是是一个全新的进程，并作为原进程的子进程。</p>
-<h2 id="4、RDB保存的是dump-rdb文件。"><a href="#4、RDB保存的是dump-rdb文件。" class="headerlink" title="4、RDB保存的是dump.rdb文件。"></a>4、RDB保存的是dump.rdb文件。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">################################ SNAPSHOTTING  ################################</span><br><span class="line">#</span><br><span class="line"># Save the DB on disk:</span><br><span class="line">#</span><br><span class="line">#   save &lt;seconds&gt; &lt;changes&gt;</span><br><span class="line">#</span><br><span class="line">#   Will save the DB if both the given number of seconds and the given</span><br><span class="line">#   number of write operations against the DB occurred.</span><br><span class="line">#</span><br><span class="line">#   In the example below the behaviour will be to save:</span><br><span class="line">#   after 900 sec (15 min) if at least 1 key changed</span><br><span class="line">#   after 300 sec (5 min) if at least 10 keys changed</span><br><span class="line">#   after 60 sec if at least 10000 keys changed</span><br><span class="line">#</span><br><span class="line">#   Note: you can disable saving completely by commenting out all &quot;save&quot; lines.</span><br><span class="line">#</span><br><span class="line">#   It is also possible to remove all the previously configured save</span><br><span class="line">#   points by adding a save directive with a single empty string argument</span><br><span class="line">#   like in the following example:</span><br><span class="line">#</span><br><span class="line">#   save &quot;&quot;</span><br><span class="line">#表示900秒之内修改了一次就会记录一下快照</span><br><span class="line">save 900 1</span><br><span class="line">#300秒改动10次</span><br><span class="line">save 300 10</span><br><span class="line">60秒10000次</span><br><span class="line">save 60 10000</span><br><span class="line"></span><br><span class="line"># By default Redis will stop accepting writes if RDB snapshots are enabled</span><br><span class="line"># (at least one save point) and the latest background save failed.</span><br><span class="line"># This will make the user aware (in a hard way) that data is not persisting</span><br><span class="line"># on disk properly, otherwise chances are that no one will notice and some</span><br><span class="line"># disaster will happen.</span><br><span class="line">#</span><br><span class="line"># If the background saving process will start working again Redis will</span><br><span class="line"># automatically allow writes again.</span><br></pre></td></tr></table></figure>
-<p><strong>如果发生宕机等行为，下次重启，redis会自动由dump.drb自动恢复</strong></p>
-<h6 id="表示900秒之内修改了一次就会记录一下快照"><a href="#表示900秒之内修改了一次就会记录一下快照" class="headerlink" title="#表示900秒之内修改了一次就会记录一下快照"></a>#表示900秒之内修改了一次就会记录一下快照</h6><p>save 900 1</p>
-<h6 id="300秒改动10次"><a href="#300秒改动10次" class="headerlink" title="#300秒改动10次"></a>#300秒改动10次</h6><p>save 300 10</p>
-<h6 id="60秒10000次"><a href="#60秒10000次" class="headerlink" title="60秒10000次"></a>60秒10000次</h6><p>save 60 10000</p>
-<h2 id="5、save命令：即刻备份。"><a href="#5、save命令：即刻备份。" class="headerlink" title="5、save命令：即刻备份。"></a>5、save命令：即刻备份。</h2><p>bgsave：reids会在后台异步进行快照操作，快照同时还可以响应客户端请求。可以通过lastsave命令获取最后一次成功执行快照的时间。</p>
-<h2 id="6、stop-writes-on-bgsave-error-yes"><a href="#6、stop-writes-on-bgsave-error-yes" class="headerlink" title="6、stop-writes-on-bgsave-error yes"></a>6、stop-writes-on-bgsave-error yes</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># If the background saving process will start working again Redis will</span><br><span class="line"># automatically allow writes again.</span><br><span class="line">#</span><br><span class="line"># However if you have setup your proper monitoring of the Redis server</span><br><span class="line"># and persistence, you may want to disable this feature so that Redis will</span><br><span class="line"># continue to work as usual even if there are problems with disk,</span><br><span class="line"># permissions, and so forth.</span><br><span class="line">stop-writes-on-bgsave-error yes</span><br><span class="line">//后台保存出错前台停止写入</span><br></pre></td></tr></table></figure>
-<p>如果snapshot过程中出现错误,即数据持久化失败,是否终止所有的客户端write请求。这个选项很让人为难,”yes”表示终止,一旦snapshot故障,那么此server为只读服务；</p>
-<p>如果为”no”，那么此次snapshot将失败，但下一次snapshot不会受到影响,不过如果出现故障,数据只能恢复到”最近一个成功点”。<br>如果配置成no表示不在乎数据的不一致性或者有其他的手段发现和控制</p>
-<h2 id="7、rdbcompression-yes"><a href="#7、rdbcompression-yes" class="headerlink" title="7、rdbcompression yes"></a>7、rdbcompression yes</h2><p>、是否启用rdb文件压缩手段,默认为yes.压缩可能需要额外的cpu开支,不过这能够有效的减小rdb文件的大小,有利于存储/备份/传输/数据恢复。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Compress string objects using LZF when dump .rdb databases?</span><br><span class="line"># For default that&apos;s set to &apos;yes&apos; as it&apos;s almost always a win.</span><br><span class="line"># If you want to save some CPU in the saving child set it to &apos;no&apos; but</span><br><span class="line"># the dataset will likely be bigger if you have compressible values or keys.</span><br><span class="line">rdbcompression yes</span><br></pre></td></tr></table></figure>
-<h2 id="7、rdbchecksum-yes"><a href="#7、rdbchecksum-yes" class="headerlink" title="7、rdbchecksum yes"></a>7、rdbchecksum yes</h2><p>是否对rdb文件使用CRC64校验和,默认为”yes”,那么每个rdb文件内容的末尾都会追加CRC校验和。对于其他第三方校验工具,可以很方便的检测文件的完整性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># RDB files created with checksum disabled have a checksum of zero that will</span><br><span class="line"># tell the loading code to skip the check.</span><br><span class="line">rdbchecksum yes</span><br></pre></td></tr></table></figure>
-<h2 id="8、dbfilename-dump-rdb"><a href="#8、dbfilename-dump-rdb" class="headerlink" title="8、dbfilename dump.rdb"></a>8、dbfilename dump.rdb</h2><p>指定rdb文件的名称</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># The filename where to dump the DB</span><br><span class="line">dbfilename dump.rdb</span><br></pre></td></tr></table></figure>
-<h2 id="9、dir"><a href="#9、dir" class="headerlink" title="9、dir ./"></a>9、dir ./</h2><p>指定rdb/AOF文件的目录位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># The working directory.</span><br><span class="line">#</span><br><span class="line"># The DB will be written inside this directory, with the filename specified</span><br><span class="line"># above using the &apos;dbfilename&apos; configuration directive.</span><br><span class="line">#</span><br><span class="line"># The Append Only File will also be created inside this directory.</span><br><span class="line">#</span><br><span class="line"># Note that you must specify a directory here, not a file name.</span><br><span class="line">dir ./</span><br></pre></td></tr></table></figure></p>
-<p>优势：适合大规模数据的恢复，对数据的一致性要求不高。</p>
-<p>劣势：在一定的间隔时间做一次备份，所以如果redis意外down掉，就会丢失最后一次快照的所有修改。<br>fork的时候，内存中的数据被克隆了一份，大致2<br>倍的膨胀性能需要考虑。</p>
-<h2 id="10、如何停止RDB："><a href="#10、如何停止RDB：" class="headerlink" title="10、如何停止RDB："></a>10、如何停止RDB：</h2><p>动态停止RDB保存规则的方法：redis-cli config set save “”</p>
-<h1 id="二、AOF"><a href="#二、AOF" class="headerlink" title="二、AOF"></a>二、AOF</h1><h2 id="1、介绍"><a href="#1、介绍" class="headerlink" title="1、介绍"></a>1、介绍</h2><p>aop是以日志中的形式来记录每个写操作，将redis执行过的所有写指令记录下来（读操作不记录），只许追加文件但不可以改写文件，redis启动之初会读取该文件重新构建数据，换言之，redis重启的话就会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作。</p>
-<p><strong>aof保存的是appendonly.aof文件</strong></p>
-<h2 id="2、配置文件"><a href="#2、配置文件" class="headerlink" title="2、配置文件"></a>2、配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">############################## APPEND ONLY MODE ###############################</span><br><span class="line"></span><br><span class="line"># By default Redis asynchronously dumps the dataset on disk. This mode is</span><br><span class="line"># good enough in many applications, but an issue with the Redis process or</span><br><span class="line"># a power outage may result into a few minutes of writes lost (depending on</span><br><span class="line"># the configured save points).</span><br><span class="line">#</span><br><span class="line"># The Append Only File is an alternative persistence mode that provides</span><br><span class="line"># much better durability. For instance using the default data fsync policy</span><br><span class="line"># (see later in the config file) Redis can lose just one second of writes in a</span><br><span class="line"># dramatic event like a server power outage, or a single write if something</span><br><span class="line"># wrong with the Redis process itself happens, but the operating system is</span><br><span class="line"># still running correctly.</span><br><span class="line">#</span><br><span class="line"># AOF and RDB persistence can be enabled at the same time without problems.</span><br><span class="line"># If the AOF is enabled on startup Redis will load the AOF, that is the file</span><br><span class="line"># with the better durability guarantees.</span><br><span class="line">#</span><br><span class="line"># Please check http://redis.io/topics/persistence for more information.</span><br><span class="line"></span><br><span class="line">//默认关闭</span><br><span class="line">appendonly no</span><br><span class="line"></span><br><span class="line"># The name of the append only file (default: &quot;appendonly.aof&quot;)</span><br><span class="line"></span><br><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br><span class="line"></span><br><span class="line"># The fsync() call tells the Operating System to actually write data on disk</span><br><span class="line"># instead of waiting for more data in the output buffer. Some OS will really flush</span><br><span class="line"># data on disk, some other OS will just try to do it ASAP.</span><br><span class="line">#</span><br><span class="line"># Redis supports three different modes:</span><br><span class="line">#</span><br><span class="line"># no: don&apos;t fsync, just let the OS flush the data when it wants. Faster.</span><br><span class="line"># always: fsync after every write to the append only log. Slow, Safest.</span><br><span class="line"># everysec: fsync only one time every second. Compromise.</span><br><span class="line">#</span><br><span class="line"># The default is &quot;everysec&quot;, as that&apos;s usually the right compromise between</span><br></pre></td></tr></table></figure>
-<p><strong>使用aof需要设置：appendonly yes</strong></p>
-<h2 id="3、appendfilename-“appendonly-aof”"><a href="#3、appendfilename-“appendonly-aof”" class="headerlink" title="3、appendfilename “appendonly.aof”"></a>3、appendfilename “appendonly.aof”</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> The name of the append only file (default: &quot;appendonly.aof&quot;)</span><br><span class="line"></span><br><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="4、appendfsync-everysec"><a href="#4、appendfsync-everysec" class="headerlink" title="4、appendfsync everysec"></a>4、appendfsync everysec</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># Redis supports three different modes:</span><br><span class="line">#</span><br><span class="line"># no: don&apos;t fsync, just let the OS flush the data when it wants. Faster.</span><br><span class="line"># always: fsync after every write to the append only log. Slow, Safest.</span><br><span class="line"># everysec: fsync only one time every second. Compromise.</span><br><span class="line">#</span><br><span class="line"># The default is &quot;everysec&quot;, as that&apos;s usually the right compromise between</span><br><span class="line"># speed and data safety. It&apos;s up to you to understand if you can relax this to</span><br><span class="line"># &quot;no&quot; that will let the operating system flush the output buffer when</span><br><span class="line"># it wants, for better performances (but if you can live with the idea of</span><br><span class="line"># some data loss consider the default persistence mode that&apos;s snapshotting),</span><br><span class="line"># or on the contrary, use &quot;always&quot; that&apos;s very slow but a bit safer than</span><br><span class="line"># everysec.</span><br><span class="line">#</span><br><span class="line"># More details please check the following article:</span><br><span class="line"># http://antirez.com/post/redis-persistence-demystified.html</span><br><span class="line">#</span><br><span class="line"># If unsure, use &quot;everysec&quot;.</span><br><span class="line"></span><br><span class="line"># appendfsync always</span><br><span class="line">appendfsync everysec</span><br><span class="line"># appendfsync no</span><br><span class="line"></span><br><span class="line">说明：Always：同步持久化，每次发生数据变更会被立即记录到磁盘，性能较差但数据完整性较好。</span><br><span class="line">Everysec：出厂默认推荐，异步操作，每秒记录，如果一秒内宕机，有数据丢失；</span><br><span class="line">No：</span><br></pre></td></tr></table></figure>
-<h2 id="5、启动："><a href="#5、启动：" class="headerlink" title="5、启动："></a>5、启动：</h2><p>设置：appendonly yes</p>
-<h2 id="6、恢复："><a href="#6、恢复：" class="headerlink" title="6、恢复："></a>6、恢复：</h2><p>dump.rdb 和appendonly.aof两个文件可以共存，但是会默认有aof启动恢复。如果aof出错，此时不能启动redis，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k1</span><br><span class="line">$2</span><br><span class="line">v1</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k2</span><br><span class="line">$2</span><br><span class="line">v2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k3</span><br><span class="line">$2</span><br><span class="line">v3</span><br><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">qwddcdsdffczcsdvxvvxzvdsczccxfdsxcxz,cx cxzcmz,xzcvsdfcc</span><br><span class="line">dsDcsdczcz</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
-<p><strong>此时可以通过redis-check-aof –fix appendonly.aof来修复文件。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k1</span><br><span class="line">$2</span><br><span class="line">v1</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k2</span><br><span class="line">$2</span><br><span class="line">v2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$2</span><br><span class="line">k3</span><br><span class="line">$2</span><br><span class="line">v3</span><br><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">qwddcdsdffczcsdvxvvxzvdsczccxfdsxcxz,cx cxzcmz,xzcvsdfcc</span><br><span class="line">dsDcsdczcz</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
-<h2 id="7、rewrite"><a href="#7、rewrite" class="headerlink" title="7、rewrite"></a>7、rewrite</h2><p>AOF采用文件追加，文件会越来越大，为了避免出现此种情况，新增了重写机制。当AOF文件的大小超过了所设定的阈值时，Redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集，可以使用命令：bgrewriteaof。</p>
-<p>原理:AOF文件持续增大而过大时，会fork出一条新进程来将文件重写（也是先写临时文件最后再rename），遍历新进程的内存中的数据，每条记录有一条set语句。重写AOF文件的操作，并没有读取旧的aof文件，而是将整个内存中的数据库内容用命令的方式重写了一个新的aof文件，这点和快照有点类似。</p>
-<p>触发机制：redis会记录上次重写时的AOF大小，默认配置是AOF文件大小是上次rewrite后大小的一倍且文件大于64M时出发。</p>
-<p><strong>//100即上次的一倍</strong></p>
-<h4 id="auto-aof-rewrite-percentage-100"><a href="#auto-aof-rewrite-percentage-100" class="headerlink" title="auto-aof-rewrite-percentage 100"></a>auto-aof-rewrite-percentage 100</h4><p><strong>//阈值是64M，超过64M时启动</strong></p>
-<h4 id="auto-aof-rewrite-min-size-64mb"><a href="#auto-aof-rewrite-min-size-64mb" class="headerlink" title="auto-aof-rewrite-min-size 64mb"></a>auto-aof-rewrite-min-size 64mb</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Automatic rewrite of the append only file.</span><br><span class="line"># Redis is able to automatically rewrite the log file implicitly calling</span><br><span class="line"># BGREWRITEAOF when the AOF log size grows by the specified percentage.</span><br><span class="line">#</span><br><span class="line"># This is how it works: Redis remembers the size of the AOF file after the</span><br><span class="line"># latest rewrite (if no rewrite has happened since the restart, the size of</span><br><span class="line"># the AOF at startup is used).</span><br><span class="line">#</span><br><span class="line"># This base size is compared to the current size. If the current size is</span><br><span class="line"># bigger than the specified percentage, the rewrite is triggered. Also</span><br><span class="line"># you need to specify a minimal size for the AOF file to be rewritten, this</span><br><span class="line"># is useful to avoid rewriting the AOF file even if the percentage increase</span><br><span class="line"># is reached but it is still pretty small.</span><br><span class="line">#</span><br><span class="line"># Specify a percentage of zero in order to disable the automatic AOF</span><br><span class="line"># rewrite feature.</span><br><span class="line"></span><br><span class="line">//100即上次的一倍</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line"></span><br><span class="line">//阈值是64M，超过64M时启动</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
-<h2 id="8、no-appendfsync-on-rewrite-no"><a href="#8、no-appendfsync-on-rewrite-no" class="headerlink" title="8、no-appendfsync-on-rewrite no"></a>8、no-appendfsync-on-rewrite no</h2><p>重写时是否可以运用（4）中Appendsync，默认no即可，保证数据的安全性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># When the AOF fsync policy is set to always or everysec, and a background</span><br><span class="line"># saving process (a background save or AOF log background rewriting) is</span><br><span class="line"># performing a lot of I/O against the disk, in some Linux configurations</span><br><span class="line"># Redis may block too long on the fsync() call. Note that there is no fix for</span><br><span class="line"># this currently, as even performing fsync in a different thread will block</span><br><span class="line"># our synchronous write(2) call.</span><br><span class="line">#</span><br><span class="line"># In order to mitigate this problem it&apos;s possible to use the following option</span><br><span class="line"># that will prevent fsync() from being called in the main process while a</span><br><span class="line"># BGSAVE or BGREWRITEAOF is in progress.</span><br><span class="line">#</span><br><span class="line"># This means that while another child is saving, the durability of Redis is</span><br><span class="line"># the same as &quot;appendfsync none&quot;. In practical terms, this means that it is</span><br><span class="line"># possible to lose up to 30 seconds of log in the worst scenario (with the</span><br><span class="line"># default Linux settings).</span><br><span class="line">#</span><br><span class="line"># If you have latency problems turn this to &quot;yes&quot;. Otherwise leave it as</span><br><span class="line"># &quot;no&quot; that is the safest pick from the point of view of durability.</span><br><span class="line"></span><br><span class="line">no-appendfsync-on-rewrite no</span><br></pre></td></tr></table></figure></p>
-<h1 id="三、rdb和aof的比较"><a href="#三、rdb和aof的比较" class="headerlink" title="三、rdb和aof的比较"></a>三、rdb和aof的比较</h1><p><strong>rdb和aof策略可以同时存在</strong>。</p>
-<h5 id="AOF优势："><a href="#AOF优势：" class="headerlink" title="AOF优势："></a>AOF优势：</h5><p>以有不同的策略，即：</p>
-<p>appendfsync always </p>
-<p>appendfsync everysec</p>
-<p>appendfsync no:从不同步</p>
-<h5 id="AOF劣势："><a href="#AOF劣势：" class="headerlink" title="AOF劣势："></a>AOF劣势：</h5><p>相同数据集的数据而言aof文件要远大于rdb，恢复慢于rdb</p>
-<p>aof运行效率慢于rdb，每秒同步效率好，不同步效率与rdb相同。</p>
-<h5 id="官网建议："><a href="#官网建议：" class="headerlink" title="官网建议："></a>官网建议：</h5><p><strong>RDB</strong>：持久化方式能够再指定的时间间隔能对你的数据进行快照</p>
-<p><strong>AOF</strong>：持久化记录每次对服务器的写操作，当服务器重启的时候会执行这些命令来恢复原始数据，AOF命令以redis协议追加保存每次写的操作到文件末尾。redis还能对AOF文件进行后台重写，使得AOF文件的体积不至于过大。</p>
-<p><strong>只做缓存</strong>：如果只希望数据在服务器运行的时候存在，也可以不适用任何持久化方式。</p>
-<p><code>`</code></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Redis集群" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -583,61 +424,6 @@ yum install rubygems
 <pre><code>cluster info
 cluster nodes
 </code></pre>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-test2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/06/05/test2/" class="article-date">
-      <time datetime="2018-06-05T13:36:40.000Z" itemprop="datePublished">2018-06-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/05/test2/">test2</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        
       
     </div>
     
@@ -718,11 +504,11 @@ cluster nodes
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Redis的持久化--RDB和AOF" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/06/05/hello-world/" class="article-date">
-      <time datetime="2018-06-05T12:50:40.469Z" itemprop="datePublished">2018-06-05</time>
+      <a href="/2018/06/05/Redis的持久化--RDB和AOF/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
 </a>
 
 
@@ -737,7 +523,7 @@ cluster nodes
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/05/hello-world/">Hello World</a>
+      <a class="article-title" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a>
     </h1>
   
 
@@ -747,16 +533,8 @@ cluster nodes
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+              <p>Redis的持久化<br>
+          
       
     </div>
     
@@ -765,6 +543,10 @@ cluster nodes
       
 
       
+      
+        <p class="article-more-link">
+          <a href="/2018/06/05/Redis的持久化--RDB和AOF/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
