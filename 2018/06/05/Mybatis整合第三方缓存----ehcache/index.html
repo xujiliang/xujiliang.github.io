@@ -15,17 +15,18 @@
 
 
 
-<meta name="description" content="Mybitis整合第三方缓存1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&quot;http://www.w3.org/20">
+<meta name="description" content="Redis的持久化">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kevin">
+<meta property="og:title" content="Mybitis整合第三方缓存">
 <meta property="og:url" content="http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/index.html">
 <meta property="og:site_name" content="Kevin">
-<meta property="og:description" content="Mybitis整合第三方缓存1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&quot;http://www.w3.org/20">
+<meta property="og:description" content="Redis的持久化">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-05T15:13:30.675Z">
+<meta property="og:updated_time" content="2018-06-05T15:32:02.993Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kevin">
-<meta name="twitter:description" content="Mybitis整合第三方缓存1、加入jar包  ehcache-core.jar  mybatis-ehcache-1.3.jar  2、配置文件ehcache.xml12345678910111213141516171819&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;ehcache xmlns:xsi=&quot;http://www.w3.org/20">
+<meta name="twitter:title" content="Mybitis整合第三方缓存">
+<meta name="twitter:description" content="Redis的持久化">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Kevin</title>
+<title>Mybitis整合第三方缓存 | Kevin</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -197,7 +198,7 @@
   
     <div class="article-meta">
       <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" class="article-date">
-      <time datetime="2018-06-05T14:27:45.628Z" itemprop="datePublished">2018-06-05</time>
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
 </a>
 
 
@@ -208,10 +209,37 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mybitis整合第三方缓存
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="Mybitis整合第三方缓存"><a href="#Mybitis整合第三方缓存" class="headerlink" title="Mybitis整合第三方缓存"></a>Mybitis整合第三方缓存</h1><h3 id="1、加入jar包"><a href="#1、加入jar包" class="headerlink" title="1、加入jar包"></a>1、加入jar包</h3><ul>
+        <p>Redis的持久化<br><a id="more"></a></p>
+<h1 id="Mybitis整合第三方缓存"><a href="#Mybitis整合第三方缓存" class="headerlink" title="Mybitis整合第三方缓存"></a>Mybitis整合第三方缓存</h1><h3 id="1、加入jar包"><a href="#1、加入jar包" class="headerlink" title="1、加入jar包"></a>1、加入jar包</h3><ul>
 <li style="list-style: none"><input type="checkbox" checked> ehcache-core.jar</li>
 <li style="list-style: none"><input type="checkbox" checked> mybatis-ehcache-1.3.jar</li>
 </ul>
@@ -226,12 +254,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/"></a></p>
+        <p><span>本文标题:</span><a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
-        <p><span>发布时间:</span>2018-06-05, 22:27:45</p>
-        <p><span>最后更新:</span>2018-06-05, 23:13:30</p>
+        <p><span>发布时间:</span>2018-06-05, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-05, 23:32:02</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" title="">http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/</a>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" title="Mybitis整合第三方缓存">http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -244,10 +272,16 @@
 
     <nav id="article-nav">
         
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/06/05/test/">
+                    test
+                </a>
+            </div>
+        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/06/05/Redis的事务/">
-                    
+                <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">
+                    SSH整合
                 </a>
             </div>
         
@@ -295,7 +329,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Mybitis整合第三方缓存　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -315,19 +349,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/06/05/test/" title="上一篇: test">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/06/05/Redis的事务/" title="下一篇: ">
+            <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/" title="下一篇: SSH整合">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybatis整合第三方缓存----ehcache</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li></ul>
 
 
 

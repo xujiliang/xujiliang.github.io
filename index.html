@@ -196,57 +196,6 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-Mybatis整合第三方缓存----ehcache" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" class="article-date">
-      <time datetime="2018-06-05T14:27:45.628Z" itemprop="datePublished">2018-06-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="Mybitis整合第三方缓存"><a href="#Mybitis整合第三方缓存" class="headerlink" title="Mybitis整合第三方缓存"></a>Mybitis整合第三方缓存</h1><h3 id="1、加入jar包"><a href="#1、加入jar包" class="headerlink" title="1、加入jar包"></a>1、加入jar包</h3><ul>
-<li style="list-style: none"><input type="checkbox" checked> ehcache-core.jar</li>
-<li style="list-style: none"><input type="checkbox" checked> mybatis-ehcache-1.3.jar</li>
-</ul>
-<h3 id="2、配置文件ehcache-xml"><a href="#2、配置文件ehcache-xml" class="headerlink" title="2、配置文件ehcache.xml"></a>2、配置文件ehcache.xml</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;ehcache xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line"> xsi:noNamespaceSchemaLocation=<span class="string">"../config/ehcache.xsd"</span>&gt;</span><br><span class="line"> &lt;!-- 磁盘保存路径 --&gt;</span><br><span class="line"> &lt;diskStore path=<span class="string">"D:\44\ehcache"</span> /&gt;</span><br><span class="line"> </span><br><span class="line"> &lt;defaultCache </span><br><span class="line">   maxElementsInMemory=<span class="string">"10000"</span> </span><br><span class="line">   maxElementsOnDisk=<span class="string">"10000000"</span></span><br><span class="line">   eternal=<span class="string">"false"</span> </span><br><span class="line">   overflowToDisk=<span class="string">"true"</span> </span><br><span class="line">   timeToIdleSeconds=<span class="string">"120"</span></span><br><span class="line">   timeToLiveSeconds=<span class="string">"120"</span> </span><br><span class="line">   diskExpiryThreadIntervalSeconds=<span class="string">"120"</span></span><br><span class="line">   memoryStoreEvictionPolicy=<span class="string">"LRU"</span>&gt;</span><br><span class="line"> &lt;/defaultCache&gt;</span><br><span class="line">&lt;/ehcache&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="3、在mapper文件中引入第三方缓存"><a href="#3、在mapper文件中引入第三方缓存" class="headerlink" title="3、在mapper文件中引入第三方缓存"></a>3、在mapper文件中引入第三方缓存</h3><p>EmployeeMapper.xml<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"> <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">"com.atguigu.mybatis.dao.EmployeeMapper"</span>&gt;</span><br><span class="line">&lt;cache type="org.mybatis.caches.ehcache.EhcacheCache"&gt;&lt;/cache&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
-<p>DepartmentMapper.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line"> &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.atguigu.mybatis.dao.DepartmentMapper&quot;&gt;</span><br><span class="line">&lt;!-- 引用缓存：namespace：指定和哪个名称空间下的缓存一样 --&gt;</span><br><span class="line">&lt;cache-ref namespace=&quot;com.atguigu.mybatis.dao.EmployeeMapp&quot;&gt;&lt;/cache&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Redis的事务" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -428,6 +377,74 @@ cluster nodes
       
 
       
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Mybatis整合第三方缓存----ehcache" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>Redis的持久化<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
