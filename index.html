@@ -196,83 +196,6 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-Redis集群" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/06/06/Redis集群/" class="article-date">
-      <time datetime="2018-06-06T01:31:25.040Z" itemprop="datePublished">2018-06-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h1 id="Redis集群的搭建"><a href="#Redis集群的搭建" class="headerlink" title="Redis集群的搭建"></a>Redis集群的搭建</h1><h2 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h2><p><strong>由于当集群中的某一台redis主机挂了，需要其他主机投票，当某台主机的得票数达到半数以上，其成为主机的要求，所有至少需要三台机器；又由于redis服务器要保证高可用，需要满足拥有16384个槽，若一台机器挂了，槽不完整，整个集群都不可用，所有每个主机需要一个备份机，及一共需要6台主机。</strong></p>
-<p>搭建伪分布式集群，可以在一台主机上运行多个redis实例。需要修改redis得端口号：7001-7006；</p>
-<p>步骤：</p>
-<p><strong>1、复制多份redis实例到文件夹redis-cluster下</strong></p>
-<p><strong>2、修改配置文件redis.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">修改端口：</span><br><span class="line"></span><br><span class="line"># Accept connections on the specified port, default is 6379 (IANA #815344).</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line">port 7001</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">改为后台启动</span><br><span class="line">################################# GENERAL #####################################</span><br><span class="line"></span><br><span class="line"># By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">打开集群模式：</span><br><span class="line">################################ REDIS CLUSTER  ###############################</span><br><span class="line">#</span><br><span class="line"># ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"># WARNING EXPERIMENTAL: Redis Cluster is considered to be stable code, however</span><br><span class="line"># in order to mark it as &quot;mature&quot; we need to wait for a non trivial percentage</span><br><span class="line"># of users to deploy it in production.</span><br><span class="line"># ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line">#</span><br><span class="line"># Normal Redis instances can&apos;t be part of a Redis Cluster; only nodes that are</span><br><span class="line"># started as cluster nodes can. In order to start a Redis instance as a</span><br><span class="line"># cluster node enable the cluster support uncommenting the following:</span><br><span class="line">#</span><br><span class="line">  cluster-enabled yes</span><br></pre></td></tr></table></figure>
-<p><strong>3、复制多分redis实例</strong>：</p>
-<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_13-57-28.png" alt="image"></p>
-<p><strong>4、修改redis.conf文件（如步骤2中），端口分别位7002、7003、7004、7005、7006；</strong></p>
-<p><strong>5、启动所有实例；</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">cd redis01</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd redis02</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line">cd redis03</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis04</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis05</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">cd redis06</span><br><span class="line">./redis-server redis.conf</span><br><span class="line">cd ..</span><br><span class="line">~                                                                                                                                                                                                                </span><br><span class="line">~</span><br></pre></td></tr></table></figure>
-<p>查看进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-cluster]# ps -ef|grep redis</span><br><span class="line">root      3261     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7001 [cluster]</span><br><span class="line">root      3265     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7002 [cluster]</span><br><span class="line">root      3269     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7003 [cluster]</span><br><span class="line">root      3273     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7004 [cluster]</span><br><span class="line">root      3277     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7005 [cluster]</span><br><span class="line">root      3279     1  0 06:19 ?        00:00:00 ./redis-server 127.0.0.1:7006 [cluster]</span><br><span class="line">root      3285  3026  0 06:19 pts/1    00:00:00 grep --color=auto redis</span><br><span class="line">[root@localhost redis-cluster]# ll</span><br></pre></td></tr></table></figure>
-<p><strong>6、使用ruby脚本搭建集群。需要ruby的运行环境。</strong></p>
-<p><strong>安装ruby</strong></p>
-<pre><code>yum install ruby
-
-yum install rubygems
-
-(gem install redis-3.0.0.gem)
-</code></pre><p>7、运行：</p>
-<pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-47-01.png" alt="image"></p>
-<pre><code>yes
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-49-19.png" alt="image"></p>
-<p><strong>至此，集群搭建完成；那么如何连接集群？</strong></p>
-<p><strong>随便进入一个redis实例内：</strong></p>
-<p><strong>执行命令：-c参数不能缺少</strong></p>
-<pre><code>./redis-cli -p 7006 -c
-</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-05-30_14-55-34.png" alt="image"></p>
-<p><strong>一些集群的命令：</strong></p>
-<pre><code>cluster info
-cluster nodes
-</code></pre>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -506,6 +429,74 @@ cluster nodes
       
         <p class="article-more-link">
           <a href="/2018/06/05/Redis的持久化--RDB和AOF/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Redis集群" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/05/Redis集群/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/05/Redis集群/">Redis集群的搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>Redis集群的搭建<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/06/05/Redis集群/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
