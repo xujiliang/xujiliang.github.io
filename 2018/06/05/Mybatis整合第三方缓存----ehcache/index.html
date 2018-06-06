@@ -15,17 +15,18 @@
 
 
 
-<meta name="description" content="这是我的第一篇博客谢谢">
+<meta name="description" content="Redis的持久化">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="http://yoursite.com/2018/06/05/test/index.html">
+<meta property="og:title" content="Mybitis整合第三方缓存">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/index.html">
 <meta property="og:site_name" content="Kevin">
-<meta property="og:description" content="这是我的第一篇博客谢谢">
+<meta property="og:description" content="Redis的持久化">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-05T13:18:18.790Z">
+<meta property="og:updated_time" content="2018-06-05T15:32:02.993Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-<meta name="twitter:description" content="这是我的第一篇博客谢谢">
+<meta name="twitter:title" content="Mybitis整合第三方缓存">
+<meta name="twitter:description" content="Redis的持久化">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>test | Kevin</title>
+<title>Mybitis整合第三方缓存 | Kevin</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -193,11 +194,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Mybatis整合第三方缓存----ehcache" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/06/05/test/" class="article-date">
-      <time datetime="2018-06-05T13:16:02.000Z" itemprop="datePublished">2018-06-05</time>
+      <a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
 </a>
 
 
@@ -212,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      test
+      Mybitis整合第三方缓存
     </h1>
   
 
@@ -220,8 +221,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -229,7 +238,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="这是我的第一篇博客"><a href="#这是我的第一篇博客" class="headerlink" title="这是我的第一篇博客"></a>这是我的第一篇博客</h1><h2 id="谢谢"><a href="#谢谢" class="headerlink" title="谢谢"></a>谢谢</h2>
+        <p>Redis的持久化<br><a id="more"></a></p>
+<h1 id="Mybitis整合第三方缓存"><a href="#Mybitis整合第三方缓存" class="headerlink" title="Mybitis整合第三方缓存"></a>Mybitis整合第三方缓存</h1><h3 id="1、加入jar包"><a href="#1、加入jar包" class="headerlink" title="1、加入jar包"></a>1、加入jar包</h3><ul>
+<li style="list-style: none"><input type="checkbox" checked> ehcache-core.jar</li>
+<li style="list-style: none"><input type="checkbox" checked> mybatis-ehcache-1.3.jar</li>
+</ul>
+<h3 id="2、配置文件ehcache-xml"><a href="#2、配置文件ehcache-xml" class="headerlink" title="2、配置文件ehcache.xml"></a>2、配置文件ehcache.xml</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;</span><br><span class="line">&lt;ehcache xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line"> xsi:noNamespaceSchemaLocation=<span class="string">"../config/ehcache.xsd"</span>&gt;</span><br><span class="line"> &lt;!-- 磁盘保存路径 --&gt;</span><br><span class="line"> &lt;diskStore path=<span class="string">"D:\44\ehcache"</span> /&gt;</span><br><span class="line"> </span><br><span class="line"> &lt;defaultCache </span><br><span class="line">   maxElementsInMemory=<span class="string">"10000"</span> </span><br><span class="line">   maxElementsOnDisk=<span class="string">"10000000"</span></span><br><span class="line">   eternal=<span class="string">"false"</span> </span><br><span class="line">   overflowToDisk=<span class="string">"true"</span> </span><br><span class="line">   timeToIdleSeconds=<span class="string">"120"</span></span><br><span class="line">   timeToLiveSeconds=<span class="string">"120"</span> </span><br><span class="line">   diskExpiryThreadIntervalSeconds=<span class="string">"120"</span></span><br><span class="line">   memoryStoreEvictionPolicy=<span class="string">"LRU"</span>&gt;</span><br><span class="line"> &lt;/defaultCache&gt;</span><br><span class="line">&lt;/ehcache&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3、在mapper文件中引入第三方缓存"><a href="#3、在mapper文件中引入第三方缓存" class="headerlink" title="3、在mapper文件中引入第三方缓存"></a>3、在mapper文件中引入第三方缓存</h3><p>EmployeeMapper.xml<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC <span class="string">"-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"> <span class="string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span>&gt;</span><br><span class="line">&lt;mapper namespace=<span class="string">"com.atguigu.mybatis.dao.EmployeeMapper"</span>&gt;</span><br><span class="line">&lt;cache type="org.mybatis.caches.ehcache.EhcacheCache"&gt;&lt;/cache&gt;</span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<p>DepartmentMapper.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper</span><br><span class="line"> PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line"> &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.atguigu.mybatis.dao.DepartmentMapper&quot;&gt;</span><br><span class="line">&lt;!-- 引用缓存：namespace：指定和哪个名称空间下的缓存一样 --&gt;</span><br><span class="line">&lt;cache-ref namespace=&quot;com.atguigu.mybatis.dao.EmployeeMapp&quot;&gt;&lt;/cache&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h3>
       
     </div>
     
@@ -237,13 +254,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/06/05/test/">test</a></p>
+        <p><span>本文标题:</span><a href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
-        <p><span>发布时间:</span>2018-06-05, 21:16:02</p>
-        <p><span>最后更新:</span>2018-06-05, 21:18:18</p>
+        <p><span>发布时间:</span>2018-06-05, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-05, 23:32:02</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/06/05/test/" title="test">http://yoursite.com/2018/06/05/test/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/05/test/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/" title="Mybitis整合第三方缓存">http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/05/Mybatis整合第三方缓存----ehcache/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -255,12 +272,12 @@
 
     <nav id="article-nav">
         
-        
-            <div id="article-nav-older" class="article-nav-title">
+            <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">
                     SSH整合
                 </a>
             </div>
+        
         
     </nav>
 
@@ -270,7 +287,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#这是我的第一篇博客"><span class="toc-number">1.</span> <span class="toc-text">这是我的第一篇博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#谢谢"><span class="toc-number">1.1.</span> <span class="toc-text">谢谢</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybitis整合第三方缓存"><span class="toc-number">1.</span> <span class="toc-text">Mybitis整合第三方缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、加入jar包"><span class="toc-number">1.0.1.</span> <span class="toc-text">1、加入jar包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、配置文件ehcache-xml"><span class="toc-number">1.0.2.</span> <span class="toc-text">2、配置文件ehcache.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、在mapper文件中引入第三方缓存"><span class="toc-number">1.0.3.</span> <span class="toc-text">3、在mapper文件中引入第三方缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完成"><span class="toc-number">1.0.4.</span> <span class="toc-text">完成</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -306,7 +323,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"test　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Mybitis整合第三方缓存　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -326,15 +343,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/" title="上一篇: SSH整合">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/" title="下一篇: SSH整合">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
     </div>
 
