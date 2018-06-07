@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="Redis从出门到高可用–Redis API的使用与理解">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis从出门到高可用--Redis API的使用与理解">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="Redis从出门到高可用–Redis API的使用与理解">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-06_20-40-30.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/57-22.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/1.png">
+<meta property="og:updated_time" content="2018-06-07T13:42:12.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis从出门到高可用--Redis API的使用与理解">
+<meta name="twitter:description" content="Redis从出门到高可用–Redis API的使用与理解">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-06_20-40-30.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Redis从出门到高可用--Redis API的使用与理解 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Redis从入门到高可用--Redis API的使用与理解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis从出门到高可用--Redis API的使用与理解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Redis从出门到高可用–Redis API的使用与理解<br><a id="more"></a></p>
+<h1 id="一、通用命令"><a href="#一、通用命令" class="headerlink" title="一、通用命令"></a>一、通用命令</h1><h3 id="1-1、通用命令"><a href="#1-1、通用命令" class="headerlink" title="1.1、通用命令"></a>1.1、通用命令</h3><p><strong>keys * :所有key</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; set k1 v1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; set k2 v2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; keys *</span><br><span class="line">1) &quot;k1&quot;</span><br><span class="line">2) &quot;k2&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>keys [..]</p>
+<p>dbsize：数据库中key的总数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; dbsize</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>exists key：key是否存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; exists k1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>del key [key …]:删除key-value</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; del k1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; </span><br><span class="line">127.0.0.1:6382&gt; keys *</span><br><span class="line">1) &quot;k2&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>expire key seconds：设置过期时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; set k1 v1 </span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; set k2 v2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; expire k1 10</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) 6</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; ttl k1</span><br><span class="line">(integer) -2</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>ttl：查看过期时间</p>
+<p>persis key：去掉过期时间</p>
+<p>type key：返回key的类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; type k2</span><br><span class="line">string</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2、数据结构和内部编码"><a href="#1-2、数据结构和内部编码" class="headerlink" title="1.2、数据结构和内部编码"></a>1.2、数据结构和内部编码</h3><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-06_20-40-30.png" alt="image"></p>
+<h3 id="1-3、单线程架构"><a href="#1-3、单线程架构" class="headerlink" title="1.3、单线程架构"></a>1.3、单线程架构</h3><p><img src="http://p9hqvn87i.bkt.clouddn.com/57-22.png" alt="image"></p>
+<pre><code>单线程为什么还这么快？
+（1）、redis是纯内存的
+（2）、redis是非阻塞式IO
+（3）、避免线程切换和竞态消耗
+单线程需要注意什么？
+（1）、一次只运行一条命令
+（2）、拒绝长（慢）命令（keys flushall slow lua script mutil/exec operate big value(collection)）
+（3）、其实并不是单线程
+</code></pre><hr>
+<h1 id="二、字符串类型"><a href="#二、字符串类型" class="headerlink" title="二、字符串类型"></a>二、字符串类型</h1><h5 id="2-1、结构命令"><a href="#2-1、结构命令" class="headerlink" title="2.1、结构命令"></a>2.1、结构命令</h5><p><strong>get</strong>   获取值</p>
+<p>时间复杂度：   O(1)</p>
+<p><strong>set</strong>      设置值            O(1)</p>
+<p><strong>del </strong>                 O(1)</p>
+<p><strong>incr</strong> 自增（线程安全）</p>
+<p><strong>decr</strong></p>
+<p><strong>incrby</strong></p>
+<p><strong>decrby</strong></p>
+<h5 id="2-2、快速实战"><a href="#2-2、快速实战" class="headerlink" title="2.2、快速实战"></a>2.2、快速实战</h5><p>  <strong>做计数器</strong></p>
+<p><strong>缓存视频的基本信息</strong></p>
+<p><strong>分布式的id生成器</strong><br><img src="http://p9hqvn87i.bkt.clouddn.com/1.png" alt="image"></p>
+<p>set：无论key是否存在都设置</p>
+<p>setnx：key存在才设置</p>
+<p>setxx：key存在才设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; exists php</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; set php good</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; set php bad</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; setnx php best</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; get php</span><br><span class="line">&quot;bad&quot;</span><br><span class="line">127.0.0.1:6382&gt; exists java</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; setnx java good</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; set java easy xx</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; get java</span><br><span class="line">&quot;easy&quot;</span><br></pre></td></tr></table></figure>
+<p>mget：批量获取 O(n)</p>
+<p>mset批量设置 O(n)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; mset k3 3 k4 4 k5 5</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; get k3</span><br><span class="line">&quot;3&quot;</span><br><span class="line">127.0.0.1:6382&gt; get k4</span><br><span class="line">&quot;4&quot;</span><br><span class="line">127.0.0.1:6382&gt; get k5</span><br><span class="line">&quot;5&quot;</span><br><span class="line">127.0.0.1:6382&gt; </span><br><span class="line">127.0.0.1:6382&gt; mget k3 k4 k5</span><br><span class="line">1) &quot;3&quot;</span><br><span class="line">2) &quot;4&quot;</span><br><span class="line">3) &quot;5&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="2-3、内部编码"><a href="#2-3、内部编码" class="headerlink" title="2.3、内部编码"></a>2.3、内部编码</h5><h5 id="2-4、查缺补漏"><a href="#2-4、查缺补漏" class="headerlink" title="2.4、查缺补漏"></a>2.4、查缺补漏</h5><pre><code>getset key newvalue: 返回旧值，设置新值
+
+append key value：将value追加到旧值
+
+strlen key：返回字符串的长度
+incrbyfloat key 3.5
+getrange key start end
+setrange key index value
+</code></pre><hr>
+<h1 id="三、哈希类型"><a href="#三、哈希类型" class="headerlink" title="三、哈希类型"></a>三、哈希类型</h1><h5 id="3-1、特点"><a href="#3-1、特点" class="headerlink" title="3.1、特点"></a>3.1、特点</h5><pre><code>key filed value
+</code></pre><p>例如：<br>key：表名</p>
+<p>filed：属性</p>
+<p>value：属性值</p>
+<p>filed不能相同</p>
+<h5 id="3-2、重要API"><a href="#3-2、重要API" class="headerlink" title="3.2、重要API"></a>3.2、重要API</h5><pre><code>hget  key filed
+
+hset  key filed value
+
+hdel  key filed
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; hset user:1:info age 23</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; hget user:1:info age</span><br><span class="line">&quot;23&quot;</span><br><span class="line">127.0.0.1:6382&gt; hset user:1:info name cluo</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; hgetall user:1:info</span><br><span class="line">1) &quot;age&quot;</span><br><span class="line">2) &quot;23&quot;</span><br><span class="line">3) &quot;name&quot;</span><br><span class="line">4) &quot;cluo&quot;</span><br><span class="line">127.0.0.1:6382&gt; hdel user:1:info age</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; hgetall user:1:info</span><br><span class="line">1) &quot;name&quot;</span><br><span class="line">2) &quot;cluo&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>hexists
+hlen
+hmget
+hmset
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; hexists user:1:info name</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; hexists user:1:info age</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; hmset user:2:info age 30 name kaka page 50</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; hlen user:2:info</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6382&gt; hmget user:2:info age name</span><br><span class="line">1) &quot;30&quot;</span><br><span class="line">2) &quot;kaka&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>O(n)
+hgetall key:返回hash key对应所有的field 和 value(小心使用)
+hvals key：返回hash key 对应所有field的value
+hkeys key：返回hash key对应所有field
+</code></pre><h5 id="3-3、string-hash"><a href="#3-3、string-hash" class="headerlink" title="3.3、string|hash"></a>3.3、string|hash</h5><table>
+<thead>
+<tr>
+<th>string</th>
+<th>hash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>get</td>
+<td>hget</td>
+</tr>
+<tr>
+<td>set setnx</td>
+<td>hset hsetnx</td>
+</tr>
+<tr>
+<td>del</td>
+<td>hdel</td>
+</tr>
+<tr>
+<td>incr incrby decr decrby</td>
+<td>hinc hdecr hincrby hincr</td>
+</tr>
+<tr>
+<td>mset</td>
+<td>hmset</td>
+</tr>
+<tr>
+<td>mget</td>
+<td>hmget</td>
+</tr>
+</tbody>
+</table>
+<h5 id="3-4、实战"><a href="#3-4、实战" class="headerlink" title="3.4、实战"></a>3.4、实战</h5><p>实现如下功能：</p>
+<pre><code>记录每个人主页访问量？
+hincrby user:1:info pageview count
+缓存视频的基本信息？
+</code></pre><hr>
+<h1 id="四、列表类型"><a href="#四、列表类型" class="headerlink" title="四、列表类型"></a>四、列表类型</h1><pre><code>key elements
+user:1:message   a b c d e f 
+</code></pre><h5 id="4-1、特点"><a href="#4-1、特点" class="headerlink" title="4.1、特点"></a>4.1、特点</h5><pre><code>有序
+
+可重复
+
+左右两边插入弹出
+</code></pre><h5 id="4-2、重要API"><a href="#4-2、重要API" class="headerlink" title="4.2、重要API"></a>4.2、重要API</h5><p>rpush</p>
+<pre><code>rpush key v1 v2 v3...Vn：从列表右端插入值（1~N个）
+
+rpush listkey c b a 
+c---&gt;b---&gt;a
+</code></pre><p>lpush</p>
+<pre><code>lpush key v1 v2 v3...Vn:从列表左边插入值（1~N个）
+
+lpush listkey c b a 
+a&lt;---b&lt;---c
+</code></pre><p>linsert</p>
+<pre><code>linsert key before|after value newValue:在list指定的值前|后插入newValue
+
+a---b---c---d
+ linsert listkey before b java
+ a---java---b---c---d
+
+ linsert listKey after b php
+ a---b---php---c---d
+</code></pre><p>lpop</p>
+<pre><code>lpop:从列表左边弹出一个item
+
+a--b--c--d
+lpop listKey
+--b--c--d
+</code></pre><p>rpop</p>
+<pre><code>a--b--c--d
+rpop listKey
+a--b--c--
+</code></pre><p>lrem</p>
+<pre><code>lrem key count value
+#根据count值，从列表中删除所有与value相等的项
+（1）、count&gt;0,从左到右，删除最多count个value相等的项
+（2）、从右到左，删除最多Math.abs(count)个value相等的项
+（3）、count=0,删除所有value相等的项
+
+a---c---a---c---b---f
+lrem listkey 0 a
+ ---c---c----b---f
+
+ lrem listkey -1 c
+ a---c---a---b---f
+</code></pre><p>ltrim</p>
+<pre><code>ltrim key start end:按照索引范围修剪列表
+
+a---b---c---d---e---f
+
+ltrim listkey 1  4
+---b---c---d---e
+</code></pre><p>lrange</p>
+<p>lindex</p>
+<pre><code>lindex key index:获取列表指定索引的值
+</code></pre><p>lset</p>
+<pre><code>lset key index newValue:设置列表指定索引为newValue
+</code></pre><h5 id="4-3、实战"><a href="#4-3、实战" class="headerlink" title="4.3、实战"></a>4.3、实战</h5><h5 id="4-4、查缺补漏"><a href="#4-4、查缺补漏" class="headerlink" title="4.4、查缺补漏"></a>4.4、查缺补漏</h5><p>blpop</p>
+<pre><code>blpop key timeout:lpop阻塞版本，timeout是阻塞超时时间，timeout=0表示永不阻塞
+</code></pre><p>brpop</p>
+<pre><code>与blpop同理
+</code></pre><hr>
+<h1 id="五、集合类型"><a href="#五、集合类型" class="headerlink" title="五、集合类型"></a>五、集合类型</h1><h5 id="5-1、特点"><a href="#5-1、特点" class="headerlink" title="5.1、特点"></a>5.1、特点</h5><p>不允许重复</p>
+<p>无序</p>
+<p>支持集合间的操作</p>
+<h5 id="5-2、集合内API和实战"><a href="#5-2、集合内API和实战" class="headerlink" title="5.2、集合内API和实战"></a>5.2、集合内API和实战</h5><p>sadd</p>
+<pre><code>sadd key elements：添加
+</code></pre><p>srem</p>
+<pre><code>srem key element：删除
+</code></pre><p>scard sismember srandmember smembers</p>
+<pre><code>scard user:1:follow   = 4  #计算集合大小
+sismember user:1:follow it   =1#判断it是否存在集合中
+srandmember user:1:follow count  =his#从集合挑选count个元素，不会破坏原集合
+spop user:!:follow  =sports#从集合中随机弹出一个元素
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; sadd user:1:follow it new his sports</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6382&gt; smembers user:1:follow</span><br><span class="line">1) &quot;sports&quot;</span><br><span class="line">2) &quot;his&quot;</span><br><span class="line">3) &quot;new&quot;</span><br><span class="line">4) &quot;it&quot;</span><br><span class="line">127.0.0.1:6382&gt; spop user:1:follow</span><br><span class="line">&quot;new&quot;</span><br><span class="line">127.0.0.1:6382&gt; smembers user:1:follow</span><br><span class="line">1) &quot;sports&quot;</span><br><span class="line">2) &quot;his&quot;</span><br><span class="line">3) &quot;it&quot;</span><br><span class="line">127.0.0.1:6382&gt; scard user:1:follow</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6382&gt; sismember user:1:follow entertainment</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>微博抽奖</p>
+<p>给用户添加标签</p>
+<h5 id="5-3、集合间API和实战"><a href="#5-3、集合间API和实战" class="headerlink" title="5.3、集合间API和实战"></a>5.3、集合间API和实战</h5><p>sdiff sinter sunion:差、交、并</p>
+<hr>
+<h1 id="六、有序集合类型"><a href="#六、有序集合类型" class="headerlink" title="六、有序集合类型"></a>六、有序集合类型</h1><pre><code>key score value
+
+user:ranking 1 james
+</code></pre><h5 id="6-1、特点"><a href="#6-1、特点" class="headerlink" title="6.1、特点"></a>6.1、特点</h5><p>无重复元素</p>
+<p>有序</p>
+<p>element+score</p>
+<h5 id="6-2、重要API"><a href="#6-2、重要API" class="headerlink" title="6.2、重要API"></a>6.2、重要API</h5><p>zadd</p>
+<pre><code>zadd key score element:添加score和element  O(logN)
+</code></pre><p>zrem</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rem key element:删除元素</span><br></pre></td></tr></table></figure>
+<p>zscore</p>
+<pre><code>zscore key element:返回元素分数
+</code></pre><p>zinsrby</p>
+<pre><code>zincrby key increScore element:增加或减少元素分数
+
+zincrby user:1:ranking 9 mike
+</code></pre><p>zcard:</p>
+<pre><code>zcard key :返回元素个数
+</code></pre><p>zrange</p>
+<pre><code>zrange key start end [WITHSCORES]
+</code></pre><h5 id="6-3、实战"><a href="#6-3、实战" class="headerlink" title="6.3、实战"></a>6.3、实战</h5><pre><code>排行版
+</code></pre><h5 id="6-4、查缺补漏"><a href="#6-4、查缺补漏" class="headerlink" title="6.4、查缺补漏"></a>6.4、查缺补漏</h5><pre><code>zrevrank
+
+zrevrange
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-06-05, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-07, 21:42:12</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/" title="Redis从出门到高可用--Redis API的使用与理解">http://yoursite.com/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/06/05/Redis的事务/">
+                    Redis的事务
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、通用命令"><span class="toc-number">1.</span> <span class="toc-text">一、通用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1、通用命令"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.1、通用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2、数据结构和内部编码"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.2、数据结构和内部编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3、单线程架构"><span class="toc-number">1.0.3.</span> <span class="toc-text">1.3、单线程架构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、字符串类型"><span class="toc-number">2.</span> <span class="toc-text">二、字符串类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1、结构命令"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">2.1、结构命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2、快速实战"><span class="toc-number">2.0.0.0.2.</span> <span class="toc-text">2.2、快速实战</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3、内部编码"><span class="toc-number">2.0.0.0.3.</span> <span class="toc-text">2.3、内部编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4、查缺补漏"><span class="toc-number">2.0.0.0.4.</span> <span class="toc-text">2.4、查缺补漏</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、哈希类型"><span class="toc-number">3.</span> <span class="toc-text">三、哈希类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1、特点"><span class="toc-number">3.0.0.0.1.</span> <span class="toc-text">3.1、特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2、重要API"><span class="toc-number">3.0.0.0.2.</span> <span class="toc-text">3.2、重要API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3、string-hash"><span class="toc-number">3.0.0.0.3.</span> <span class="toc-text">3.3、string|hash</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4、实战"><span class="toc-number">3.0.0.0.4.</span> <span class="toc-text">3.4、实战</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、列表类型"><span class="toc-number">4.</span> <span class="toc-text">四、列表类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1、特点"><span class="toc-number">4.0.0.0.1.</span> <span class="toc-text">4.1、特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2、重要API"><span class="toc-number">4.0.0.0.2.</span> <span class="toc-text">4.2、重要API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3、实战"><span class="toc-number">4.0.0.0.3.</span> <span class="toc-text">4.3、实战</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4、查缺补漏"><span class="toc-number">4.0.0.0.4.</span> <span class="toc-text">4.4、查缺补漏</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、集合类型"><span class="toc-number">5.</span> <span class="toc-text">五、集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1、特点"><span class="toc-number">5.0.0.0.1.</span> <span class="toc-text">5.1、特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2、集合内API和实战"><span class="toc-number">5.0.0.0.2.</span> <span class="toc-text">5.2、集合内API和实战</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-3、集合间API和实战"><span class="toc-number">5.0.0.0.3.</span> <span class="toc-text">5.3、集合间API和实战</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、有序集合类型"><span class="toc-number">6.</span> <span class="toc-text">六、有序集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#6-1、特点"><span class="toc-number">6.0.0.0.1.</span> <span class="toc-text">6.1、特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-2、重要API"><span class="toc-number">6.0.0.0.2.</span> <span class="toc-text">6.2、重要API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-3、实战"><span class="toc-number">6.0.0.0.3.</span> <span class="toc-text">6.3、实战</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-4、查缺补漏"><span class="toc-number">6.0.0.0.4.</span> <span class="toc-text">6.4、查缺补漏</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Redis从出门到高可用--Redis API的使用与理解　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/06/05/Redis的事务/" title="上一篇: Redis的事务">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
