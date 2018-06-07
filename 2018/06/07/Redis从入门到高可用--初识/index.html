@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="Redis从入门到高可用–初识">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis集群的搭建">
+<meta property="og:url" content="http://yoursite.com/2018/06/07/Redis从入门到高可用--初识/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="Redis从入门到高可用–初识">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-07T02:35:09.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis集群的搭建">
+<meta name="twitter:description" content="Redis从入门到高可用–初识">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Redis集群的搭建 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Redis从入门到高可用--初识" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/07/Redis从入门到高可用--初识/" class="article-date">
+      <time datetime="2018-06-07T02:29:50.425Z" itemprop="datePublished">2018-06-07</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis集群的搭建
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Redis从入门到高可用–初识<br><a id="more"></a></p>
+<h1 id="一、redis是什么"><a href="#一、redis是什么" class="headerlink" title="一、redis是什么"></a>一、redis是什么</h1><p>1、开源</p>
+<p>2、基于键值对的存储服务系统（K-V）</p>
+<p>3、多种数据结构（5种）</p>
+<p>4、高性能、功能丰富</p>
+<h1 id="二、redis特性回顾"><a href="#二、redis特性回顾" class="headerlink" title="二、redis特性回顾"></a>二、redis特性回顾</h1><h3 id="1、速度快；"><a href="#1、速度快；" class="headerlink" title="1、速度快；"></a>1、速度快；</h3><p>10万OPS，其将数据存在内存（主因），使用c语言开发的，单线程模型；</p>
+<h3 id="2、持久化"><a href="#2、持久化" class="headerlink" title="2、持久化"></a>2、持久化</h3><p>Redis持久化分为：<strong>RDB和AOF</strong></p>
+<p>持久化简单说就是断电不丢数据；Redis所有的数据保存在内存，对数据的更新将异步的保存到磁盘；</p>
+<h3 id="3、多种数据结构"><a href="#3、多种数据结构" class="headerlink" title="3、多种数据结构"></a>3、多种数据结构</h3><p>String、hash 、Set、List、Sort Set五种数据结构；</p>
+<p>续：Bitmaps位图、HyperLogLog、GEO</p>
+<h3 id="4、支持多种编程语言"><a href="#4、支持多种编程语言" class="headerlink" title="4、支持多种编程语言"></a>4、支持多种编程语言</h3><p>Java、Python、PHP、Ruby、Lua等；</p>
+<h3 id="5、功能丰富"><a href="#5、功能丰富" class="headerlink" title="5、功能丰富"></a>5、功能丰富</h3><p>发布订阅、Lua脚本、事务、Pipeline</p>
+<h3 id="6、“简单”"><a href="#6、“简单”" class="headerlink" title="6、“简单”"></a>6、“简单”</h3><p>其实并不简单啊</p>
+<p>不依赖外部库</p>
+<p>单线程模型</p>
+<h3 id="7、主从复制"><a href="#7、主从复制" class="headerlink" title="7、主从复制"></a>7、主从复制</h3><p>主从服务器</p>
+<h3 id="8、高可用、分布式"><a href="#8、高可用、分布式" class="headerlink" title="8、高可用、分布式"></a>8、高可用、分布式</h3><p>Redis-Sentinel支持高可用</p>
+<p>Redis-Cluster支持分布式</p>
+<h1 id="三、redis单机版安装"><a href="#三、redis单机版安装" class="headerlink" title="三、redis单机版安装"></a>三、redis单机版安装</h1><h3 id="1、Redis安装（Linux）"><a href="#1、Redis安装（Linux）" class="headerlink" title="1、Redis安装（Linux）"></a>1、Redis安装（Linux）</h3><p>wget <a href="http://download.redis.io/releases/redis-3.0.3.tar.gz" target="_blank" rel="noopener">http://download.redis.io/releases/redis-3.0.3.tar.gz</a></p>
+<p>tar -xzf redis-3.0.7.tar.gz</p>
+<p>ln -s redis-3.0.7 redis</p>
+<p>cd redis</p>
+<p>make &amp;&amp; make install</p>
+<h3 id="2、可执行文件说明"><a href="#2、可执行文件说明" class="headerlink" title="2、可执行文件说明"></a>2、可执行文件说明</h3><h3 id="3、三种启动方法"><a href="#3、三种启动方法" class="headerlink" title="3、三种启动方法"></a>3、三种启动方法</h3><hr>
+<h4 id="最简单启动"><a href="#最简单启动" class="headerlink" title="最简单启动"></a>最简单启动</h4><p>执行：<strong>redis-server</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@promote redis]# redis-server </span><br><span class="line">2345:C 06 Jun 08:14:25.135 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span><br><span class="line">2345:M 06 Jun 08:14:25.135 * Increased maximum number of open files to 10032 (it was originally set to 1024).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-``__ &apos;&apos;-._                                             </span><br><span class="line">      _.-``    `.  `_.  &apos;&apos;-._           Redis 3.0.3 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &apos;&apos;-._                                   </span><br><span class="line"> (    &apos;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&apos;` _.-&apos;|     Port: 6379</span><br><span class="line"> |    `-._   `._    /     _.-&apos;    |     PID: 2345</span><br><span class="line">  `-._    `-._  `-./  _.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |           http://redis.io        </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |                                  </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line">      `-._    `-.__.-&apos;    _.-&apos;                                       </span><br><span class="line">          `-._        _.-&apos;                                           </span><br><span class="line">              `-.__.-&apos;                                               </span><br><span class="line"></span><br><span class="line">2345:M 06 Jun 08:14:25.148 # Server started, Redis version 3.0.3</span><br><span class="line">2345:M 06 Jun 08:14:25.148 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &apos;vm.overcommit_memory = 1&apos; to /etc/sysctl.conf and then reboot or run the command &apos;sysctl vm.overcommit_memory=1&apos; for this to take effect.</span><br><span class="line">2345:M 06 Jun 08:14:25.149 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &apos;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&apos; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br><span class="line">2345:M 06 Jun 08:14:25.149 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span><br><span class="line">2345:M 06 Jun 08:14:25.149 * The server is now ready to accept connections on port 6379</span><br></pre></td></tr></table></figure>
+<p><strong>此时使用默认配置启动</strong></p>
+<hr>
+<h4 id="动态参数启动"><a href="#动态参数启动" class="headerlink" title="动态参数启动"></a>动态参数启动</h4><p>执行：redis-server –port 6380</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@promote ~]# redis-server --port 6380</span><br><span class="line">2405:M 06 Jun 08:16:50.720 * Increased maximum number of open files to 10032 (it was originally set to 1024).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-``__ &apos;&apos;-._                                             </span><br><span class="line">      _.-``    `.  `_.  &apos;&apos;-._           Redis 3.0.3 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &apos;&apos;-._                                   </span><br><span class="line"> (    &apos;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&apos;` _.-&apos;|     Port: 6380</span><br><span class="line"> |    `-._   `._    /     _.-&apos;    |     PID: 2405</span><br><span class="line">  `-._    `-._  `-./  _.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |           http://redis.io        </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |                                  </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line">      `-._    `-.__.-&apos;    _.-&apos;                                       </span><br><span class="line">          `-._        _.-&apos;                                           </span><br><span class="line">              `-.__.-&apos;                                               </span><br><span class="line"></span><br><span class="line">2405:M 06 Jun 08:16:50.731 # Server started, Redis version 3.0.3</span><br><span class="line">2405:M 06 Jun 08:16:50.731 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &apos;vm.overcommit_memory = 1&apos; to /etc/sysctl.conf and then reboot or run the command &apos;sysctl vm.overcommit_memory=1&apos; for this to take effect.</span><br><span class="line">2405:M 06 Jun 08:16:50.731 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &apos;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&apos; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br><span class="line">2405:M 06 Jun 08:16:50.732 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span><br><span class="line">2405:M 06 Jun 08:16:50.732 * The server is now ready to accept connections on port 6380</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="配置文件启动"><a href="#配置文件启动" class="headerlink" title="配置文件启动"></a>配置文件启动</h4><p>配置<strong>redis-6382.conf</strong> 文件修改后如下：其在目录<br><strong>/root/redis/conf</strong>文件夹下，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br><span class="line">port 6382</span><br><span class="line">#工作目录</span><br><span class="line">dir &quot;/root/redis/data&quot;</span><br><span class="line">logfile &quot;6382.log&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">[root@promote redis]# redis-server config/redis-6382.conf </span><br><span class="line">[root@promote redis]# ps -ef|grep redis</span><br><span class="line">root      8636     1  0 08:53 ?        00:00:00 redis-server *:6382</span><br><span class="line">root      8640  2412  0 08:53 pts/3    00:00:00 grep --color=auto redis</span><br><span class="line"></span><br><span class="line">[root@promote redis]# cd data/</span><br><span class="line">[root@promote data]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 2252 Jun  6 08:53 6382.log</span><br><span class="line">[root@promote data]# cat 6382.log </span><br><span class="line">8636:M 06 Jun 08:53:12.322 * Increased maximum number of open files to 10032 (it was originally set to 1024).</span><br><span class="line">                _._                                                  </span><br><span class="line">           _.-``__ &apos;&apos;-._                                             </span><br><span class="line">      _.-``    `.  `_.  &apos;&apos;-._           Redis 3.0.3 (00000000/0) 64 bit</span><br><span class="line">  .-`` .-```.  ```\/    _.,_ &apos;&apos;-._                                   </span><br><span class="line"> (    &apos;      ,       .-`  | `,    )     Running in standalone mode</span><br><span class="line"> |`-._`-...-` __...-.``-._|&apos;` _.-&apos;|     Port: 6382</span><br><span class="line"> |    `-._   `._    /     _.-&apos;    |     PID: 8636</span><br><span class="line">  `-._    `-._  `-./  _.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |           http://redis.io        </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line"> |`-._`-._    `-.__.-&apos;    _.-&apos;_.-&apos;|                                  </span><br><span class="line"> |    `-._`-._        _.-&apos;_.-&apos;    |                                  </span><br><span class="line">  `-._    `-._`-.__.-&apos;_.-&apos;    _.-&apos;                                   </span><br><span class="line">      `-._    `-.__.-&apos;    _.-&apos;                                       </span><br><span class="line">          `-._        _.-&apos;                                           </span><br><span class="line">              `-.__.-&apos;                                               </span><br><span class="line"></span><br><span class="line">8636:M 06 Jun 08:53:12.325 # Server started, Redis version 3.0.3</span><br><span class="line">8636:M 06 Jun 08:53:12.325 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add &apos;vm.overcommit_memory = 1&apos; to /etc/sysctl.conf and then reboot or run the command &apos;sysctl vm.overcommit_memory=1&apos; for this to take effect.</span><br><span class="line">8636:M 06 Jun 08:53:12.325 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &apos;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&apos; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br><span class="line">8636:M 06 Jun 08:53:12.325 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span><br><span class="line">8636:M 06 Jun 08:53:12.325 * The server is now ready to accept connections on port 6382</span><br><span class="line">[root@promote data]# ll</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 2252 Jun  6 08:53 6382.log</span><br><span class="line">[root@promote data]#</span><br></pre></td></tr></table></figure>
+<h3 id="4、简单的客户端连接"><a href="#4、简单的客户端连接" class="headerlink" title="4、简单的客户端连接"></a>4、简单的客户端连接</h3><pre><code>redis-cli -h 127.0.0.1 -p 6379
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@promote ~]# redis-cli -h 127.0.0.1 -p 6379</span><br><span class="line">127.0.0.1:6379&gt; ping</span><br><span class="line">PONG</span><br><span class="line">127.0.0.1:6379&gt; exit</span><br><span class="line">[root@promote ~]# redis-cli </span><br><span class="line">127.0.0.1:6379&gt; set hello ww</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get hello</span><br><span class="line">&quot;ww&quot;</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@promote ~]# redis-cli -p 6380</span><br><span class="line">127.0.0.1:6380&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="四、redis典型的使用场景"><a href="#四、redis典型的使用场景" class="headerlink" title="四、redis典型的使用场景"></a>四、redis典型的使用场景</h1><h3 id="1、缓存系统"><a href="#1、缓存系统" class="headerlink" title="1、缓存系统"></a>1、缓存系统</h3><h3 id="2、计数器"><a href="#2、计数器" class="headerlink" title="2、计数器"></a>2、计数器</h3><p><strong>Incr()方法</strong>实现</p>
+<p>比如：微博的<strong>转发数</strong>、<strong>评论数</strong></p>
+<h3 id="3、消息队列系统"><a href="#3、消息队列系统" class="headerlink" title="3、消息队列系统"></a>3、消息队列系统</h3><p>简单的消息队列；<br>Producer、Consumer</p>
+<p>ActiveMQ</p>
+<h3 id="4、排行榜"><a href="#4、排行榜" class="headerlink" title="4、排行榜"></a>4、排行榜</h3><p><strong>Sort Set</strong>数据结构实现</p>
+<h3 id="5、社交网络"><a href="#5、社交网络" class="headerlink" title="5、社交网络"></a>5、社交网络</h3><p>粉丝数、点赞数</p>
+<h3 id="6、实时系统"><a href="#6、实时系统" class="headerlink" title="6、实时系统"></a>6、实时系统</h3>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/07/Redis从入门到高可用--初识/">Redis集群的搭建</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-06-07, 10:29:50</p>
+        <p><span>最后更新:</span>2018-06-07, 10:35:09</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/07/Redis从入门到高可用--初识/" title="Redis集群的搭建">http://yoursite.com/2018/06/07/Redis从入门到高可用--初识/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/07/Redis从入门到高可用--初识/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/05/test/">
+                    test
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、redis是什么"><span class="toc-number">1.</span> <span class="toc-text">一、redis是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、redis特性回顾"><span class="toc-number">2.</span> <span class="toc-text">二、redis特性回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、速度快；"><span class="toc-number">2.0.1.</span> <span class="toc-text">1、速度快；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、持久化"><span class="toc-number">2.0.2.</span> <span class="toc-text">2、持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、多种数据结构"><span class="toc-number">2.0.3.</span> <span class="toc-text">3、多种数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、支持多种编程语言"><span class="toc-number">2.0.4.</span> <span class="toc-text">4、支持多种编程语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、功能丰富"><span class="toc-number">2.0.5.</span> <span class="toc-text">5、功能丰富</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、“简单”"><span class="toc-number">2.0.6.</span> <span class="toc-text">6、“简单”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、主从复制"><span class="toc-number">2.0.7.</span> <span class="toc-text">7、主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8、高可用、分布式"><span class="toc-number">2.0.8.</span> <span class="toc-text">8、高可用、分布式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、redis单机版安装"><span class="toc-number">3.</span> <span class="toc-text">三、redis单机版安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、Redis安装（Linux）"><span class="toc-number">3.0.1.</span> <span class="toc-text">1、Redis安装（Linux）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、可执行文件说明"><span class="toc-number">3.0.2.</span> <span class="toc-text">2、可执行文件说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、三种启动方法"><span class="toc-number">3.0.3.</span> <span class="toc-text">3、三种启动方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最简单启动"><span class="toc-number">3.0.3.1.</span> <span class="toc-text">最简单启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态参数启动"><span class="toc-number">3.0.3.2.</span> <span class="toc-text">动态参数启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置文件启动"><span class="toc-number">3.0.3.3.</span> <span class="toc-text">配置文件启动</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、简单的客户端连接"><span class="toc-number">3.0.4.</span> <span class="toc-text">4、简单的客户端连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、redis典型的使用场景"><span class="toc-number">4.</span> <span class="toc-text">四、redis典型的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、缓存系统"><span class="toc-number">4.0.1.</span> <span class="toc-text">1、缓存系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、计数器"><span class="toc-number">4.0.2.</span> <span class="toc-text">2、计数器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、消息队列系统"><span class="toc-number">4.0.3.</span> <span class="toc-text">3、消息队列系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、排行榜"><span class="toc-number">4.0.4.</span> <span class="toc-text">4、排行榜</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、社交网络"><span class="toc-number">4.0.5.</span> <span class="toc-text">5、社交网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、实时系统"><span class="toc-number">4.0.6.</span> <span class="toc-text">6、实时系统</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Redis集群的搭建　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/05/test/" title="下一篇: test">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
