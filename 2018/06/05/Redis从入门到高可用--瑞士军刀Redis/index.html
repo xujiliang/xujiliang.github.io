@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="Redis从出门到高可用–瑞士军刀Redis">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis从出门到高可用--瑞士军刀Redis">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="Redis从出门到高可用–瑞士军刀Redis">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/life.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/p1.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-31-27.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-31-47.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-34-13.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-42-41.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-43-06.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-49-28.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-54-19.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-10-13.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-23-48.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-24-07.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-31-21.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-52-40.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-03-34.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-03-56.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-04-57.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-06-57.png">
+<meta property="og:updated_time" content="2018-06-07T13:44:13.603Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis从出门到高可用--瑞士军刀Redis">
+<meta name="twitter:description" content="Redis从出门到高可用–瑞士军刀Redis">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/life.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Redis从出门到高可用--瑞士军刀Redis | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Redis从入门到高可用--瑞士军刀Redis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/" class="article-date">
+      <time datetime="2018-06-04T16:00:00.000Z" itemprop="datePublished">2018-06-05</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis从出门到高可用--瑞士军刀Redis
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Redis从出门到高可用–瑞士军刀Redis<br><a id="more"></a></p>
+<h1 id="一、慢查询"><a href="#一、慢查询" class="headerlink" title="一、慢查询"></a>一、慢查询</h1><pre><code>慢查询日志就是系统在命令执行前后计算每条命令的执行时间，当超过预设阀值，就将这条命令的相关信息（慢查询ID，发生时间戳，耗时，命令的详细信息）记录下来。
+
+慢查询其实是一个先进先出的队列，有固定的长度，保存在内存内。
+</code></pre><p><strong>1.1、生命周期</strong><br><img src="http://p9hqvn87i.bkt.clouddn.com/life.png" alt="image"></p>
+<pre><code>两点说明：
+1、慢查询发生在第三阶段
+2、客户端超时不一定慢查询，但是慢查询是客户端超时的一个可能因素。
+</code></pre><p><strong>1.2、两个配置</strong></p>
+<pre><code>1、慢查询的预设阀值  slowlog-log-slower-than
+
+slowlog-log-slower-than参数就是预设阀值，单位是微秒,默认值是1000，如果一条命令的执行时间超过10000微妙，那么它将被记录在慢查询日志中。
+
+如果slowlog-log-slower-than的值是0，则会记录所有命令。
+
+如果slowlog-log-slower-than的值小于0，则任何命令都不会记录日志。
+
+
+2、慢查询日志的长度slowlog-max-len
+slowlog-max-len只是说明了慢查询日志最多存储多少条。Redis使用一个列表来存储慢查询日志，showlog-max-len就是列表的最大
+长度。当慢查询日志已经到达列表的最大长度时，又有慢查询日志要进入列表，则最早插入列表的日志将会被移出列表，新日志被插入列表的末尾。
+</code></pre><p><strong>1.3、三个命令</strong></p>
+<pre><code>1、获取慢查询日志slowlog get [n]
+
+命令：slowlog get [N]
+
+选型：N，可选，代表获取的日志条数
+
+例如：showlog get 5
+
+
+2、获取慢查询日志列表的当前长度slowlog len
+
+命令：slowlog len
+
+返回：慢日志列表的当前长度
+
+例如：slowlog len
+
+返回：2
+
+
+3、慢查询日志重置slowlog reset
+
+慢查询日志重置实际是对列表做清理操作。
+
+命令：slowlog reset
+
+例如：slowlog reset
+
+slowlog len
+
+返回： 0
+</code></pre><p><strong>1.4、运维经验</strong></p>
+<pre><code>1、slowlog-max-len：不要设置过小，通常设置1000左右
+2、slowlog-log-lower-than：不要设置过大，默认10ms，通常设置1ms
+3、定期持久化慢查询：慢查询日志是一个先进先出队列，慢查询较多的情况下，可能会丢失部分慢查询命令，可以定期执行slow
+get命令将慢查询日志持久化到其他存储中。然后制作可视化界面查询
+</code></pre><hr>
+<h1 id="二、pipeline"><a href="#二、pipeline" class="headerlink" title="二、pipeline"></a>二、pipeline</h1><p><img src="http://p9hqvn87i.bkt.clouddn.com/p1.png" alt="image"><br><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-31-27.png" alt="image"></p>
+<p><strong>2.1、什么是流水线</strong></p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-31-47.png" alt="image"></p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-34-13.png" alt="image"></p>
+<pre><code>两点注意：
+1、Redis的命令执行时间是微妙级的
+2、pipeline每次条数要控制
+</code></pre><p><strong>2.2、客户端实现</strong></p>
+<p>实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/redis.clients/jedis --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.9.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">没有pipeline:</span><br><span class="line">    Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=<span class="number">10000</span>;i++)&#123;</span><br><span class="line">        jedis.hset(<span class="string">"hashkey"</span>+i,<span class="string">"field"</span>+i,<span class="string">"value"</span>+i);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">使用pipeline:</span><br><span class="line">Jedis jedis = new Jedis(&quot;127.0.0.1&quot;,6379);</span><br><span class="line">for(int i=0;i&lt;=100;i++)&#123;</span><br><span class="line">    Pipeline pipeline = jedis.pipelined();</span><br><span class="line">    for(int j=0;j&lt;(i+1)*100;j++)&#123;</span><br><span class="line">        pipeline.hset(&quot;hashkey&quot;+j,&quot;field&quot;+j,&quot;value&quot;+j)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>2.3、与原生操作相比</strong></p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-42-41.png" alt="image"></p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-43-06.png" alt="image"></p>
+<pre><code>即：pipeline会被分成一个个的子pipeline执行
+</code></pre><p><strong>2.4、使用建议</strong></p>
+<pre><code>1、注意每次pipeline携带数据量
+2、pipeline每次只能作用在一个Redis节点上
+</code></pre><hr>
+<h1 id="三、发布订阅"><a href="#三、发布订阅" class="headerlink" title="三、发布订阅"></a>三、发布订阅</h1><h5 id="3-1、角色"><a href="#3-1、角色" class="headerlink" title="3.1、角色"></a>3.1、角色</h5><pre><code>发布者（publisher）
+订阅者（subscriber）
+频道（channel）
+</code></pre><h5 id="3-2、模型"><a href="#3-2、模型" class="headerlink" title="3.2、模型"></a>3.2、模型</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-49-28.png" alt="image"></p>
+<h5 id="3-3、API"><a href="#3-3、API" class="headerlink" title="3.3、API"></a>3.3、API</h5><pre><code>publish
+publish channel message
+subscribe
+
+unsubscribe
+</code></pre><p>publish:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; PUBLISH sohu:tv &quot;hello world&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; PUBLISH sohu:tv &quot;hello world2&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; PUBLISH sohu:tv &quot;hello world3&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure></p>
+<p>subscriber</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; SUBSCRIBE sohu:tv</span><br><span class="line">Reading messages... (press Ctrl-C to quit)</span><br><span class="line">1) &quot;subscribe&quot;</span><br><span class="line">2) &quot;sohu:tv&quot;</span><br><span class="line">3) (integer) 1</span><br><span class="line">1) &quot;message&quot;</span><br><span class="line">2) &quot;sohu:tv&quot;</span><br><span class="line">3) &quot;hello world&quot;</span><br><span class="line">1) &quot;message&quot;</span><br><span class="line">2) &quot;sohu:tv&quot;</span><br><span class="line">3) &quot;hello world2&quot;</span><br><span class="line">1) &quot;message&quot;</span><br><span class="line">2) &quot;sohu:tv&quot;</span><br><span class="line">3) &quot;hello world3&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="3-4、发布订阅与消息队列"><a href="#3-4、发布订阅与消息队列" class="headerlink" title="3.4、发布订阅与消息队列"></a>3.4、发布订阅与消息队列</h5><h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_15-54-19.png" alt="image"></h2><h1 id="四、Bitmap"><a href="#四、Bitmap" class="headerlink" title="四、Bitmap"></a>四、Bitmap</h1><h5 id="4-1、位图"><a href="#4-1、位图" class="headerlink" title="4.1、位图"></a>4.1、位图</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-10-13.png" alt="image"></p>
+<h5 id="4-2、相关API"><a href="#4-2、相关API" class="headerlink" title="4.2、相关API"></a>4.2、相关API</h5><p>setbit</p>
+<pre><code>setbit key offset value:给位图指定索引设置值
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; set hello big</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; getbit hello 1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; setbit hello 7 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; get hello</span><br><span class="line">&quot;cig&quot;</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>getbit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; setbit unique:user 0 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; setbit unique:user 5 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; setbit unique:user 11 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; setbit unique:user 15 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt; setbit unique:user 19 1</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>bitcount </p>
+<pre><code>bitcount key [start end]
+获取位图指定范围（start到end，单位字节，默认所有）位置为1的个数
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; bitcount unique:user 1 3</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<p>bitop</p>
+<pre><code>bitop op destkey key [key....]
+做多个Bitmap的and（交）、or（并）、not（非）、xor（异或）操作
+</code></pre><h5 id="4-3、独立用户统计"><a href="#4-3、独立用户统计" class="headerlink" title="4.3、独立用户统计"></a>4.3、独立用户统计</h5><p>案例：</p>
+<pre><code>1、使用set和Bitmap
+2、某网站1亿用户，5千万的独立用户统计
+</code></pre><p>使用两种数据结构统计：</p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-23-48.png" alt="image"></p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-24-07.png" alt="image"></p>
+<p>但是Bitmap并不是绝对的好：</p>
+<pre><code>如：只有10万的独立用户呢？
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-31-21.png" alt="image"></p>
+<h5 id="4-4、使用经验："><a href="#4-4、使用经验：" class="headerlink" title="4.4、使用经验："></a>4.4、使用经验：</h5><pre><code>1、Bitmap是type=string,最大521M
+2、注意setbit时的偏移量，可能有较大的耗时
+3、位图不是绝对的好
+</code></pre><hr>
+<h1 id="五、HyperLogLog"><a href="#五、HyperLogLog" class="headerlink" title="五、HyperLogLog"></a>五、HyperLogLog</h1><h5 id="5-1、新的数据结构？"><a href="#5-1、新的数据结构？" class="headerlink" title="5.1、新的数据结构？"></a>5.1、新的数据结构？</h5><pre><code>1、基于HyperLogLog算法：使用极小的空间完成独立用户统计
+2、本质还是字符串
+</code></pre><h5 id="5-2、三个API"><a href="#5-2、三个API" class="headerlink" title="5.2、三个API"></a>5.2、三个API</h5><pre><code>1、pfadd key element [element ...]:向pyherloglog添加元素
+2、pfcount key [key...]:计算hyperloglog的独立总数
+3、pfmerge destkey sourcekey [sourcekey....]：合并多个hyperloglog
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; bitcount unique:user 1 3</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6382&gt; pfadd 20180507:unique:ids &quot;uuid-1&quot; &quot;uuid-2&quot; &quot;uuid-3&quot; &quot;uuid-4&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; pfcount 20180507:unique:ids</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6382&gt; pfadd 20180507:unique:ids &quot;uuid-1&quot; &quot;uuid-2&quot; &quot;uuid-3&quot; &quot;uuid-99&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; pfcount 20180507:unique:ids</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6382&gt; pfadd 20180508:unique:ids &quot;uuid-1&quot; &quot;uuid-2&quot; &quot;uuid-3&quot; &quot;uuid-4&quot;</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6382&gt; pfcount 20180508:unique:ids</span><br><span class="line">(integer) 4</span><br><span class="line">127.0.0.1:6382&gt; pfmerge 2018050708:unique:ids 20180507:unique:ids 20180508:unique:ids</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6382&gt; pfcount 2018050708:unique:ids</span><br><span class="line">(integer) 5</span><br><span class="line">127.0.0.1:6382&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="5-3、内存的消耗"><a href="#5-3、内存的消耗" class="headerlink" title="5.3、内存的消耗"></a>5.3、内存的消耗</h5><p>1百万独立用户统计</p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_16-52-40.png" alt="image"></p>
+<h5 id="5-4、使用经验"><a href="#5-4、使用经验" class="headerlink" title="5.4、使用经验"></a>5.4、使用经验</h5><pre><code>1、取决于你能否容忍错误：因为hyperloglog会出错，错误率为0.81%
+
+2、是否需要单挑数据,hyperloglog结构数据是不能取出单条数据的
+</code></pre><hr>
+<h1 id="六、GEO"><a href="#六、GEO" class="headerlink" title="六、GEO"></a>六、GEO</h1><p>redis3.2以上版本支持</p>
+<h5 id="6-1、GEO是什么"><a href="#6-1、GEO是什么" class="headerlink" title="6.1、GEO是什么"></a>6.1、GEO是什么</h5><h5 id="6-2、5个城市经纬度"><a href="#6-2、5个城市经纬度" class="headerlink" title="6.2、5个城市经纬度"></a>6.2、5个城市经纬度</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-03-34.png" alt="image"></p>
+<h5 id="6-3、API"><a href="#6-3、API" class="headerlink" title="6.3、API"></a>6.3、API</h5><p>geoadd</p>
+<pre><code>geo key longitude latitude member [longitude latitude menber]:增加地理位置信息
+</code></pre><p>  <img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-03-56.png" alt="image"></p>
+<p>geopos</p>
+<pre><code>geopos key menber [member...]:获取地理位置信息
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-04-57.png" alt="image"></p>
+<p>geodist</p>
+<pre><code>geodist key member1 member2 [unit]:获取两个地理位置的距离，unit（距离单位）：m，km，mi，ft
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-06-57.png" alt="image"><br>georadius</p>
+<h5 id="6-4、相关说明"><a href="#6-4、相关说明" class="headerlink" title="6.4、相关说明"></a>6.4、相关说明</h5><pre><code>1、redis 3.2+
+2、type geoKey = zset
+</code></pre><hr>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-06-05, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-07, 21:44:13</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/" title="Redis从出门到高可用--瑞士军刀Redis">http://yoursite.com/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/06/05/Redis从入门到高可用--Redis客户端/">
+                    Redis从出门到高可用--Redis客户端
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、慢查询"><span class="toc-number">1.</span> <span class="toc-text">一、慢查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、pipeline"><span class="toc-number">2.</span> <span class="toc-text">二、pipeline</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、发布订阅"><span class="toc-number">3.</span> <span class="toc-text">三、发布订阅</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1、角色"><span class="toc-number">3.0.0.0.1.</span> <span class="toc-text">3.1、角色</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2、模型"><span class="toc-number">3.0.0.0.2.</span> <span class="toc-text">3.2、模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3、API"><span class="toc-number">3.0.0.0.3.</span> <span class="toc-text">3.3、API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4、发布订阅与消息队列"><span class="toc-number">3.0.0.0.4.</span> <span class="toc-text">3.4、发布订阅与消息队列</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">3.1.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、Bitmap"><span class="toc-number">4.</span> <span class="toc-text">四、Bitmap</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1、位图"><span class="toc-number">4.0.0.0.1.</span> <span class="toc-text">4.1、位图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-2、相关API"><span class="toc-number">4.0.0.0.2.</span> <span class="toc-text">4.2、相关API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3、独立用户统计"><span class="toc-number">4.0.0.0.3.</span> <span class="toc-text">4.3、独立用户统计</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-4、使用经验："><span class="toc-number">4.0.0.0.4.</span> <span class="toc-text">4.4、使用经验：</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、HyperLogLog"><span class="toc-number">5.</span> <span class="toc-text">五、HyperLogLog</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1、新的数据结构？"><span class="toc-number">5.0.0.0.1.</span> <span class="toc-text">5.1、新的数据结构？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2、三个API"><span class="toc-number">5.0.0.0.2.</span> <span class="toc-text">5.2、三个API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-3、内存的消耗"><span class="toc-number">5.0.0.0.3.</span> <span class="toc-text">5.3、内存的消耗</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-4、使用经验"><span class="toc-number">5.0.0.0.4.</span> <span class="toc-text">5.4、使用经验</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、GEO"><span class="toc-number">6.</span> <span class="toc-text">六、GEO</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#6-1、GEO是什么"><span class="toc-number">6.0.0.0.1.</span> <span class="toc-text">6.1、GEO是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-2、5个城市经纬度"><span class="toc-number">6.0.0.0.2.</span> <span class="toc-text">6.2、5个城市经纬度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-3、API"><span class="toc-number">6.0.0.0.3.</span> <span class="toc-text">6.3、API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-4、相关说明"><span class="toc-number">6.0.0.0.4.</span> <span class="toc-text">6.4、相关说明</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Redis从出门到高可用--瑞士军刀Redis　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/06/05/Redis从入门到高可用--Redis客户端/" title="上一篇: Redis从出门到高可用--Redis客户端">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
