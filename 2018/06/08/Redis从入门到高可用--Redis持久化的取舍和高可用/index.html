@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="Redis从入门到高可用–Redis持久化的取舍与高可用">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis从入门到高可用--Redis持久化的取舍与高可用">
+<meta property="og:url" content="http://yoursite.com/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="Redis从入门到高可用–Redis持久化的取舍与高可用">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-31-35.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_11-34-45.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_11-25-35.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_13-38-30.png">
+<meta property="og:updated_time" content="2018-06-08T08:01:25.764Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis从入门到高可用--Redis持久化的取舍与高可用">
+<meta name="twitter:description" content="Redis从入门到高可用–Redis持久化的取舍与高可用">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-31-35.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Redis从入门到高可用--Redis持久化的取舍与高可用 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Redis从入门到高可用--Redis持久化的取舍和高可用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/" class="article-date">
+      <time datetime="2018-06-07T16:00:00.000Z" itemprop="datePublished">2018-06-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis从入门到高可用--Redis持久化的取舍与高可用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Redis从入门到高可用–Redis持久化的取舍与高可用<br><a id="more"></a></p>
+<h1 id="一、持久化的作用"><a href="#一、持久化的作用" class="headerlink" title="一、持久化的作用"></a>一、持久化的作用</h1><h5 id="1-1、什么是持久化"><a href="#1-1、什么是持久化" class="headerlink" title="1.1、什么是持久化"></a>1.1、什么是持久化</h5><pre><code>redis所的数据是保存在内存中，对数据的更新将异步地保存到磁盘上。
+</code></pre><h5 id="1-2、持久化的实现方式"><a href="#1-2、持久化的实现方式" class="headerlink" title="1.2、持久化的实现方式"></a>1.2、持久化的实现方式</h5><pre><code>1、快照---mysql的Dump、Redis的RDB
+2、写日志---Mysql的Binlog、Hbase的Hlog、Redis的AOF
+</code></pre><hr>
+<h1 id="二、RDB"><a href="#二、RDB" class="headerlink" title="二、RDB"></a>二、RDB</h1><h5 id="2-1、什么是RDB"><a href="#2-1、什么是RDB" class="headerlink" title="2.1、什么是RDB"></a>2.1、什么是RDB</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-07_17-31-35.png" alt="image"></p>
+<h5 id="2-2、触发机制–主要三种方式"><a href="#2-2、触发机制–主要三种方式" class="headerlink" title="2.2、触发机制–主要三种方式"></a>2.2、触发机制–主要三种方式</h5><pre><code>（1）、save（同步）：会造成阻塞，O(n)，会替换掉旧的.rdb文件；
+（2）、bgsave（异步）:会fork一个子进程进行持久化操作，在fork的过程中依然可能造成阻塞，O(n),会替换旧的.rdb文件；
+（3）、自动：
+900秒内1次改变，
+300秒内10次改变，
+60秒内10000次改变，会自动生成（bgsave）RDB文件
+</code></pre><p>redis.conf的几个参数说明：</p>
+<pre><code>dbfilename:rdb文件名
+dir ./：生成的rdb文件存放的位置；
+stop-writes-on-gbsave-error yes:bgsave发生错误是否停止写入；
+rdbcompression yes:rdb文件是否采用压缩的格式；
+rdbchecksum yes:是否对rdb文件进行一个校验和的检验；
+</code></pre><h5 id="2-3、触发机制–不容忽略方式"><a href="#2-3、触发机制–不容忽略方式" class="headerlink" title="2.3、触发机制–不容忽略方式"></a>2.3、触发机制–不容忽略方式</h5><pre><code>1、全量复制
+2、debug reload
+3、shutdown
+</code></pre><h5 id="2，4、实验"><a href="#2，4、实验" class="headerlink" title="2，4、实验"></a>2，4、实验</h5><p>修改redis.conf如下几个配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">################################ GENERAL  #####################################</span><br><span class="line"></span><br><span class="line"># By default Redis does not run as a daemon. Use &apos;yes&apos; if you need it.</span><br><span class="line"># Note that Redis will write a pid file in /var/run/redis.pid when daemonized.</span><br><span class="line">daemonize yes</span><br><span class="line"></span><br><span class="line"># When running daemonized, Redis writes a pid file in /var/run/redis.pid by</span><br><span class="line"># default. You can specify a custom pid file location here.</span><br><span class="line">pidfile /var/run/redis-6379.pid</span><br><span class="line"></span><br><span class="line"># Accept connections on the specified port, default is 6379.</span><br><span class="line"># If port 0 is specified Redis will not listen on a TCP socket.</span><br><span class="line">port 6379</span><br><span class="line">...</span><br><span class="line"># Specify the log file name. Also the empty string can be used to force</span><br><span class="line"># Redis to log on the standard output. Note that if you use standard</span><br><span class="line"># output for logging but daemonize, logs will be sent to /dev/null</span><br><span class="line">logfile &quot;6379.log&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#   save &quot;&quot;</span><br><span class="line"></span><br><span class="line">#save 900 1</span><br><span class="line">#save 300 10</span><br><span class="line">#save 60 10000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># The filename where to dump the DB</span><br><span class="line">dbfilename dump-6379.rdb</span><br><span class="line"></span><br><span class="line"># The working directory.</span><br><span class="line">#</span><br><span class="line"># The DB will be written inside this directory, with the filename specified</span><br><span class="line"># above using the &apos;dbfilename&apos; configuration directive.</span><br><span class="line">#</span><br><span class="line"># The Append Only File will also be created inside this directory.</span><br><span class="line">#</span><br><span class="line"># Note that you must specify a directory here, not a file name.</span><br><span class="line">dir /root/redis/redis/data</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>其他配置保持默认</p>
+<p>执行如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; dbsize</span><br><span class="line">(integer) 0</span><br><span class="line">127.0.0.1:6379&gt; set k1 1</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set k2 2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set k3 2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set k4 2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set k5 2</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; save</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure></p>
+<p>查看后台：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-rw-r--r--. 1 root root 2298 Jun  7 09:32 6379.log</span><br><span class="line">-rw-r--r--. 1 root root 4753 Jun  7 09:24 6382.log</span><br><span class="line">-rw-r--r--. 1 root root   50 Jun  7 09:32 dump-6379.rdb</span><br><span class="line">[root@promote data]# pwd</span><br><span class="line">/root/redis/data</span><br><span class="line">[root@promote data]#</span><br></pre></td></tr></table></figure></p>
+<pre><code>说明：
+（1）、若在redis中的数据较大，比如400多M，当执行save命令进行持久化时，同时有另外的客户端在执行get操作，此时的get操作会被阻塞，知道save命令执行完成。
+（2）、但是如果是在执行bgsave后，立即执行get操作，则不会阻塞get操作，因为此时主进程会fork一个子进程进行save，主进程执行get操作。
+（3）、执行save或者bgsave都会生成一个临时的rdb文件，然后替换旧的rdb文件；
+</code></pre><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><pre><code>1、rdb时redis内存到硬盘的快照，用于持久化；
+2、save通常会阻塞redis；
+3、bgsave不会阻塞redis，但是会fork新进程；
+4、save自动配置满足任一就会被执行；
+5、有些触发机制不容忽视；
+</code></pre><hr>
+<h1 id="三、AOF"><a href="#三、AOF" class="headerlink" title="三、AOF"></a>三、AOF</h1><h5 id="3-1、RDB现存的一些问题"><a href="#3-1、RDB现存的一些问题" class="headerlink" title="3.1、RDB现存的一些问题"></a>3.1、RDB现存的一些问题</h5><pre><code> RDB的缺点：
+（1）、耗时，耗性能
+耗时：O(n)，fork:消耗内存，
+DiskI/O：IO性能
+
+（2）、不可控，丢失数据
+会丢失最后一次的写数据
+</code></pre><h5 id="3-2、什么是AOF"><a href="#3-2、什么是AOF" class="headerlink" title="3.2、什么是AOF"></a>3.2、什么是AOF</h5><pre><code>AOF类似于日志，会将对数据的写操作写入AOF文件；
+</code></pre><h5 id="3-3、AOF三种策略"><a href="#3-3、AOF三种策略" class="headerlink" title="3.3、AOF三种策略"></a>3.3、AOF三种策略</h5><pre><code>always:
+每条命令fsync到硬盘；
+
+everysec:
+每秒把缓冲区fsync到硬盘
+会丢失一秒的数据
+no:
+OS决定fsync
+
+三者的比较：
+            always      everysec        no
+优点      不丢失数据   每秒一次sync     不用管
+                        丢一秒数据
+
+缺点       IO开销大，一般   丢一秒数据   不可控
+        的sata盘只有几百
+            TPS
+</code></pre><h5 id="3-4、AOF重写"><a href="#3-4、AOF重写" class="headerlink" title="3.4、AOF重写"></a>3.4、AOF重写</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_11-34-45.png" alt="image"></p>
+<pre><code>重写的作用：减少磁盘占用量；加速恢复速度
+
+AOF重写实现的两种方式：
+1、命令：bgrewriteaof
+AOF重写配置：
+2、配置：      配置名                      含义
+      auto_aof_rewrite_min_size     AOF文件重写需要的尺寸
+     auto_aof_rewrite_percentage    AOF文件增长率
+
+统计        统计名                      含义
+
+        aof_current_size            AOF当前尺寸
+
+        aof_base_size               AOF上次启动和重写的
+                                    尺寸(单位：字节)
+
+
+AOF自动触发时机需同时满足一下两个条件：
+aof_current_size &gt; auto_aof_rewrite_min_size
+aof_current_size - aof_base_size/aof_base_szie &gt; auto_aof_rewrite_percentage
+
+
+
+配置说明：
+appendonly  yes  :开启AOF持久化策略
+appendfilename  &quot;appendonly-${port}.aof&quot;
+appendfsync  everysec
+dir /bigdiskpath
+no-appendfsync-on-rewrite  yes：关闭aof的append
+auto-aof-rewrite-percentage  100
+auto-aof-rewrite-min-size  64mb
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_11-25-35.png" alt="image"></p>
+<pre><code>aof重写流程说明：
+1、首先，在执行bgrewriteaof命令后，主进程（父进程）会fork一个子进程进行重写aof操作，如图中父进程---&gt;fork---&gt;子进程
+2、子进程从内存中回溯重写aof文件如图步骤4，但是若此时主机依然在进行读写怎么办？
+3、主进程会进行3-1和3-2操作，即将主进程的写操作写入aof_buf和aof_rewrite_buf中，aof_buf中的操作会继续写入旧的AOF文件中，
+而aof_rewrite_buf中的数据会在重写完成以后再将缓存中的数据追加到新的AOF文件中，如5-2
+3、子进程重写AOF文件完成后，会将新生成的AOF文件替换旧的AOF文件，如5-3；
+
+
+
+AOF后台Rewrite存在的问题：
+aof_rewrite_buf是个不限大小的buffer,但用户写入的数据量较多时会出现以下两个问题：
+1、占用过多内存，浪费资源；
+2、主进程将aof_rewrite_buf数据写入到新AOF文件中时会阻塞工作线程，即步骤5-2，用户正常请求的延时会变高，严重情况下会超时，
+主备同步也会出问题，断开重连，重新同步等
+
+AOF后台Rewrite解决方案：
+（1）、官方解决方案：主要思路是AOF重写期间，主进程跟子进程通过管道通信，主进程实时将新写入的数据发送给子进程，子进程
+从管道读出数据缓存在buffer中，子进程等待存量数据全部写入AOF文件后，将缓存数据追加到AOF文件中，此方案只是解决阻塞工作线程问题，但占用内存过多问题并没有解决。
+
+（2）、新解决方案：主要思路是AOF重写期间，主进程创建一个新的aof_buf，新的AOF文件用于接收新写入的命令，sync策略保持不
+变，在AOF重写期间，系统需要向两个aof_buf，两个AOF文件同时追加新写入的命令。当主进程收到子进程重写AOF文件完成后，停
+止向老的aof_buf，AOF文件追加命令，然后删除旧的AOF文件(流程跟原来保持一致)；将将子进程新生成的AOF文件重命名为appendon
+ly.aof.last，具体流程如下：
+    停止向旧的aof_buf，AOF文件追加命令；
+    删除旧的的appendonly.aof.last文件；
+    交换两个aof_buf，AOF文件指针；
+    回收旧的aof_buf,AOF文件；
+    重命令子进程生成的AOF文件为appendonly.aof.last；
+</code></pre><h5 id="3-5、AOF相关功能的演示"><a href="#3-5、AOF相关功能的演示" class="headerlink" title="3.5、AOF相关功能的演示"></a>3.5、AOF相关功能的演示</h5><pre><code>（1）、aof相关配置文件：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">appendonly no</span><br><span class="line"></span><br><span class="line"># The name of the append only file (default: &quot;appendonly.aof&quot;)</span><br><span class="line"></span><br><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># appendfsync always</span><br><span class="line">appendfsync everysec</span><br><span class="line"># appendfsync no</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># Specify a percentage of zero in order to disable the automatic AOF</span><br><span class="line"># rewrite feature.</span><br><span class="line"></span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># Note that if the AOF file will be found to be corrupted in the middle</span><br><span class="line"># the server will still exit with an error. This option only applies when</span><br><span class="line"># Redis will try to read more data from the AOF file but not enough bytes</span><br><span class="line"># will be found.</span><br><span class="line">//如果aof文件不完整，有错误，当重启aof时是否忽略错误</span><br><span class="line">aof-load-truncated yes</span><br></pre></td></tr></table></figure>
+<pre><code>（2）、动态设置：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; config get appendonly</span><br><span class="line">1) &quot;appendonly&quot;</span><br><span class="line">2) &quot;no&quot;</span><br><span class="line">127.0.0.1:6379&gt; config set appendonly yes</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; config rewrite</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; exit</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt; set hello world</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set hello java</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set hello redis</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; incr counter</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; incr counter</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; incr counter</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; rpush list a</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; rpush list b</span><br><span class="line">(integer) 2</span><br><span class="line">127.0.0.1:6379&gt; rpush list c</span><br><span class="line">(integer) 3</span><br><span class="line">127.0.0.1:6379&gt; exit</span><br></pre></td></tr></table></figure>
+<pre><code>（3）、可以查看，已经生成了appendonly.aof文件
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@promote config]# cd ../data/</span><br><span class="line">[root@promote data]# ll</span><br><span class="line">total 24</span><br><span class="line">-rw-r--r--. 1 root root 5412 Jun  8 02:57 6379.log</span><br><span class="line">-rw-r--r--. 1 root root 4753 Jun  7 09:24 6382.log</span><br><span class="line">-rw-r--r--. 1 root root  467 Jun  8 03:02 appendonly.aof</span><br><span class="line">-rw-r--r--. 1 root root   50 Jun  7 09:32 dump-6379.rdb</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">[root@promote data]# more appendonly.aof </span><br><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k4</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k5</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k1</span><br><span class="line">$1</span><br><span class="line">1</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k3</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k2</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$5</span><br><span class="line">hello</span><br><span class="line">$5</span><br><span class="line">world</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$5</span><br><span class="line">hello</span><br><span class="line">$4</span><br><span class="line">java</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">set</span><br><span class="line">$5</span><br><span class="line">hello</span><br><span class="line">$5</span><br><span class="line">redis</span><br><span class="line">*2</span><br><span class="line">$4</span><br><span class="line">incr</span><br><span class="line">$7</span><br><span class="line">counter</span><br><span class="line">*2</span><br><span class="line">$4</span><br><span class="line">incr</span><br><span class="line">$7</span><br><span class="line">counter</span><br><span class="line">*2</span><br><span class="line">$4</span><br><span class="line">incr</span><br><span class="line">$7</span><br><span class="line">counter</span><br><span class="line">*3</span><br><span class="line">$5</span><br><span class="line">rpush</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">a</span><br><span class="line">*3</span><br><span class="line">$5</span><br><span class="line">rpush</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">b</span><br><span class="line">*3</span><br><span class="line">$5</span><br><span class="line">rpush</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+<pre><code>（4）、开启 BGREWRITEAOF
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; BGREWRITEAOF</span><br><span class="line">Background append only file rewriting started</span><br><span class="line">127.0.0.1:6379&gt; exit</span><br></pre></td></tr></table></figure>
+<pre><code>（5）、查看aof文件
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">[root@promote data]# cat appendonly.aof </span><br><span class="line">*2</span><br><span class="line">$6</span><br><span class="line">SELECT</span><br><span class="line">$1</span><br><span class="line">0</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k4</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*5</span><br><span class="line">$5</span><br><span class="line">RPUSH</span><br><span class="line">$4</span><br><span class="line">list</span><br><span class="line">$1</span><br><span class="line">a</span><br><span class="line">$1</span><br><span class="line">b</span><br><span class="line">$1</span><br><span class="line">c</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$7</span><br><span class="line">counter</span><br><span class="line">$1</span><br><span class="line">3</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$5</span><br><span class="line">hello</span><br><span class="line">$5</span><br><span class="line">redis</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k5</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k1</span><br><span class="line">$1</span><br><span class="line">1</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k3</span><br><span class="line">$1</span><br><span class="line">2</span><br><span class="line">*3</span><br><span class="line">$3</span><br><span class="line">SET</span><br><span class="line">$2</span><br><span class="line">k2</span><br><span class="line">$1</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="四、RDB和AOF的抉择"><a href="#四、RDB和AOF的抉择" class="headerlink" title="四、RDB和AOF的抉择"></a>四、RDB和AOF的抉择</h1><h5 id="4-1、RDB和AOF比较"><a href="#4-1、RDB和AOF比较" class="headerlink" title="4.1、RDB和AOF比较"></a>4.1、RDB和AOF比较</h5><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-08_13-38-30.png" alt="image"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-06-08, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-08, 16:01:25</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/" title="Redis从入门到高可用--Redis持久化的取舍与高可用">http://yoursite.com/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/07/Redis从入门到高可用--初识/">
+                    Redis从入门到高可用--初识
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、持久化的作用"><span class="toc-number">1.</span> <span class="toc-text">一、持久化的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-1、什么是持久化"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">1.1、什么是持久化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-2、持久化的实现方式"><span class="toc-number">1.0.0.0.2.</span> <span class="toc-text">1.2、持久化的实现方式</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、RDB"><span class="toc-number">2.</span> <span class="toc-text">二、RDB</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1、什么是RDB"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">2.1、什么是RDB</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2、触发机制–主要三种方式"><span class="toc-number">2.0.0.0.2.</span> <span class="toc-text">2.2、触发机制–主要三种方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3、触发机制–不容忽略方式"><span class="toc-number">2.0.0.0.3.</span> <span class="toc-text">2.3、触发机制–不容忽略方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2，4、实验"><span class="toc-number">2.0.0.0.4.</span> <span class="toc-text">2，4、实验</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、AOF"><span class="toc-number">3.</span> <span class="toc-text">三、AOF</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1、RDB现存的一些问题"><span class="toc-number">3.0.0.0.1.</span> <span class="toc-text">3.1、RDB现存的一些问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2、什么是AOF"><span class="toc-number">3.0.0.0.2.</span> <span class="toc-text">3.2、什么是AOF</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3、AOF三种策略"><span class="toc-number">3.0.0.0.3.</span> <span class="toc-text">3.3、AOF三种策略</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4、AOF重写"><span class="toc-number">3.0.0.0.4.</span> <span class="toc-text">3.4、AOF重写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-5、AOF相关功能的演示"><span class="toc-number">3.0.0.0.5.</span> <span class="toc-text">3.5、AOF相关功能的演示</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、RDB和AOF的抉择"><span class="toc-number">4.</span> <span class="toc-text">四、RDB和AOF的抉择</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-1、RDB和AOF比较"><span class="toc-number">4.0.0.0.1.</span> <span class="toc-text">4.1、RDB和AOF比较</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Redis从入门到高可用--Redis持久化的取舍与高可用　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/07/Redis从入门到高可用--初识/" title="下一篇: Redis从入门到高可用--初识">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
