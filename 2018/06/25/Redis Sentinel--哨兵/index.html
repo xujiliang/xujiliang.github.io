@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="Redis从出门到高可用–sentinel哨兵模式">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis从出门到高可用--sentinel哨兵模式">
+<meta property="og:url" content="http://yoursite.com/2018/06/25/Redis Sentinel--哨兵/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="Redis从出门到高可用–sentinel哨兵模式">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/121400_IKz2_3371837.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_14-39-03.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/152638_HJxJ_3371837.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/152908_Zun4_3371837.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/153125_1uB4_3371837.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/153431_xS0p_3371837.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-40-22.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-39-52.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-39-35.png">
+<meta property="og:updated_time" content="2018-06-25T02:05:50.809Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis从出门到高可用--sentinel哨兵模式">
+<meta name="twitter:description" content="Redis从出门到高可用–sentinel哨兵模式">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/121400_IKz2_3371837.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Redis从出门到高可用--sentinel哨兵模式 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Redis Sentinel--哨兵" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/25/Redis Sentinel--哨兵/" class="article-date">
+      <time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Redis从出门到高可用--sentinel哨兵模式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Redis从出门到高可用–sentinel哨兵模式<br><a id="more"></a></p>
+<h1 id="一、主从复制到高可用存在的问题"><a href="#一、主从复制到高可用存在的问题" class="headerlink" title="一、主从复制到高可用存在的问题"></a>一、主从复制到高可用存在的问题</h1><pre><code>1、手动故障转移
+    例如当master宕机，我们在某台slave上执行slaveof no one命令让这个从节点不再属于任何master，自己成为master，其
+    余slave执行slaveof new master命令来对这个新master进行同步，但这里会有个问题，我
+    们不知道何时master节点会不可用，无法及时手动去解决，而且出现这种问题我们容易手忙脚乱。还有当master发生改变时，如
+    何通知我们的客户端？
+2、写能力和存储能力受到限制
+</code></pre><hr>
+<h1 id="二、架构说明"><a href="#二、架构说明" class="headerlink" title="二、架构说明"></a>二、架构说明</h1><p><img src="http://p9hqvn87i.bkt.clouddn.com/121400_IKz2_3371837.png" alt="image"></p>
+<pre><code>首先，你可以把一个sentinel想象是一个redis的进程，不同的是sentinel不负责存储数据，它是负责对redis的一个故障判断、故障转
+移以及通知客户端的功能。另外，由上图可以看出sentinel不是一个而是多个，这样一来可以保证我们判断故障的一个公平性（后面
+可以设置几个sentinel认为节点有故障才算数），同时也保证了我们的高可用（即当一个sentinel节点挂了，仍然可以保证我们这个sentinel机制是完美的）。
+
+那对客户端来说就再也不会直接从redis中获取信息，也就是说在我们客户端中不会记录redis的地址（某个IP），而是记录sentinel的
+地址，这样我们可以直接从sentinel获取的redis地址，因为sentinel会对所有的master、slave进行监控，它是知道到底谁才是真正的
+master的，例如我们故障转移，这时候对于sentinel来说，master是变了的，然后通知客户端。而客户端根本不用关心到底谁才是真正
+的master，只关心sentinel告知的master。
+
+
+
+redis sentinel故障转移的步骤:
+(1)、多个sentinel发现并确认master有问题;
+(2)、选举出一个sentinel作为领导。（因为故障转移一系列操作只需要一个sentinel就可以完成）;
+(3)、从多个slave中选出一个slave作为新的master;
+(4)、通知其余slave成为新的master的slave;
+(5)、通知客户端主从变化（这样客户端就不会有读取失败的问题）;
+(6)、等待老的master复活成为新的master的slave（sentinel依然会对老的master进行监控是否复活）;
+
+这里简单提一下：我们的一套sentinel是可以监听多套master+slave的组合，这样可以有效节省资源，其中每套master+slave会使用一个master-name作为一个标识。
+</code></pre><hr>
+<h1 id="三、安装配置"><a href="#三、安装配置" class="headerlink" title="三、安装配置"></a>三、安装配置</h1><pre><code>1、配置开启主从节点
+2、配置开启sentinel监控主节点。（sentinel是特殊的redis）
+3、实际应该多机器
+4、详细配置节点；
+
+最终配置的效果如下：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_14-39-03.png" alt="image"></p>
+<pre><code>对主节点的配置：
+
+启动：redis-server redis-7000.conf
+
+配置：port 7000
+      daemonize yes
+      pidfile /var/run/redis-7000.pid
+      logfile &quot;7000.log&quot;
+      dir &quot;/root/redis/data/&quot;
+
+对从节点的配置：
+
+slave-1
+        port 7001
+        daemonize yes
+        pidfile /var/run/redis-7001.pid
+        logfile &quot;7001.log&quot;
+        dir &quot;/root/redis/data/&quot;
+        slaveof 127.0.0.1 7000
+
+slave-2      
+        port 7002
+        daemonize yes
+        pidfile /var/run/redis-7002.pid
+        logfile &quot;7002.log&quot;
+        dir &quot;/root/redis/data/&quot;
+        slaveof 127.0.0.1 7000
+
+启动：redis-server redis-7001.conf
+      redis-server redis-7002.conf
+
+
+sentinel主要配置：
+
+port ${port}
+dir &quot;/root/redis/data/&quot;
+logfile &quot;${port}.log&quot;
+sentinel monitor mymaster 127.0.0.1 7000 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel parallel-synec mymaster 1
+sentinel failover-timeout mymaster 180000
+</code></pre><p><strong>实验</strong>：</p>
+<pre><code>redis-7000.conf:
+port 7000
+daemonize yes
+pidfile /var/run/redis-7000.pid
+logfile &quot;7000.log&quot;
+dir &quot;/root/redis/data/&quot;
+
+redis-7001.conf:
+port 7001
+daemonize yes
+pidfile /var/run/redis-7001.pid
+logfile &quot;7001.log&quot;
+dir &quot;/root/redis/data/&quot;
+slaveof 127.0.0.1 7000
+
+
+redis-7002.conf:
+port 7002
+daemonize yes
+pidfile /var/run/redis-7002.pid
+logfile &quot;7002.log&quot;
+dir &quot;/root/redis/data/&quot;
+slaveof 127.0.0.1 7000
+
+分别启动三个redis实例：
+[root@promote config]# redis-server redis-7000.conf 
+[root@promote config]# redis-server redis-7001.conf 
+[root@promote config]# redis-server redis-7002.conf 
+</code></pre><p><strong>查看master信息：</strong></p>
+<pre><code>[root@promote config]# redis-cli -p 7000 info replication
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=127.0.0.1,port=7001,state=online,offset=29,lag=1
+slave1:ip=127.0.0.1,port=7002,state=online,offset=29,lag=1
+master_repl_offset:29
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:2
+repl_backlog_histlen:28
+</code></pre><p><strong>查看slave信息：</strong></p>
+<pre><code>[root@promote config]# redis-cli -p 7001 info replication
+# Replication
+role:slave
+master_host:127.0.0.1
+master_port:7000
+master_link_status:up
+master_last_io_seconds_ago:2
+master_sync_in_progress:0
+slave_repl_offset:435
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+[root@promote config]# redis-cli -p 7002 info replication
+# Replication
+role:slave
+master_host:127.0.0.1
+master_port:7000
+master_link_status:up
+master_last_io_seconds_ago:10
+master_sync_in_progress:0
+slave_repl_offset:463
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+
+对redis sentinel配置：
+reids-sentinel-26379.conf:
+port 26379
+daemonize yes
+dir &quot;/root/redis/data&quot;
+logfile &quot;26379.log&quot;
+sentinel monitor mymaster 127.0.0.1 7000 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel parallel-syncs mymaster 1
+sentinel failover-timeout mymaster 180000
+
+
+redis-sentinel-26380.conf:
+
+port 26380
+daemonize yes
+dir &quot;/root/redis/data&quot;
+logfile &quot;26380.log&quot;
+sentinel monitor mymaster 127.0.0.1 7000 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel parallel-syncs mymaster 1
+sentinel failover-timeout mymaster 180000
+
+
+redis-sentinel-26381.conf:
+
+port 26381
+daemonize yes
+dir &quot;/root/redis/data&quot;
+logfile &quot;26381.log&quot;
+sentinel monitor mymaster 127.0.0.1 7000 2
+sentinel down-after-milliseconds mymaster 30000
+sentinel parallel-syncs mymaster 1
+sentinel failover-timeout mymaster 180000
+</code></pre><p><strong>分别启动三个实例：</strong></p>
+<pre><code>redis-sentinel redis-sentinel-26379.conf 
+redis-sentinel redis-sentinel-26380.conf 
+redis-sentinel redis-sentinel-26381.conf 
+
+查看配置文件redis-sentinel-26379.conf的变化：
+port 26379
+daemonize yes
+dir &quot;/root/redis-3.0.3/data&quot;
+logfile &quot;26379.log&quot;
+sentinel monitor mymaster 127.0.0.1 7000 2
+sentinel config-epoch mymaster 0
+sentinel leader-epoch mymaster 0
+sentinel known-slave mymaster 127.0.0.1 7001
+# Generated by CONFIG REWRITE
+sentinel known-slave mymaster 127.0.0.1 7002
+sentinel known-sentinel mymaster 127.0.0.1 26381 c698ffdc6c0ae865369161ad265288beebb3c2dd
+sentinel known-sentinel mymaster 127.0.0.1 26379 91d09f9acde747c9c5f0105497d8f3353364b25e
+sentinel current-epoch 0
+
+26380与26381类似。
+
+启动redis-cli客户端：
+[root@promote config]# redis-cli -p 26379 
+[root@promote config]# redis-cli -p 26380 
+[root@promote config]# redis-cli -p 26381 
+</code></pre><p><strong>查看信息</strong>：</p>
+<pre><code>127.0.0.1:26380&gt; info
+
+
+# Server
+redis_version:3.0.3
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:b042e46a9c1e1b6c
+redis_mode:sentinel
+os:Linux 3.10.0-514.10.2.el7.x86_64 x86_64
+arch_bits:64
+multiplexing_api:epoll
+gcc_version:4.8.5
+process_id:3383
+run_id:6aa2c586c70b76a91cb22763ca5d31c99ada406a
+tcp_port:26380
+uptime_in_seconds:159
+uptime_in_days:0
+hz:13
+lru_clock:1802516
+config_file:/root/redis-3.0.3/config/redis-sentinel-26380.conf
+
+# Sentinel
+sentinel_masters:1
+sentinel_tilt:0
+sentinel_running_scripts:0
+sentinel_scripts_queue_length:0
+master0:name=mymaster,status=ok,address=127.0.0.1:7000,slaves=2,sentinels=3
+127.0.0.1:26380&gt; exit
+[root@promote config]# redis-cli -p 26381 
+127.0.0.1:26381&gt; info
+# Server
+redis_version:3.0.3
+redis_git_sha1:00000000
+redis_git_dirty:0
+redis_build_id:b042e46a9c1e1b6c
+redis_mode:sentinel
+os:Linux 3.10.0-514.10.2.el7.x86_64 x86_64
+arch_bits:64
+multiplexing_api:epoll
+gcc_version:4.8.5
+process_id:3452
+run_id:c698ffdc6c0ae865369161ad265288beebb3c2dd
+tcp_port:26381
+uptime_in_seconds:43
+uptime_in_days:0
+hz:17
+lru_clock:1802530
+config_file:/root/redis-3.0.3/config/redis-sentinel-26381.conf
+
+# Sentinel
+sentinel_masters:1
+sentinel_tilt:0
+sentinel_running_scripts:0
+sentinel_scripts_queue_length:0
+master0:name=mymaster,status=ok,address=127.0.0.1:7000,slaves=2,sentinels=3
+</code></pre><p><strong>其他类似</strong></p>
+<hr>
+<h1 id="四、客户端连接"><a href="#四、客户端连接" class="headerlink" title="四、客户端连接"></a>四、客户端连接</h1><pre><code>4.1、请求响应流程
+
+（1）.首先要获取所有sentinel节点的集合，获取一个可用节点，同时需要一个对应的masterName；
+</code></pre><p> <img src="http://p9hqvn87i.bkt.clouddn.com/152638_HJxJ_3371837.png" alt="image"></p>
+<pre><code>(2).通过sentinel的一个api：get-master-addr-by-name-masterName(通过名字获取地址)，sentinel会返回master的真正地址和端口;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/152908_Zun4_3371837.png" alt="image"></p>
+<pre><code>(3).当客户端获取到master信息后，会通过role replication来进行一个验证是否是真正的master节点
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/153125_1uB4_3371837.png" alt="image"></p>
+<pre><code>(4).最后一步就是当sentinel感知到master的变化会通知客户端更换节点，其实内部是用的一个发布订阅模式（客户端订阅sentinel
+的某一个频道，当master发生变化，sentinel向这个频道publish一条消息，客户端就可以获取再对新的master进行一个连接）
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/153431_xS0p_3371837.png" alt="image"></p>
+<pre><code>4.2、jedis
+(1).需要一个sentinel地址的集合
+
+(2).需要masterName
+
+(3).不是代理模式（不是每次都需要去连接sentinel节点去获取master信息，这样效率很差，而是采用通知的形式）
+
+使用Jedis访问sentinel:
+//初始化Sentinel连接池，注意：这里名字是JedisSentinelPool只是为了区分它是sentinel方式连接，其内部还是连接master
+JedisSentinelPool sentinelPool = new JedisSentinelPool(masterName,SentinelSet,poolConfig,timeout);
+
+Jedis jedis = null;
+try{
+  jedis = sentinelPool.getResource();
+  //这里执行jedis command
+}catch(Exception e){
+  logger.error(e.getMessage(),e);
+}finally{
+  if(jedis != null)
+     //归还连接
+     jedis.close();
+}
+</code></pre><hr>
+<h1 id="五、实现原理"><a href="#五、实现原理" class="headerlink" title="五、实现原理"></a>五、实现原理</h1><pre><code>5.1、 三个定时任务
+sentinel在内部有3个定时任务
+（1）、每10秒每个sentinel会对master和slave执行info命令；
+这个任务达到两个目的：
+
+发现slave节点
+
+确认主从关系
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-40-22.png" alt="image"></p>
+<pre><code>（2）、每2秒每个sentinel通过master节点的channel交换信息（pub/sub）；
+
+master节点上有一个发布订阅的频道(__sentinel__:hello)。
+
+sentinel节点通过__sentinel__:hello频道进行信息交换(对节点的&quot;看法&quot;和自身的信息)，达成共识。
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-39-52.png" alt="image"></p>
+<pre><code>（3）、每1秒每个sentinel对其他sentinel和redis节点执行ping操作（相互监控）
+
+这个其实是一个心跳检测，是失败判定的依据。
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-09_21-39-35.png" alt="image"></p>
+<pre><code>5.2、主观下线和客观下线
+
+在redis-sentinel的conf文件里有这么两个配置：
+
+(1)、sentinel monitor &lt;masterName&gt; &lt;ip&gt; &lt;port&gt; &lt;quorum&gt;
+四个参数含义：
+
+masterName这个是对某个master+slave组合的一个区分标识（一套sentinel是可以监听多套master+slave这样的组合的）。
+
+ip 和 port 就是master节点的 ip 和 端口号。
+
+quorum这个参数是进行客观下线的一个依据，意思是至少有 quorum 个sentinel主观的认为这个master有故障，才会对这个ma
+ster进行下线以及故障转移。因为有的时候，某个sentinel节点可能因为自身网络原因，导致无法连接master，而此时master并没有
+出现故障，所以这就需要多个sentinel都一致认为该master有问题，才可以进行下一步操作，这就保证了公平性和高可用。
+
+(2)、sentinel down-after-milliseconds &lt;masterName&gt; &lt;timeout&gt; 
+这个配置其实就是进行主观下线的一个依据，masterName这个参数不用说了，timeout是一个毫秒值，表示：如果这台sentinel超过t
+imeout这个时间都无法连通master包括slave（slave不需要客观下线，因为不需要故障转移）的话，就会主观认为该master已经下线
+（实际下线需要客观下线的判断通过才会下线）；
+
+那么，多个sentinel之间是如何达到共识的呢？
+这就是依赖于前面说的第二个定时任务，某个sentinel先将master节点进行一个主观下线，然后会将这个判定通过sentinel  is-master-down-by-addr这个命令
+问对应的节点是否也同样认为该addr的master节点要做客观下线。最后当达成这一共识的sentinel
+个数达到前面说的quorum设置的这个值时，就会对该master节点下线进行故障转移。quorum的值一般设置为sentinel个数的二分之一
+加1，例如3个sentinel就设置2
+
+
+
+5.3、领导者选举
+为什么要选领导者？因为只能有一个sentinel节点去完成故障转移；
+sentinel is-master-down-by-addr这个命令有两个作用，一是确认下线判定，二是进行领导者选举。
+
+选举过程：
+(1).每个做主观下线的sentinel节点向其他sentinel节点发送上面那条命令，要求将它设置为领导者。
+
+(2).收到命令的sentinel节点如果还没有同意过其他的sentinel发送的命令（还未投过票），那么就会同意，否则拒绝。
+
+(3).如果该sentinel节点发现自己的票数已经过半且达到了quorum的值，就会成为领导者
+
+(4).如果这个过程出现多个sentinel成为领导者，则会等待一段时间重新选举。
+
+
+
+5.4、故障转移
+所谓故障转移就是当master宕机，选一个合适的slave来晋升为master的操作，redis-sentinel会自动完成这个，不需要我们手动来实现。
+
+那么，如何选择一个合适的slave呢？顺序如下：
+
+(1).选择slave-priority（slave节点优先级配置）最高的slave节点，（默认都是一样的）例如：如果我们有两台slave在两台机器
+上，一台配置较高，我们希望当master挂掉优先选配置高的，就可以配置该值为slave中最高的。如果存在最高则返回，不存在继续;
+
+(2).选择复制偏移量最大的节点（复制得最完整，与master节点的数据一致性更高），如果存在则返回，不存在继续;
+
+(3).如果以上两个条件都不满足，选runId最小的（启动最早的）;
+
+补充一点：还可以向任意sentinel发生sentinel failover &lt;masterName&gt; 进行手动故障转移，这样就不需要经过上述主客观和选举的过程。
+</code></pre><hr>
+<h1 id="六、常见的开发运维问题"><a href="#六、常见的开发运维问题" class="headerlink" title="六、常见的开发运维问题"></a>六、常见的开发运维问题</h1><pre><code>1、节点运维
+
+
+
+2、高可用读写分离
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-06-25, 00:00:00</p>
+        <p><span>最后更新:</span>2018-06-25, 10:05:50</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/25/Redis Sentinel--哨兵/" title="Redis从出门到高可用--sentinel哨兵模式">http://yoursite.com/2018/06/25/Redis Sentinel--哨兵/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/06/25/Redis Sentinel--哨兵/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/06/25/Redis缓存的设计与优化/">
+                    Redis从出门到高可用--Redis缓存设计与优化
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、主从复制到高可用存在的问题"><span class="toc-number">1.</span> <span class="toc-text">一、主从复制到高可用存在的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、架构说明"><span class="toc-number">2.</span> <span class="toc-text">二、架构说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、安装配置"><span class="toc-number">3.</span> <span class="toc-text">三、安装配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、客户端连接"><span class="toc-number">4.</span> <span class="toc-text">四、客户端连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、实现原理"><span class="toc-number">5.</span> <span class="toc-text">五、实现原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、常见的开发运维问题"><span class="toc-number">6.</span> <span class="toc-text">六、常见的开发运维问题</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Redis从出门到高可用--sentinel哨兵模式　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/06/25/Redis缓存的设计与优化/" title="下一篇: Redis从出门到高可用--Redis缓存设计与优化">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
