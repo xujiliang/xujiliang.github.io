@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="项目部署">
+<meta name="description" content="SpringBoot简介">
 <meta name="keywords" content="springboot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微信点餐系统">
-<meta property="og:url" content="http://yoursite.com/2018/07/14/二十一、项目部署/index.html">
+<meta property="og:title" content="SpringBoot">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/SpringBoot--简介/index.html">
 <meta property="og:site_name" content="Kevin">
-<meta property="og:description" content="项目部署">
+<meta property="og:description" content="SpringBoot简介">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-14T06:05:28.404Z">
+<meta property="og:updated_time" content="2018-07-14T06:12:12.732Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微信点餐系统">
-<meta name="twitter:description" content="项目部署">
+<meta name="twitter:title" content="SpringBoot">
+<meta name="twitter:description" content="SpringBoot简介">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>微信点餐系统 | Kevin</title>
+<title>SpringBoot | Kevin</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -194,10 +194,10 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-二十一、项目部署" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-SpringBoot--简介" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/07/14/二十一、项目部署/" class="article-date">
+      <a href="/2018/07/14/SpringBoot--简介/" class="article-date">
       <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
 </a>
 
@@ -213,7 +213,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      微信点餐系统
+      SpringBoot
     </h1>
   
 
@@ -238,33 +238,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>项目部署<br><a id="more"></a><br>1、tomcat方式部署</p>
-<p>2、java -jar命令</p>
-<pre><code>（1）、先将项目打包：
-mvn clean package -Dmaven.test.skip=true    //打包，跳过单元测试
-
-
-（2）、将项目sell.jar拷贝到服务器上:
-scp target/sell.jar root@192.168.116.150:/opt/javaapps
-
-
-
-（3）、运行命令：
-java -jar -Dserver.port=8090 sell.jar    //-Dserver.port=8090  :修改端口，可以缺省
-
-如果需要在不同的环境使用不同的配置文件，怎么办呢？
-方法一：新建两个不同的配置文件，命名为：application-dev.yml和application-prod.yml，再在配置文件application.yml如下配置：
-spring:
-  profiles:
-    active: dev
-
-表示项目使用application-dev.yml配置
-方法二:依然方法一中的配置文件，用如下启动命令动态使用配置文件：
-java -jar -Dserver.port=8090 -Dspring.profiles.active=dev sell.jar
-
-
-方法三：项目后台启动：
-nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
+        <p>SpringBoot简介<br><a id="more"></a></p>
+<h1 id="一、SpringBoot特点"><a href="#一、SpringBoot特点" class="headerlink" title="一、SpringBoot特点"></a>一、SpringBoot特点</h1><pre><code>1、化繁为简，简化配置
+2、备受关注，下一代框架。
+3、微服务的入门级微框架
 </code></pre>
       
     </div>
@@ -273,13 +250,13 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></p>
+        <p><span>本文标题:</span><a href="/2018/07/14/SpringBoot--简介/">SpringBoot</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
         <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
-        <p><span>最后更新:</span>2018-07-14, 14:05:28</p>
+        <p><span>最后更新:</span>2018-07-14, 14:12:12</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/07/14/二十一、项目部署/" title="微信点餐系统">http://yoursite.com/2018/07/14/二十一、项目部署/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/二十一、项目部署/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/SpringBoot--简介/" title="SpringBoot">http://yoursite.com/2018/07/14/SpringBoot--简介/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/SpringBoot--简介/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -292,15 +269,15 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/07/14/SpringBoot--WEB/">
+                <a href="/2018/07/14/SpringBoot--HelloWorld/">
                     SpringBoot
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/07/14/十三、权限校验/">
-                    微信点餐系统
+                <a href="/2018/07/14/SpringBoot--单元测试/">
+                    SpringBoot
                 </a>
             </div>
         
@@ -312,7 +289,7 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、SpringBoot特点"><span class="toc-number">1.</span> <span class="toc-text">一、SpringBoot特点</span></a></li></ol>
         
     </div>
     <style>
@@ -348,7 +325,7 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"微信点餐系统　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"SpringBoot　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -368,7 +345,7 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/07/14/SpringBoot--WEB/" title="上一篇: SpringBoot">
+            <a href="/2018/07/14/SpringBoot--HelloWorld/" title="上一篇: SpringBoot">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -376,7 +353,7 @@ nohup java -jar sell.jar &gt; /dev/null 2&gt;&amp;1 &amp;
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/07/14/十三、权限校验/" title="下一篇: 微信点餐系统">
+            <a href="/2018/07/14/SpringBoot--单元测试/" title="下一篇: SpringBoot">
                 <i class="fa fa-angle-right"></i>
             </a>
         

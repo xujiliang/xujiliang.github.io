@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="SpringBoot的HelloWorld">
+<meta name="keywords" content="springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/SpringBoot--HelloWorld/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="SpringBoot的HelloWorld">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-00-16.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-00-30.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-01-00.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-01-31.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-02-24.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-12-47.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-26-17.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-55-30.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_20-24-19.png">
+<meta property="og:updated_time" content="2018-07-14T06:13:04.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot">
+<meta name="twitter:description" content="SpringBoot的HelloWorld">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-00-16.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>SpringBoot | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-SpringBoot--HelloWorld" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/SpringBoot--HelloWorld/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SpringBoot
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/SpringBoot/">SpringBoot</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>SpringBoot的HelloWorld<br><a id="more"></a></p>
+<h1 id="一、HelloWorl工程的搭建"><a href="#一、HelloWorl工程的搭建" class="headerlink" title="一、HelloWorl工程的搭建"></a>一、HelloWorl工程的搭建</h1><pre><code>本项目用到的开发工具时IDEA，java版本时1.8
+1、新建项目
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-00-16.png" alt="image"><br><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-00-30.png" alt="image"><br><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-01-00.png" alt="image"><br><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-01-31.png" alt="image"></p>
+<pre><code>2、删除下面三个文件
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-02-24.png" alt="image"><br>    查看pom文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">	&lt;groupId&gt;com.njupt&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;girl&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">	&lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line"></span><br><span class="line">	&lt;name&gt;girl&lt;/name&gt;</span><br><span class="line">	&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">	&lt;parent&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">		&lt;version&gt;2.0.3.RELEASE&lt;/version&gt;</span><br><span class="line">		&lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">	&lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">	&lt;properties&gt;</span><br><span class="line">		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">		&lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;</span><br><span class="line">		&lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">	&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">			&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>GirlApplication文件：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.njupt.girl;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class GirlApplication &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication.run(GirlApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>GirlApplicationTest文件 
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.njupt.girl;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line">import org.springframework.test.context.junit4.SpringRunner;</span><br><span class="line"></span><br><span class="line">@RunWith(SpringRunner.class)</span><br><span class="line">@SpringBootTest</span><br><span class="line">public class GirlApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	public void contextLoads() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>3、启动项目：
+    （1）、方法一
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-12-47.png" alt="image"></p>
+<pre><code>（2）、方法二：命令行启动方式：
+进入项目目录girl
+输入命令mvn spring-boot:run启动项目
+（3）、方法三：命令行启动方式
+进入项目目录girl下的target目录：
+D:\girl\target&gt;
+查看目录几种的文件：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-26-17.png" alt="image"></p>
+<pre><code>    输入命令：java -jar girl-0.0.1-SNAPSHOT.jar启动项目
+
+4、新建一个Controller
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package com.njupt.girl;</span><br><span class="line"></span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @Author: XJL</span><br><span class="line"> * @Description:</span><br><span class="line"> * @Date: Create in 16:05 2018/6/26</span><br><span class="line"> * @Modified By:</span><br><span class="line"> **/</span><br><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/say&quot;,method = RequestMethod.GET)</span><br><span class="line">    public String say()&#123;</span><br><span class="line">        return &quot;Hello SpringBoot!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>5、启动项目
+6、浏览器输入:
+http://localhost:8080/say
+</code></pre><h1 id="二、配置文件相关"><a href="#二、配置文件相关" class="headerlink" title="二、配置文件相关"></a>二、配置文件相关</h1><pre><code>1、在项目的resource目录下有一个application.properties文件：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_16-55-30.png" alt="image"></p>
+<pre><code>2、修改改配置文件为如下内容：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">server.port=8081</span><br><span class="line">server.servlet.context-path=/girl</span><br></pre></td></tr></table></figure>
+<pre><code>该配置文件作用：修改项目根目录和启动端口，此时应该用如下方式调用方法：
+http://localhost:8081/girl/say
+
+3、还可以使用yml文件代替.properties文件,新建application.yml文件，并删除application.properties：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8082</span><br><span class="line">  servlet:</span><br><span class="line">    context-path: /girl</span><br></pre></td></tr></table></figure>
+<pre><code>启动项目，http://localhost:8082/girl/say
+
+
+4、现在有如下需求，加入修改获得罩杯时B，年纪为22的女生，该如何配置呢：
+（1）、首先配置文件application.yml：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8080</span><br><span class="line">cupSize: B</span><br><span class="line">age: 22</span><br></pre></td></tr></table></figure>
+<pre><code>（2）、然后在controller中注入属性：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    @Value(&quot;$&#123;cupSize&#125;&quot;)</span><br><span class="line">    private String cupSize;</span><br><span class="line">    @Value(&quot;$&#123;age&#125;&quot;)</span><br><span class="line">    private Integer age;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/say&quot;,method = RequestMethod.GET)</span><br><span class="line">    public String say()&#123;</span><br><span class="line">        return cupSize+age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>（3）、启动运行即可。
+5、如何在不同的环境下使用不同的配置文件呢？
+（1）需要两个在不同版本下使用的配置文件：
+application-dev.yml
+application-prod.yml
+然后在默认配置文件application.yml中如下配置：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: dev</span><br></pre></td></tr></table></figure>
+<pre><code>表示使用application-dev.yml配置文件。 
+6、如何在配置文件中使用配置呢：
+（1）、修改配置文件：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8080</span><br><span class="line">cupSize: B</span><br><span class="line">age: 22</span><br><span class="line">content: &quot;cupSize: $&#123;cupSize&#125;, age: $&#123;age&#125;&quot;</span><br></pre></td></tr></table></figure>
+<pre><code>（2）、属性注入与调用：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    </span><br><span class="line">    @Value(&quot;$&#123;content&#125;&quot;)</span><br><span class="line">    private String content;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/say&quot;,method = RequestMethod.GET)</span><br><span class="line">    public String say()&#123;</span><br><span class="line">        return content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>7、但是有个问题，这样平凡的使用 @Value注解是很麻烦的一件事，如果配置文件中的女神属性多了怎么办？于是可以基于类的配置方式：
+（1）、application.yml文件修改：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8080</span><br><span class="line">girl:</span><br><span class="line">  cupSize: B</span><br><span class="line">  age: 22</span><br></pre></td></tr></table></figure>
+<pre><code>（2）、新建一个GirlProperties的类
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">package com.njupt.girl;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @Author: XJL</span><br><span class="line"> * @Description:</span><br><span class="line"> * @Date: Create in 17:15 2018/6/26</span><br><span class="line"> * @Modified By:</span><br><span class="line"> **/</span><br><span class="line">@Component</span><br><span class="line">@ConfigurationProperties(prefix = &quot;girl&quot;)</span><br><span class="line">public class GirlProprities &#123;</span><br><span class="line"></span><br><span class="line">    private String cupSize;</span><br><span class="line"></span><br><span class="line">    private Integer age;</span><br><span class="line"></span><br><span class="line">    public String getCupSize() &#123;</span><br><span class="line">        return cupSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setCupSize(String cupSize) &#123;</span><br><span class="line">        this.cupSize = cupSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Integer getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(Integer age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>注意添加注解：
+@Component
+@ConfigurationProperties(prefix = &quot;girl&quot;)
+
+
+（3）、然后在方法中利用@AutoWire注解注入：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class HelloController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private GirlProprities girlProprities;</span><br><span class="line">    @RequestMapping(value = &quot;/say&quot;, method = RequestMethod.GET)</span><br><span class="line">    public String say() &#123;</span><br><span class="line">        return girlProprities.getCupSize();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="三、Controller的使用"><a href="#三、Controller的使用" class="headerlink" title="三、Controller的使用"></a>三、Controller的使用</h1><pre><code>1、
+@Controller：处理Http请求
+@RestController：Spring4之后新增加的注解，原来返回json数据需要@ResponseBody配合@Controller使用
+@RequestMapping：配置url映射。
+
+2、
+可以用@GetMapping(value = &quot;say&quot;)代替@RequestMapping(value = &quot;/say&quot;, method = RequestMethod.GET)，其他如POST同理
+3、其他如@PathVariable，@RequestParam等注解的使用与springMVC相同。
+</code></pre><h1 id="四、数据库操作"><a href="#四、数据库操作" class="headerlink" title="四、数据库操作"></a>四、数据库操作</h1><pre><code>要求完成一下的api：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-26_20-24-19.png" alt="image"></p>
+<pre><code>1、在pom文件中添加依赖：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>2、新建类Girl，对应数据库中的表，其中@Entity表示该类对应数据库中的表，@ID表示该字段为主键，@GeneratedValue表示主键自增：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">public class Girl &#123;</span><br><span class="line">    @Id</span><br><span class="line">    @GeneratedValue</span><br><span class="line">    private Integer id;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    private String cupSize;</span><br><span class="line"></span><br><span class="line">    public Girl() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>3、配置文件：
+由于数据库的配置应该是全局的，所以配置在appliaction.yml文件中：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: dev</span><br><span class="line">    #数据库的配置</span><br><span class="line">  datasource:</span><br><span class="line">    driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">    username: root</span><br><span class="line">    password: root</span><br><span class="line">    url: jdbc:mysql://127.0.0.1:3306/dbgirl</span><br><span class="line">  </span><br><span class="line">  jpa:</span><br><span class="line">    show-sql: true#表示在后台显示sql语句</span><br><span class="line">    hibernate:</span><br><span class="line">      ddl-auto: update #表示启动项目时当数据库代dbgirl中没有表时新建一张girl表，如果表中有数据则更新表，还有create：表示每次启动都会新建表</span><br></pre></td></tr></table></figure>
+<pre><code>4、新建一个接口并继承JpaRepository，各个接口如下:
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.njupt.girl;</span><br><span class="line"></span><br><span class="line">import org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @Author: XJL</span><br><span class="line"> * @Description:</span><br><span class="line"> * @Date: Create in 20:33 2018/6/26</span><br><span class="line"> * @Modified By:</span><br><span class="line"> **/</span><br><span class="line">public interface GirlRepository extends JpaRepository&lt;Girl,Integer&gt; &#123;</span><br><span class="line">     List&lt;Girl&gt; findByName(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>4、新建一个GirlController：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class GirlController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private GirlRepository girlRepository;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取女生列表</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @GetMapping(value = &quot;/girls&quot;)</span><br><span class="line">    public List&lt;Girl&gt; getGirlList() &#123;</span><br><span class="line">        List&lt;Girl&gt; girls = girlRepository.findAll();</span><br><span class="line"></span><br><span class="line">        return girls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 新增一个女生</span><br><span class="line">     * @param name</span><br><span class="line">     * @param cupSize</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @PostMapping(value = &quot;/girls&quot;)</span><br><span class="line">    public Girl addGirl(@RequestParam(&quot;name&quot;) String name,@RequestParam(&quot;cupSize&quot;) String cupSize)&#123;</span><br><span class="line">        Girl girl = new Girl();</span><br><span class="line">        girl.setCupSize(cupSize);</span><br><span class="line">        girl.setName(name);</span><br><span class="line">        return girlRepository.save(girl);</span><br><span class="line">    &#125;</span><br><span class="line">//</span><br><span class="line">//    /**</span><br><span class="line">//     * 根据Id获取一个女生</span><br><span class="line">//     * @param id</span><br><span class="line">//     * @return</span><br><span class="line">//     */</span><br><span class="line">//    @GetMapping(value = &quot;/girls/&#123;id&#125;&quot;)</span><br><span class="line">//    public Girl getOneGirl(@PathVariable(&quot;id&quot;) Integer id)&#123;</span><br><span class="line">//        return girlRepository.getOne(id);</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 更新一个女生</span><br><span class="line">     * @param id</span><br><span class="line">     * @param name</span><br><span class="line">     * @param cupSize</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @PutMapping(value = &quot;/girls/&#123;id&#125;&quot;)</span><br><span class="line">    public Girl updateGirlById(@PathVariable(&quot;id&quot;) Integer id,</span><br><span class="line">                               @RequestParam(&quot;name&quot;) String name,</span><br><span class="line">                               @RequestParam(&quot;cupSize&quot;) String cupSize) &#123;</span><br><span class="line">        Girl girl = new Girl();</span><br><span class="line">        girl.setName(name);</span><br><span class="line">        girl.setId(id);</span><br><span class="line">        girl.setCupSize(cupSize);</span><br><span class="line">        return girlRepository.save(girl);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 删除一个女生</span><br><span class="line">     * @param id</span><br><span class="line">     */</span><br><span class="line">    @DeleteMapping(value = &quot;/girls/&#123;id&#125;&quot;)</span><br><span class="line">    public void deleteGirl(@PathVariable(&quot;id&quot;) Integer id)&#123;</span><br><span class="line">         girlRepository.deleteById(id);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">     /**</span><br><span class="line">     * 根据命中获取女生</span><br><span class="line">     */</span><br><span class="line">    @GetMapping(value = &quot;/girls/&#123;name&#125;&quot;)</span><br><span class="line">    public List&lt;Girl&gt; getGirlsBYName(@PathVariable(&quot;name&quot;) String name)&#123;</span><br><span class="line">        return girlRepository.findByName(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="五、事务管理"><a href="#五、事务管理" class="headerlink" title="五、事务管理"></a>五、事务管理</h1><pre><code>要求：插入两条女生数据，要么都成功，要么都失败
+
+1、新建一个GirlService，在方法上加注解： @Transactional
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class GirlService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private GirlRepository girlRepository;</span><br><span class="line"></span><br><span class="line">    @Transactional</span><br><span class="line">    public void insertGirls()&#123;</span><br><span class="line">        Girl girla = new Girl();</span><br><span class="line">        girla.setCupSize(&quot;E&quot;);</span><br><span class="line">        girla.setName(&quot;G&quot;);</span><br><span class="line">        girlRepository.save(girla);</span><br><span class="line"></span><br><span class="line">        Girl girlb = new Girl();</span><br><span class="line">        girlb.setName(&quot;AAAAAA&quot;);</span><br><span class="line">        girlb.setCupSize(&quot;c&quot;);</span><br><span class="line"></span><br><span class="line">        girlRepository.save(girlb);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>2、controller中新增方法：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;/girls/add&quot;)</span><br><span class="line">  public void insertGirls()&#123;</span><br><span class="line">      girlService.insertGirls();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<pre><code>此时该方法就用事务了。
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/SpringBoot--HelloWorld/">SpringBoot</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 14:13:04</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/SpringBoot--HelloWorld/" title="SpringBoot">http://yoursite.com/2018/07/14/SpringBoot--HelloWorld/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/SpringBoot--HelloWorld/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/三、项目搭建与配置/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/SpringBoot--简介/">
+                    SpringBoot
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、HelloWorl工程的搭建"><span class="toc-number">1.</span> <span class="toc-text">一、HelloWorl工程的搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、配置文件相关"><span class="toc-number">2.</span> <span class="toc-text">二、配置文件相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、Controller的使用"><span class="toc-number">3.</span> <span class="toc-text">三、Controller的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、数据库操作"><span class="toc-number">4.</span> <span class="toc-text">四、数据库操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、事务管理"><span class="toc-number">5.</span> <span class="toc-text">五、事务管理</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"SpringBoot　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/三、项目搭建与配置/" title="上一篇: 微信点餐系统">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/SpringBoot--简介/" title="下一篇: SpringBoot">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--HelloWorld/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--简介/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--单元测试/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--WEB/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
