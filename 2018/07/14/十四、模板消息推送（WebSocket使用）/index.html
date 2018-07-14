@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="模板消息推送">
+<meta name="keywords" content="springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信点餐系统">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/十四、模板消息推送（WebSocket使用）/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="模板消息推送">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-08_13-34-47.png">
+<meta property="og:updated_time" content="2018-07-14T05:59:24.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信点餐系统">
+<meta name="twitter:description" content="模板消息推送">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-08_13-34-47.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>微信点餐系统 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-十四、模板消息推送（WebSocket使用）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信点餐系统
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>模板消息推送<br><a id="more"></a></p>
+<h1 id="一、微信推送模板消息"><a href="#一、微信推送模板消息" class="headerlink" title="一、微信推送模板消息"></a>一、微信推送模板消息</h1><pre><code>1、首先需要在公众号中添加消息模板，记住在白名单添加IP：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-08_13-34-47.png" alt="image"></p>
+<pre><code>2、代码实现，使用第三方SDK
+@Service
+@Slf4j
+public class PushMessageServiceImpl implements PushMessageService{
+    @Autowired
+    private WxMpService wxMpService;
+    @Autowired
+    private WechatAccountConfig accountConfig;
+
+    @Override
+    public void orderStatus(OrderDTO orderDTO) {
+        WxMpTemplateMessage templateMessage = new WxMpTemplateMessage();
+        //设置模板id
+        templateMessage.setTemplateId(accountConfig.getTemplateId().get(&quot;orderStatus&quot;));
+        templateMessage.setToUser(orderDTO.getBuyerOpenid());//opneid
+        List&lt;WxMpTemplateData&gt; data = Arrays.asList(new WxMpTemplateData(
+                &quot;first&quot;,&quot;亲，记得收货&quot;),
+                new WxMpTemplateData(&quot;keyword1&quot;,&quot;微信点餐&quot;),
+                new WxMpTemplateData(&quot;keyword2&quot;,&quot;18766666666&quot;),
+                new WxMpTemplateData(&quot;keyword3&quot;,orderDTO.getOrderId()),
+                new WxMpTemplateData(&quot;keyword4&quot;,orderDTO.getOrderStatusEnum().getMessage()),
+
+                new WxMpTemplateData(&quot;keyword5&quot;,&quot;￥&quot;+orderDTO.getOrderAmount()),
+                new WxMpTemplateData(&quot;remark&quot;,&quot;欢迎再次光临&quot;));
+        templateMessage.setData(data);
+        try {
+            wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            log.error(&quot;【微信模板消息推送】{}&quot;,e);
+        }
+    }
+}
+
+
+
+3、然后在其他业务代码中选择推送模板消息，在此项目中选择在完结订单时推送：
+    @Override
+    @Transactional
+    public OrderDTO finish(OrderDTO orderDTO) {
+
+        //判断订单状态
+        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
+            log.error(&quot;【完结订单】,订单状态不正确 orderId={},orderStatus={}&quot;,orderDTO.getOrderId(),orderDTO.getOrderStatus());
+            throw new SellException(ResultEums.ORDER_STATUS_ERROR);
+        }
+
+        //修改订单状态
+        OrderMaster orderMaster = new OrderMaster();
+        orderDTO.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+        BeanUtils.copyProperties(orderDTO,orderMaster);
+
+        OrderMaster result = orderMasterRepository.save(orderMaster);
+        if (result==null) {
+            log.error(&quot;【完结订单】订单状态更新失败 orderId={},orderStatus={}&quot;,orderMaster.getOrderId(),orderMaster.getOrderStatus());
+        }
+
+        //推送模板消息
+        pushMessageService.orderStatus(orderDTO);
+        return orderDTO;
+    }
+
+
+    注意：在推送模板消息中，如果模板消息推送失败，只是捕获异常，没有抛出，因为推送模板消息与其他业务相比，并不算是多重要的功能，就是推送失败，也是可以接受的范围之内，不能影响其他的业务实现。
+</code></pre><h1 id="二、webSocket实现消息提醒"><a href="#二、webSocket实现消息提醒" class="headerlink" title="二、webSocket实现消息提醒"></a>二、webSocket实现消息提醒</h1><pre><code>1、前台页面的处理：在订单列表页面，当有新的订单生成的弹窗提醒，并伴有提示音
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;#include &quot;../common/head.ftl&quot;&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;wrapper&quot; class=&quot;toggled&quot;&gt;</span><br><span class="line">        &lt;#-- 边栏--&gt;</span><br><span class="line">        &lt;#include &quot;../common/nav.ftl&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;#--主要内容--&gt;</span><br><span class="line">    &lt;div id=&quot;page-content-wrapper&quot;&gt;</span><br><span class="line">       ....</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!--弹窗--&gt;</span><br><span class="line">    &lt;div class=&quot;modal fade&quot; id=&quot;myModal&quot; role=&quot;dialog&quot; aria-labelledby=&quot;myModalLabel&quot; aria-hidden=&quot;true&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;modal-dialog&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;modal-content&quot;&gt;</span><br><span class="line">                &lt;div class=&quot;modal-header&quot;&gt;</span><br><span class="line">                    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;modal&quot; aria-hidden=&quot;true&quot;&gt;×&lt;/button&gt;</span><br><span class="line">                    &lt;h4 class=&quot;modal-title&quot; id=&quot;myModalLabel&quot;&gt;</span><br><span class="line">                        提醒</span><br><span class="line">                    &lt;/h4&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;div class=&quot;modal-body&quot;&gt;</span><br><span class="line">                    您有新的订单</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;div class=&quot;modal-footer&quot;&gt;</span><br><span class="line">                &lt;!--点击关闭，关闭音乐播放--&gt;</span><br><span class="line">                    &lt;button onclick=&quot;javascript:document.getElementById(&apos;notice&apos;).pause()&quot; type=&quot;button&quot; class=&quot;btn btn-default&quot; data-dismiss=&quot;modal&quot;&gt;关闭&lt;/button&gt;</span><br><span class="line">                    &lt;button onclick=&quot;location.reload()&quot; type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;查看新的订单&lt;/button&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;#--b播放音乐--&gt;</span><br><span class="line">    &lt;audio id=&quot;notice&quot; loop=&quot;loop&quot;&gt;</span><br><span class="line">        &lt;source src=&quot;/sell/mp3.notify.mp3&quot; &gt;</span><br><span class="line">    &lt;/audio&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;!--websocket--&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var  websocket = null;</span><br><span class="line">        if (&apos;WebSocket&apos; in window) &#123;</span><br><span class="line">            websocket = new WebSocket(&apos;ws://wxorder.natapp1.cc/sell/webSocket&apos;);</span><br><span class="line"></span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            alert(&apos;该浏览器不支持webSocket！&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">        websocket.onopen = function (event) &#123;</span><br><span class="line">            console.log(&apos;建立连接&apos;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        websocket.onclose = function (event) &#123;</span><br><span class="line">            console.log(&apos;连接关闭&apos;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        websocket.onmessage = function (event) &#123;</span><br><span class="line">            console.log(&apos;收到消息&apos;+event.data);</span><br><span class="line">            //弹出提醒，播放音乐</span><br><span class="line">            $(&apos;#myModal&apos;).modal(&apos;show&apos;);</span><br><span class="line">            document.getElementById(&apos;notice&apos;).play();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        window.onbeforeunload = function () &#123;</span><br><span class="line">            websocket.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>2、后台消息的发送：
+
+配置：
+@Component
+public class WebSocketConfig {
+
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+}
+
+
+@Component
+@ServerEndpoint(&quot;/webSocket&quot;)
+@Slf4j
+public class WebSocket {
+    private Session session;
+
+    private static CopyOnWriteArraySet&lt;WebSocket&gt; webSocketSet = new CopyOnWriteArraySet&lt;&gt;();
+
+    @OnOpen
+    public void onOpen(Session session) {
+        this.session = session;
+        webSocketSet.add(this);
+
+        log.info(&quot;【websocket消息】有新的连接，总数：{}&quot;,webSocketSet.size());
+    }
+
+    @OnClose
+    public void onClose() {
+        webSocketSet.remove(this);
+        log.info(&quot;【webSocket消息】 连接断开，总数：{}&quot;,webSocketSet.size());
+    }
+
+    @OnMessage
+    public void onMessage(String message) {
+        log.info(&quot;【websocket消息】 收到客户端发来的消息&quot;,message);
+    }
+
+    public void sendMessage(String message) {
+        for (WebSocket webSocket:webSocketSet) {
+            log.info(&quot;【websocket消息】 广播消息,message={}&quot;,message);
+            try {
+                webSocket.session.getBasicRemote().sendText(message);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+
+
+3、在创建订单时发送消息：
+  @Override
+@Transactional
+public OrderDTO create(OrderDTO orderDTO) {
+
+    String orderId = KeyUtils.genUniqueKey();
+    BigDecimal ordrAmount = new BigDecimal(BigInteger.ZERO);
+    //查询商品,从前台传来得OrderDTO中获取商品详细列表，遍历列表得中得所有OrderDetail，
+    for (OrderDetail orderDetail:orderDTO.getOrderDetailList()) {
+        //计算订单总价：（1）、从orderDetail中获取商品Id，查出商品信息，主要是为了获取ProducePrie和ProductQuantity
+        ProductInfo productInfo = productInfoService.findOne(orderDetail.getProductId());
+        if (productInfo==null) {
+            throw new SellException(ResultEums.PRODUCT_NOT_EXIST);
+        }
+        //（2）、根据获取得到得ProducePrie和ProductQuantity计算商品总价ordrAmount
+        ordrAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity()))
+                .add(ordrAmount);
+
+        //订单详情入库：要将从数据库中查出得productInfo复制到orderDetail，productInfo必须从数据库获取,
+        // 并且设置detailId与orderId
+
+        BeanUtils.copyProperties(productInfo,orderDetail);
+        orderDetail.setDetailId(KeyUtils.genUniqueKey());
+        orderDetail.setOrderId(orderId);
+
+        orderDetailRepository.save(orderDetail);
+    }
+    //写入订单数据库：将订单信息，即OrderMaster信息入库,要将OrderDTO中的信息复制到OrderMaster对象中
+    // ，同时设置orderId，总金额ordrAmount，支付状态，订单状态,并保存入库
+    OrderMaster orderMaster = new OrderMaster();
+    orderDTO.setOrderId(orderId);
+    BeanUtils.copyProperties(orderDTO,orderMaster);
+    orderMaster.setOrderAmount(ordrAmount);
+    orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
+    orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
+    orderMasterRepository.save(orderMaster);
+
+    //扣库存
+    List&lt;Cart&gt; cartList = orderDTO.getOrderDetailList().stream()
+            .map(e -&gt;new Cart(e.getProductId(),e.getProductQuantity()))
+            .collect(Collectors.toList());
+    productInfoService.decreStock(cartList);
+
+
+    //发送websocket消息
+    webSocket.sendMessage(orderDTO.getOrderId());
+    return orderDTO;
+}
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 13:59:24</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/" title="微信点餐系统">http://yoursite.com/2018/07/14/十四、模板消息推送（WebSocket使用）/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/十四、模板消息推送（WebSocket使用）/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/五、订单部分业务逻辑开发/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/十五、WebSocket/">
+                    websocket
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、微信推送模板消息"><span class="toc-number">1.</span> <span class="toc-text">一、微信推送模板消息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、webSocket实现消息提醒"><span class="toc-number">2.</span> <span class="toc-text">二、webSocket实现消息提醒</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"微信点餐系统　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/五、订单部分业务逻辑开发/" title="上一篇: 微信点餐系统">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/十五、WebSocket/" title="下一篇: websocket">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

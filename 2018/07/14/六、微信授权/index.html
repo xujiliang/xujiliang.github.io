@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="微信授权">
+<meta name="keywords" content="springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信点餐系统">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/六、微信授权/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="微信授权">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-51-35.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-52-02.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-52-27.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-03_21-58-49.png">
+<meta property="og:updated_time" content="2018-07-14T05:54:54.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信点餐系统">
+<meta name="twitter:description" content="微信授权">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-51-35.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>微信点餐系统 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-六、微信授权" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/六、微信授权/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信点餐系统
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>微信授权<br><a id="more"></a></p>
+<h1 id="一、获取OpenID（第一个关键点）"><a href="#一、获取OpenID（第一个关键点）" class="headerlink" title="一、获取OpenID（第一个关键点）"></a>一、获取OpenID（第一个关键点）</h1><pre><code>前期工作：
+首先，你需要一个具有公网IP的域名
+例如www.demo.com，它的域名解析的IP是123.123.123.123
+
+在微信公众平台登录你的账号
+微信公众平台：https://mp.weixin.qq.com
+
+进入 开发-&gt;开发者工具 页面 
+点击 公众平台测试账号 
+
+由于我使用的是个人公众号（测试号），权限有限，需要在测试公众号配置。测试公众号有如下：
+配置服务器和js接口安全域名
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-51-35.png" alt="image"><br>    在第1 2 步时，需要对接口配置信息修改，在后台写一个接口用于验证微信发送的Token：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">private static String token = &quot;root&quot;;</span><br><span class="line">@GetMapping(&quot;/auth&quot;)</span><br><span class="line">public String auth(@RequestParam(&quot;signature&quot;) String signature,</span><br><span class="line">                 @RequestParam(&quot;timestamp&quot;) String timestamp,</span><br><span class="line">                 @RequestParam(&quot;nonce&quot;) String nonce,</span><br><span class="line">                   @RequestParam(&quot;echostr&quot;) String echostr) &#123;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    boolean result = false;</span><br><span class="line">    </span><br><span class="line">    // 对token、timestamp和nonce按字典序排序</span><br><span class="line">    String[] array = new String[]&#123;token, timestamp, nonce&#125;;</span><br><span class="line">    Arrays.sort(array);</span><br><span class="line">    </span><br><span class="line">    // 将三个参数字符拼接成一个字符串</span><br><span class="line">    String str = array[0].concat(array[1]).concat(array[2]);</span><br><span class="line">    </span><br><span class="line">    String sha1Str = null;</span><br><span class="line">    try &#123;</span><br><span class="line">        // 对拼接后的字符串进行sha1加密</span><br><span class="line">        MessageDigest md = MessageDigest.getInstance(&quot;SHA-1&quot;);</span><br><span class="line">        byte[] digest = md.digest(str.getBytes());</span><br><span class="line">        sha1Str = byte2str(digest);</span><br><span class="line">    &#125;</span><br><span class="line">    catch(Exception e) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if(sha1Str != null &amp;&amp;  sha1Str.equals(signature)) &#123;</span><br><span class="line">    </span><br><span class="line">        return echostr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return null;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">public static String byte2str(byte[] array) &#123;</span><br><span class="line">    StringBuffer hexstr = new StringBuffer();</span><br><span class="line">    String shaHex=&quot;&quot;;</span><br><span class="line">    for(int i = 0; i &lt; array.length; i++) &#123;</span><br><span class="line">        shaHex = Integer.toHexString(array[i] &amp; 0xFF);</span><br><span class="line">        if(shaHex.length() &lt; 2) &#123;</span><br><span class="line">            hexstr.append(0);</span><br><span class="line">        &#125;</span><br><span class="line">        hexstr.append(shaHex);</span><br><span class="line">    &#125;</span><br><span class="line">    return hexstr.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>然后点击提提交
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-52-02.png" alt="image"><br><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-04_14-52-27.png" alt="image"></p>
+<h2 id="1、手工方式"><a href="#1、手工方式" class="headerlink" title="1、手工方式"></a>1、手工方式</h2><h4 id="（1）-第一步：用户同意授权，获取code"><a href="#（1）-第一步：用户同意授权，获取code" class="headerlink" title="（1） 第一步：用户同意授权，获取code"></a>（1） 第一步：用户同意授权，获取code</h4><pre><code>a文档说明：、在微信公众号请求用户网页授权之前，开发者需要先到公众平台官网中的“开发 - 接口权限 - 网页服务 - 网页帐号 - 网页授权获取用户基本信息”的配置选项中，
+修改授权回调域名。请注意，这里填写的是域名（是一个字符串），而不是URL，因此请勿加 http:// 等协议头；
+
+授权回调域名配置规范为全域名，比如需要网页授权的域名为：www.qq.com，配置以后此域名下面的页面http://www.qq.com/music.html 、 
+http://www.qq.com/login.html 都可以进行OAuth2.0鉴权。但http://pay.qq.com 、 http://music.qq.com 、 http://qq.com无法进行OAuth2.0鉴权
+
+具体操作：公众账号--&gt;公众号设置---&gt;功能设置--&gt;JS接口安全域名---&gt;设置
+</code></pre><p> <img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-07-03_21-58-49.png" alt="image"></p>
+<pre><code>在此的域名需要用到内网穿透工具（可以通过该域名访问自己的电脑），我用的是natapp(具体使用官网有介绍：需要下载客户端，配置文件，参考1分钟快速新手图文教程)，
+配置的过程中保证自己的127.0.0.1:8080能够访问，然后将MP_verify_xExFXcS84QAfvoeD.txt下载保存到项目的跟目录，我保存在resources/static下，
+然后点确定（红框）。此时就可以通过http://wxorder.natapp1.cc/buyer/product/list访问项目了,这个域名wxorder.natapp1.cc就是回调域名了
+    b、文档说明：在确保微信公众账号拥有授权作用域（scope参数）的权限的前提下（服务号获得高级接口后，默认拥有scope参数中的snsapi_base和snsapi_u
+    serinfo），引导关注者打开如下页面（在微信中打开）：
+
+    https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&amp;redirect_uri=REDIRECT_URI&amp;response_type=code&amp;scope=SCOPE&amp;state=S
+    TATE#wechat_redirect 若提示“该链接无法访问”，请检查参数是否填写错误，是否拥有scope参数对应的授权作用域权限。
+
+    具体操作： https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0807f8636ccc9325&amp;redirect_uri=http://wxorder.natapp1.cc/sel
+    l/weixin/auth&amp;response_type=code&amp;scope=snsapi_base&amp;state=STATE#wechat_redirect
+
+    scope为snsapi_base只能获取到用户的openid，scope为snsapi_userinfo可以获取到更多的用户信息。
+
+    c、下面定义一个接口，用于回调：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/weixin&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class weixinController &#123;</span><br><span class="line"></span><br><span class="line">@GetMapping(&quot;/auth&quot;)</span><br><span class="line">public void auth(@RequestParam(&quot;code&quot;)String code)&#123;</span><br><span class="line">    log.info(&quot;进入auth方法,code=&#123;&#125;&quot;,code);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>如果通过，则微信后台通过回调地址并带上code参数返回，通过接口可以获得code。例如：scope等于snsapi_userinfo时，如果用户同意授权，页面将跳转至 。（code说明 ： code作为换取access_token的票据，每次用户授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期。）
+http://wxorder.natapp1.cc/sell/weixin/auth/?code=CODE&amp;state=STATE。
+</code></pre><h4 id="（2）-第二步：通过code换取网页授权access-token"><a href="#（2）-第二步：通过code换取网页授权access-token" class="headerlink" title="（2） 第二步：通过code换取网页授权access_token"></a>（2） 第二步：通过code换取网页授权access_token</h4><pre><code>文档说明：这里通过code换取的是一个特殊的网页授权access_token,与基础支持中的access_token（该access_token用于调用其他接口）不同。公众
+号可通过下述接口来获取网页授权access_token。如果网页授权的作用域为snsapi_base，则本步骤中获取到网页授权access_token的同时，也获取到
+了openid，snsapi_base式的网页授权流程即到此为止。
+尤其注意：由于公众号的secret和获取到的access_token安全级别都非常高，必须只保存在服务器，不允许传给客户端。后续刷新access_token、通过
+access_token获取用户信息等步骤，也必须从服务器发起。
+请求方法：获取code后，请求以下链接获取access_token：https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=SECRET&amp;code=CODE&amp;grant_type=authorization_code
+
+
+具体：https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx0807f8636cc******&amp;secret=3cce0fb303517513354b1255*****&amp;code=CODE&amp;grant_type=authorization_code
+其中的code为上一步获取的code，这里的appid和secret为微信公众号上的（我使用的是测试号）.
+
+将项目中的接口改为如下：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/weixin&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class weixinController &#123;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/auth&quot;)</span><br><span class="line">    public void auth(@RequestParam(&quot;code&quot;)String code)&#123;</span><br><span class="line">        log.info(&quot;进入auth方法,code=&#123;&#125;&quot;,code);</span><br><span class="line"></span><br><span class="line">        String url=&quot;：https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx0807f8636cc******&amp;secret=3cce0fb303517513354b1255*****&amp;code=CODE&amp;grant_type=authorization_code&quot;;</span><br><span class="line">        RestTemplate restTemplate = new RestTemplate();</span><br><span class="line">        String response = restTemplate.getForObject(url,String.class);</span><br><span class="line">        log.info(&quot;response=&#123;&#125;&quot;,response);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>重新在微信中点开步骤1中的链接，即可获得openid（response中获取，其信息是基于scope=snsapi_base）
+正确时返回的JSON数据包如下：
+{ &quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,
+&quot;expires_in&quot;:7200,
+&quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,
+&quot;openid&quot;:&quot;OPENID&quot;,
+&quot;scope&quot;:&quot;SCOPE&quot; }
+
+
+例如：
+response={&quot;access_token&quot;:&quot;11_L1YOPXscF8****************KU24TxvUhIuPffmxQhfKHtuPMy7Mexg07-4vL6X1yq0SsJvb1LpCwJIELB8QBWFK****&quot;,&quot;expires_in&quot;:7200,&quot;refresh_token&quot;:&quot;11_zcxpq8U0Gc7biYxuF*****Mvm67NvmA96SYhYLwuWNkYeJ5Atx9WT3ptcq0ohY8vCHT2_tjCJgDVbij5xorap***&quot;,&quot;openid&quot;:&quot;o97tn1TR6883y7GKzEiw***********&quot;,&quot;scope&quot;:&quot;snsapi_base&quot;}
+
+
+（3） 第三步：刷新access_token（如果需要）
+由于access_token拥有较短的有效期，当access_token超时后，可以使用refresh_token进行刷新，refresh_token有效期为30天，当refresh_token失
+效之后，需要用户重新授权。
+请求方法:
+获取第二步的refresh_token后，请求以下链接获取access_token：
+https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&amp;grant_type=refresh_token&amp;refresh_token=REFRESH_TOKEN
+
+appid    是    公众号的唯一标识
+grant_type    是    填写为refresh_token
+refresh_token    是    填写通过access_token获取到的refresh_token参数
+正确时返回的JSON数据包如下：
+{ &quot;access_token&quot;:&quot;ACCESS_TOKEN&quot;,
+&quot;expires_in&quot;:7200,
+&quot;refresh_token&quot;:&quot;REFRESH_TOKEN&quot;,
+&quot;openid&quot;:&quot;OPENID&quot;,
+&quot;scope&quot;:&quot;SCOPE&quot; }
+
+（4） 第四步：拉取用户信息(需scope为 snsapi_userinfo):
+
+如果网页授权作用域为snsapi_userinfo，则此时开发者可以通过access_token和openid拉取用户信息了。
+请求方法:
+http：GET（请使用https协议） https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&amp;openid=OPENID&amp;lang=zh_CN
+
+正确时返回的JSON数据包如下：
+{    &quot;openid&quot;:&quot; OPENID&quot;,
+&quot; nickname&quot;: NICKNAME,
+&quot;sex&quot;:&quot;1&quot;,
+&quot;province&quot;:&quot;PROVINCE&quot;
+&quot;city&quot;:&quot;CITY&quot;,
+&quot;country&quot;:&quot;COUNTRY&quot;,
+&quot;headimgurl&quot;:    &quot;http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46&quot;,
+&quot;privilege&quot;:[ &quot;PRIVILEGE1&quot; &quot;PRIVILEGE2&quot;     ],
+&quot;unionid&quot;: &quot;o6_bmasdasdsad6_2sgVt7hMZOPfL&quot;
+}
+
+详细说明参考微信开发者文档：https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1421140842
+
+（5） 附：检验授权凭证（access_token）是否有效
+</code></pre><h2 id="2、利用第三方SDK"><a href="#2、利用第三方SDK" class="headerlink" title="2、利用第三方SDK"></a>2、利用第三方SDK</h2><pre><code>@Controller
+@RequestMapping(&quot;/wechat&quot;)
+@Slf4j
+public class WechatController {
+
+@Autowired
+private WxMpService wxMpService;
+
+/**
+ * 在通过调用http://wxorder.natapp1.cc/sell/wechat/authorize?returnUrl=http://www.imooc.com 时，会传一个returnUrl，用来重定向的网页地址
+ * 通过将returnUrl、url（重定向到方法userInfo，获取opendi）传入方法oauth2buildAuthorizationUrl，该方法返回值为：
+ * https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0807f8636ccc9325&amp;redirect_uri=http%3A%2F%2Fwxorder.natapp1.cc%2Fsell%2Fwechat%2FuserInfo&amp;
+ * response_type=code&amp;scope=snsapi_userinfo&amp;state=http%3A%2F%2Fwww.imooc.com#wechat_redirect
+ * 然后重定向到userInfo，并传入参数code与state(其实就是传入的returnUrl)，从而获取到了code参数
+ * @param returnUrl
+ * @return
+ */
+@RequestMapping(&quot;/authorize&quot;)
+public String authorize(@RequestParam(&quot;returnUrl&quot;)String returnUrl) {
+
+    //1、配置:基于类的配置
+
+    //2、调用方法:该方法返回重定向的url，即url，并且带上了参数code与state
+    String url = &quot;http://wxorder.natapp1.cc/sell/wechat/userInfo&quot;;
+    String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url,WxConsts.OAUTH2_SCOPE_USER_INFO, URLEncoder.encode(returnUrl));
+    log.info(&quot;【微信网页授权】获取code，result={}&quot;,redirectUrl);
+    return &quot;redirect:&quot;+redirectUrl;
+}
+
+/**
+ * code参数传入方法oauth2getAccessToken 获取access_token，返回对象WxMpOAuth2AccessToken，该对象中封装了各种信息
+ * @param code
+ * @param returnUrl
+ * @return
+ */
+@RequestMapping(&quot;/userInfo&quot;)
+public String userInfo(@RequestParam(&quot;code&quot;) String code,
+                     @RequestParam(&quot;state&quot;)String returnUrl){
+    WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
+    try {
+        wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+    } catch (WxErrorException e) {
+        e.printStackTrace();
+        log.error(&quot;【微信网页授权】{}&quot;,e);
+        throw new SellException(ResultEums.WECHAT_ERROR.getCode(),e.getError().getErrorMsg());
+    }
+    String openid = wxMpOAuth2AccessToken.getOpenId();
+    return &quot;redirect:&quot;+returnUrl+&quot;?openid=&quot;+openid;
+
+
+}
+}
+
+为了与接口配置信息时的请Url区分开，这里使用/wechat/authorize
+对于authorize方法中对WxMpService的配置，将其提取处理单独配置，如下：
+@Component
+public class WechatMpConfig {
+
+    @Autowired
+    private WechatAccountConfig config;
+
+    /**
+     * 对WxMpService对象进行
+     * @return
+     */
+    @Bean
+    public WxMpService wxMpService() {
+        WxMpService wxMpService = new WxMpServiceImpl();
+        wxMpService.setWxMpConfigStorage(wxMpConfigStorage());
+        return wxMpService;
+    }
+
+    /**
+     * 一个配置方法
+     * @return
+     */
+    public WxMpConfigStorage wxMpConfigStorage() {
+        WxMpInMemoryConfigStorage wxMpInMemoryConfigStorage = new WxMpInMemoryConfigStorage();
+        wxMpInMemoryConfigStorage.setAppId(config.getMpAppId());
+        wxMpInMemoryConfigStorage.setSecret(config.getMpAppSecret());
+
+        return wxMpInMemoryConfigStorage;
+    }
+}
+
+其中WechatAccountConfig为：
+@Component
+@Data
+@ConfigurationProperties(prefix = &quot;wechat&quot;)
+public class WechatAccountConfig {
+    private String mpAppId;
+    private String mpAppSecret;
+
+}
+
+这是基于类的配置方式；属性mpAppId与属性mpAppSecret的配置在配置文件中如下：
+wechat:
+  mpAppId: wx0807f863**********
+  mpAppSecret: 3cce0fb30351751335**************
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/六、微信授权/">微信点餐系统</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 13:54:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/六、微信授权/" title="微信点餐系统">http://yoursite.com/2018/07/14/六、微信授权/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/六、微信授权/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/八、支付模块/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/四、业务逻辑开发/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、获取OpenID（第一个关键点）"><span class="toc-number">1.</span> <span class="toc-text">一、获取OpenID（第一个关键点）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、手工方式"><span class="toc-number">1.1.</span> <span class="toc-text">1、手工方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#（1）-第一步：用户同意授权，获取code"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">（1） 第一步：用户同意授权，获取code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#（2）-第二步：通过code换取网页授权access-token"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">（2） 第二步：通过code换取网页授权access_token</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、利用第三方SDK"><span class="toc-number">1.2.</span> <span class="toc-text">2、利用第三方SDK</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"微信点餐系统　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/八、支付模块/" title="上一篇: 微信点餐系统">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/四、业务逻辑开发/" title="下一篇: 微信点餐系统">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

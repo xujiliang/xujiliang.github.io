@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="订单部分业务逻辑开发">
+<meta name="keywords" content="springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信点餐系统">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/五、订单部分业务逻辑开发/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="订单部分业务逻辑开发">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-14T05:53:29.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信点餐系统">
+<meta name="twitter:description" content="订单部分业务逻辑开发">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>微信点餐系统 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-五、订单部分业务逻辑开发" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/五、订单部分业务逻辑开发/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微信点餐系统
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>订单部分业务逻辑开发<br><a id="more"></a></p>
+<h1 id="一、订单部分"><a href="#一、订单部分" class="headerlink" title="一、订单部分"></a>一、订单部分</h1><pre><code>1、订单接口
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface OrderMasterRepository extends JpaRepository&lt;OrderMaster,String&gt; &#123;</span><br><span class="line">    Page&lt;OrderMaster&gt; findByBuyerOpenid(String openId, Pageable pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>这里要用到分页，根据openid查找改用户的OrderMaster（订单）信息
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//根据orderid查询订单详情</span><br><span class="line">public interface OrderDetailRepository extends JpaRepository&lt;OrderDetail,String&gt; &#123;</span><br><span class="line">    List&lt;OrderDetail&gt; findByOrderId(String orderId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>其中OrderMaster和OrderDetail:
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">@Data</span><br><span class="line">public class OrderDetail &#123;</span><br><span class="line">    @Id</span><br><span class="line">    private String detailId;</span><br><span class="line"></span><br><span class="line">    private String orderId;</span><br><span class="line"></span><br><span class="line">    private String productId;</span><br><span class="line"></span><br><span class="line">    private String productName;</span><br><span class="line"></span><br><span class="line">    private BigDecimal productPrice;</span><br><span class="line"></span><br><span class="line">    private Integer productQuantity;</span><br><span class="line"></span><br><span class="line">    private String productIcon;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">@Data</span><br><span class="line">public class OrderDetail &#123;</span><br><span class="line">    @Id</span><br><span class="line">    private String detailId;</span><br><span class="line"></span><br><span class="line">    private String orderId;</span><br><span class="line"></span><br><span class="line">    private String productId;</span><br><span class="line"></span><br><span class="line">    private String productName;</span><br><span class="line"></span><br><span class="line">    private BigDecimal productPrice;</span><br><span class="line"></span><br><span class="line">    private Integer productQuantity;</span><br><span class="line"></span><br><span class="line">    private String productIcon;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>2、service：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public interface OrderService &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 创建订单</span><br><span class="line">     */</span><br><span class="line">    OrderDTO create(OrderDTO orderDTO);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 查询订单</span><br><span class="line">     */</span><br><span class="line">    OrderDTO findOrder(String orderId);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 查询订单列表</span><br><span class="line">     * @param buyerOpenid</span><br><span class="line">     * @param pageable</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    Page&lt;OrderDTO&gt; findList(String buyerOpenid, Pageable pageable);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 取消订单</span><br><span class="line">     *</span><br><span class="line">     */</span><br><span class="line">    OrderDTO cancle(OrderDTO orderDTO);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 完结订单</span><br><span class="line">     */</span><br><span class="line">    OrderDTO finish(OrderDTO orderDTO);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 支付订单</span><br><span class="line">     */</span><br><span class="line">    OrderDTO pay(OrderDTO orderDTO);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>其中OrderDTO为Controller层传的数据bean
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class OrderDTO &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 订单编号</span><br><span class="line">     */</span><br><span class="line">    @Id</span><br><span class="line">    private String orderId;</span><br><span class="line">    /**</span><br><span class="line">     * 订单名</span><br><span class="line">     */</span><br><span class="line">    private String buyerName;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 手机</span><br><span class="line">     */</span><br><span class="line">    private String buyerPhone;</span><br><span class="line">    /**</span><br><span class="line">     * 买家地址</span><br><span class="line">     */</span><br><span class="line">    private String buyerAddress;</span><br><span class="line">    /**</span><br><span class="line">     * 买家微信openid</span><br><span class="line">     */</span><br><span class="line">    private String buyerOpenid;</span><br><span class="line">    /**</span><br><span class="line">     * 订单总金额</span><br><span class="line">     */</span><br><span class="line">    private BigDecimal orderAmount;</span><br><span class="line">    /**</span><br><span class="line">     * 订单状态</span><br><span class="line">     */</span><br><span class="line">    private Integer orderStatus= OrderStatusEnum.NEW.getCode();</span><br><span class="line">    /**</span><br><span class="line">     * 支付状态</span><br><span class="line">     */</span><br><span class="line">    private Integer payStatus= PayStatusEnum.WAIT.getCode();</span><br><span class="line"></span><br><span class="line">    @JsonSerialize(using = Data2LongSerializer.class)//将返回给前台的时间参数做处理</span><br><span class="line">    private Date createTime;</span><br><span class="line">    @JsonSerialize(using = Data2LongSerializer.class)</span><br><span class="line">    private Date updateTime;</span><br><span class="line">    //orderDetailList订单详情列表</span><br><span class="line">    List&lt;OrderDetail&gt; orderDetailList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>service实现：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">@Slf4j</span><br><span class="line">public class OrderServiceImpl implements OrderService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private OrderDetailRepository orderDetailRepository;</span><br><span class="line">    @Autowired</span><br><span class="line">    private OrderMasterRepository orderMasterRepository;</span><br><span class="line">    @Autowired</span><br><span class="line">    private ProductInfoService productInfoService;</span><br><span class="line">    /*</span><br><span class="line">    创建订单，逻辑：</span><br><span class="line">                    1、遍历所有的OrderDetail(与从数据库中查出的OrderDetail不同，这是用户传过来 数据)，从orderDetail中取出orderId，根据orderId查询出ProduceInfo信息</span><br><span class="line">                    2、根据Product Info的信息（Price和Quantity）计算出总金额</span><br><span class="line">                    3、将从数据库中查出的ProduceInfo信息拷贝到OrderDetail对象中，并生成openid与detailid设置到OrderDetail中，保存到数据库。</span><br><span class="line">                    4、遍历完OrderDTO中所有的OrdeDetail。</span><br><span class="line">                    5、新建OrderMaster对象，将OrderDTO属性设置到OrderMaste，补齐其他属性，保存到数据库</span><br><span class="line">                    6、扣库存：遍历cartList中所有的Cart对象，一个一个的减去库存</span><br><span class="line">                    @Override</span><br><span class="line">                    @Transactional</span><br><span class="line">                    public void decreStock(List&lt;Cart&gt; cartList) &#123;</span><br><span class="line">                        for (Cart cart:cartList</span><br><span class="line">                             ) &#123;</span><br><span class="line">                            ProductInfo productInfo = repository.findOne(cart.getProductId());</span><br><span class="line">                            if (productInfo==null) &#123;</span><br><span class="line">                </span><br><span class="line">                                throw new SellException(ResultEums.PRODUCT_NOT_EXIST);</span><br><span class="line">                            &#125;</span><br><span class="line">                            Integer stock = productInfo.getProductStock()-cart.getProductQuantity();;</span><br><span class="line">                            if (stock&lt;0)&#123;</span><br><span class="line">                                throw new SellException(ResultEums.PRODUCT_STOCK_ERROR);</span><br><span class="line">                            &#125;</span><br><span class="line">                            productInfo.setProductStock(stock);</span><br><span class="line">                            repository.save(productInfo);</span><br><span class="line">                </span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    @Transactional</span><br><span class="line">    public OrderDTO create(OrderDTO orderDTO) &#123;</span><br><span class="line"></span><br><span class="line">        String orderId = KeyUtils.genUniqueKey();</span><br><span class="line">        BigDecimal ordrAmount = new BigDecimal(BigInteger.ZERO);</span><br><span class="line">        //查询商品,从前台传来得OrderDTO中获取商品详细列表，遍历列表得中得所有OrderDetail，</span><br><span class="line">        for (OrderDetail orderDetail:orderDTO.getOrderDetailList()) &#123;</span><br><span class="line">            //计算订单总价：（1）、从orderDetail中获取商品Id，查出商品信息，主要是为了获取ProducePrie和ProductQuantity</span><br><span class="line">            ProductInfo productInfo = productInfoService.findOne(orderDetail.getProductId());</span><br><span class="line">            if (productInfo==null) &#123;</span><br><span class="line">                throw new SellException(ResultEums.PRODUCT_NOT_EXIST);</span><br><span class="line">            &#125;</span><br><span class="line">            //（2）、根据获取得到得ProducePrie和ProductQuantity计算商品总价ordrAmount</span><br><span class="line">            ordrAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity()))</span><br><span class="line">                    .add(ordrAmount);</span><br><span class="line"></span><br><span class="line">            //订单详情入库：要将从数据库中查出得productInfo复制到orderDetail，productInfo必须从数据库获取,</span><br><span class="line">            // 并且设置detailId与orderId</span><br><span class="line"></span><br><span class="line">            BeanUtils.copyProperties(productInfo,orderDetail);</span><br><span class="line">            orderDetail.setDetailId(KeyUtils.genUniqueKey());</span><br><span class="line">            orderDetail.setOrderId(orderId);</span><br><span class="line"></span><br><span class="line">            orderDetailRepository.save(orderDetail);</span><br><span class="line">        &#125;</span><br><span class="line">        //写入订单数据库：将订单信息，即OrderMaster信息入库,要将OrderDTO中的信息复制到OrderMaster对象中</span><br><span class="line">        // ，同时设置orderId，总金额ordrAmount，支付状态，订单状态,并保存入库</span><br><span class="line">        OrderMaster orderMaster = new OrderMaster();</span><br><span class="line">        orderDTO.setOrderId(orderId);</span><br><span class="line">        BeanUtils.copyProperties(orderDTO,orderMaster);</span><br><span class="line">        orderMaster.setOrderAmount(ordrAmount);</span><br><span class="line">        orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());</span><br><span class="line">        orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());</span><br><span class="line">        orderMasterRepository.save(orderMaster);</span><br><span class="line"></span><br><span class="line">        //扣库存</span><br><span class="line">        List&lt;Cart&gt; cartList = orderDTO.getOrderDetailList().stream()</span><br><span class="line">                .map(e -&gt;new Cart(e.getProductId(),e.getProductQuantity()))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">        productInfoService.decreStock(cartList);</span><br><span class="line"></span><br><span class="line">        return orderDTO;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public OrderDTO findOrder(String orderId) &#123;</span><br><span class="line">    OrderDTO orderDTO = new OrderDTO();</span><br><span class="line"></span><br><span class="line">    OrderMaster orderMaster = orderMasterRepository.findOne(orderId);</span><br><span class="line">    if (orderMaster==null) &#123;</span><br><span class="line">        throw new SellException(ResultEums.PRODUCT_NOT_EXIST);</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;OrderDetail&gt; orderDetails = orderDetailRepository.findByOrderId(orderId);</span><br><span class="line">    if (CollectionUtils.isEmpty(orderDetails)) &#123;</span><br><span class="line">        throw new SellException(ResultEums.ORDER_DETAIL_NOT_EXIT);</span><br><span class="line">    &#125;</span><br><span class="line">    BeanUtils.copyProperties(orderMaster,orderDTO);</span><br><span class="line">    orderDTO.setOrderDetailList(orderDetails);</span><br><span class="line">    return orderDTO;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Page&lt;OrderDTO&gt; findList(String buyerOpenid, Pageable pageable) &#123;</span><br><span class="line">       Page&lt;OrderMaster&gt; orderMasters = orderMasterRepository.findByBuyerOpenid(buyerOpenid,pageable);</span><br><span class="line"></span><br><span class="line">       Page&lt;OrderDTO&gt; orderDTOPage = new PageImpl&lt;OrderDTO&gt;(OrderMaster2OrderDetailUtils</span><br><span class="line">               .convert(orderMasters.getContent()),pageable,orderMasters.getTotalElements());</span><br><span class="line"></span><br><span class="line">        return orderDTOPage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    @Transactional</span><br><span class="line">    public OrderDTO cancle(OrderDTO orderDTO) &#123;</span><br><span class="line">        //判断订单状态</span><br><span class="line">        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode()))&#123;</span><br><span class="line">            log.error(&quot;【取消订单】订单状态不正确，orderId=&#123;&#125;，orderStatus=&#123;&#125;&quot;,orderDTO.getOrderId(),orderDTO.getOrderStatus());</span><br><span class="line">            throw new SellException(ResultEums.ORDER_STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        //修改订单状态</span><br><span class="line">        OrderMaster orderMaster = new OrderMaster();</span><br><span class="line"></span><br><span class="line">        orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());</span><br><span class="line">        BeanUtils.copyProperties(orderDTO,orderMaster);</span><br><span class="line">        OrderMaster orderResult = orderMasterRepository.save(orderMaster);</span><br><span class="line">        if (orderResult==null) &#123;</span><br><span class="line">            log.error(&quot;【取消订单】订单取更新败，orderMaster=&#123;&#125;&quot;,orderMaster);</span><br><span class="line">            throw new SellException(ResultEums.ORDER_UPDATE_FAIL);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        //归还库存</span><br><span class="line"></span><br><span class="line">       List&lt;OrderDetail&gt; orderDetails =  orderDTO.getOrderDetailList();</span><br><span class="line">        if (orderDetails==null) &#123;</span><br><span class="line">            log.error(&quot;【取消订单】，订单中无商品详情，orderDTO=&#123;&#125;&quot;,orderDTO);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Cart&gt; cartList = orderDetails.stream()</span><br><span class="line">                .map(e -&gt;new Cart(e.getProductId(),e.getProductQuantity()))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">        productInfoService.increStock(cartList);</span><br><span class="line">        //如果已支付，退款</span><br><span class="line">        if (orderDTO.getPayStatus().equals(PayStatusEnum.PAY.getCode())) &#123;</span><br><span class="line"></span><br><span class="line">            //TODO</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return orderDTO;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    @Transactional</span><br><span class="line">    public OrderDTO finish(OrderDTO orderDTO) &#123;</span><br><span class="line"></span><br><span class="line">        //判断订单状态</span><br><span class="line">        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) &#123;</span><br><span class="line">            log.error(&quot;【完结订单】,订单状态不正确 orderId=&#123;&#125;,orderStatus=&#123;&#125;&quot;,orderDTO.getOrderId(),orderDTO.getOrderStatus());</span><br><span class="line">            throw new SellException(ResultEums.ORDER_STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //修改订单状态</span><br><span class="line">        OrderMaster orderMaster = new OrderMaster();</span><br><span class="line">        orderDTO.setOrderStatus(OrderStatusEnum.FINISH.getCode());</span><br><span class="line">        BeanUtils.copyProperties(orderDTO,orderMaster);</span><br><span class="line"></span><br><span class="line">        OrderMaster result = orderMasterRepository.save(orderMaster);</span><br><span class="line">        if (result==null) &#123;</span><br><span class="line">            log.error(&quot;【完结订单】订单状态更新失败 orderId=&#123;&#125;,orderStatus=&#123;&#125;&quot;,orderMaster.getOrderId(),orderMaster.getOrderStatus());</span><br><span class="line">        &#125;</span><br><span class="line">        return orderDTO;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    @Transactional</span><br><span class="line">    public OrderDTO pay(OrderDTO orderDTO) &#123;</span><br><span class="line">        //判断订单状态</span><br><span class="line">        if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) &#123;</span><br><span class="line">            log.error(&quot;【完结订单】,订单状态不正确 orderId=&#123;&#125;,orderStatus=&#123;&#125;&quot;,orderDTO.getOrderId(),orderDTO.getOrderStatus());</span><br><span class="line">            throw new SellException(ResultEums.ORDER_STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        //判断支付状态</span><br><span class="line">        if (!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())) &#123;</span><br><span class="line">            log.error(&quot;【完结订单】,支付状态不正确 orderId=&#123;&#125;,orderStatus=&#123;&#125;&quot;,orderDTO.getOrderId(),orderDTO.getOrderStatus());</span><br><span class="line">            throw new SellException(ResultEums.PAY_STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        // 去支付 TODO</span><br><span class="line"></span><br><span class="line">        // 修改订单支付状态</span><br><span class="line"></span><br><span class="line">        OrderMaster orderMaster = new OrderMaster();</span><br><span class="line"></span><br><span class="line">        orderDTO.setPayStatus(PayStatusEnum.PAY.getCode());</span><br><span class="line">        BeanUtils.copyProperties(orderDTO,orderMaster);</span><br><span class="line">        OrderMaster result = orderMasterRepository.save(orderMaster);</span><br><span class="line">        if (result==null) &#123;</span><br><span class="line">            log.error(&quot;【完结订单】订单支付支付状态更新失败,orderId=&#123;&#125;,orderPayStatus=&#123;&#125;&quot;,orderMaster.getOrderId(),orderMaster.getPayStatus());</span><br><span class="line">            throw new SellException(ResultEums.PAY_STATUS_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return orderDTO;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>3、Controller
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/buyer/order&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class BuyerOrderController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private OrderService orderService;</span><br><span class="line">    @Autowired</span><br><span class="line">    private BuyerOrderService buyerOrderService;</span><br><span class="line"></span><br><span class="line">    //创建订单</span><br><span class="line">    @PostMapping(&quot;/create&quot;)</span><br><span class="line">    public ResultVO&lt;Map&lt;String,String&gt;&gt; create(@Valid OrderForm orderForm, BindingResult result) &#123;</span><br><span class="line">        if (result.hasErrors()) &#123;</span><br><span class="line">            log.error(&quot;【创建订单】创建订单参数错误 orderForm=&#123;&#125;&quot;,orderForm);</span><br><span class="line">            throw new SellException(ResultEums.PARAM_ERROR,result.getFieldError().getDefaultMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        OrderDTO orderDTO = OrderForm2OrderDTOUtils.convert(orderForm);</span><br><span class="line">        if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) &#123;</span><br><span class="line">            log.error(&quot;【创建订单】购物车不能为空 Cart=&#123;&#125;&quot;,orderDTO.getOrderDetailList());</span><br><span class="line">            throw new SellException(ResultEums.CART_NULL);</span><br><span class="line">        &#125;</span><br><span class="line">        OrderDTO orderResult = orderService.create(orderDTO);</span><br><span class="line">        Map&lt;String,String&gt; map =new HashMap&lt;&gt;();</span><br><span class="line">        map.put(&quot;orderId&quot;,orderResult.getOrderId());</span><br><span class="line">        return ResultVOUtils.success(map);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //订单列表</span><br><span class="line">    @GetMapping(&quot;/list&quot;)</span><br><span class="line">    public ResultVO&lt;List&lt;OrderDTO&gt;&gt; list(@RequestParam(value = &quot;openid&quot;) String opneid,</span><br><span class="line">                                            @RequestParam(value = &quot;page&quot;,defaultValue = &quot;0&quot;)Integer page,</span><br><span class="line">                                            @RequestParam(value = &quot;size&quot;,defaultValue = &quot;10&quot;) Integer size) &#123;</span><br><span class="line">        if (StringUtils.isEmpty(opneid))&#123;</span><br><span class="line">            log.error(&quot;【查询订单列表】查询参数错误 openid=&#123;&#125;&quot;,opneid);</span><br><span class="line">            throw new SellException(ResultEums.PARAM_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        PageRequest pageRequest = new PageRequest(page,size);</span><br><span class="line">        Page&lt;OrderDTO&gt; orderDetailList = orderService.findList(opneid,pageRequest);</span><br><span class="line">        return ResultVOUtils.success(orderDetailList.getContent());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //订单详情</span><br><span class="line">    @GetMapping(&quot;/detail&quot;)</span><br><span class="line">    public ResultVO&lt;OrderDTO&gt; findDetail(@RequestParam(&quot;openid&quot;) String openid,</span><br><span class="line">                                            @RequestParam(&quot;orderid&quot;) String orderid) &#123;</span><br><span class="line"></span><br><span class="line">        if (StringUtils.isEmpty(orderid)) &#123;</span><br><span class="line">            log.info(&quot;【订单详情查询】订单参数错误, openid=&#123;&#125;&quot;,openid);</span><br><span class="line"></span><br><span class="line">            throw new SellException(ResultEums.PARAM_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        OrderDTO orderDTO = buyerOrderService.findOrderOne(openid,orderid);</span><br><span class="line">        return ResultVOUtils.success(orderDTO);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //取消订单</span><br><span class="line">    @PostMapping(&quot;/cancel&quot;)</span><br><span class="line">    public ResultVO cancel(String openid,String orderid) &#123;</span><br><span class="line">        if (StringUtils.isEmpty(orderid)) &#123;</span><br><span class="line">            log.info(&quot;【订单取消】订单参数错误, openid=&#123;&#125;&quot;,openid);</span><br><span class="line"></span><br><span class="line">            throw new SellException(ResultEums.PARAM_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        OrderDTO orderDTO = buyerOrderService.cancelOrder(openid,orderid);</span><br><span class="line">       </span><br><span class="line">        return ResultVOUtils.success();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 13:53:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/五、订单部分业务逻辑开发/" title="微信点餐系统">http://yoursite.com/2018/07/14/五、订单部分业务逻辑开发/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/五、订单部分业务逻辑开发/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/二、开发环境的搭建/">
+                    
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、订单部分"><span class="toc-number">1.</span> <span class="toc-text">一、订单部分</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"微信点餐系统　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/二、开发环境的搭建/" title="上一篇: ">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/" title="下一篇: 微信点餐系统">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

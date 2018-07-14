@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="websocket">
+<meta name="keywords" content="websocket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="websocket">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/十五、WebSocket/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="websocket">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/1111111111111111111.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/201807081509.jpg">
+<meta property="og:updated_time" content="2018-07-14T05:59:56.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="websocket">
+<meta name="twitter:description" content="websocket">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/1111111111111111111.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>websocket | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-十五、WebSocket" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/十五、WebSocket/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      websocket
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/websocket/">websocket</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/websocket/">websocket</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>websocket<br><a id="more"></a></p>
+<h1 id="一、为什么需要-WebSocket？"><a href="#一、为什么需要-WebSocket？" class="headerlink" title="一、为什么需要 WebSocket？"></a>一、为什么需要 WebSocket？</h1><pre><code>初次接触 WebSocket 的人，都会问同样的问题：我们已经有了 HTTP 协议，为什么还需要另一个协议？它能带来什么好处？
+
+答案很简单，因为 HTTP 协议有一个缺陷：通信只能由客户端发起。
+
+举例来说，我们想了解今天的天气，只能是客户端向服务器发出请求，服务器返回查询结果。HTTP 协议做不到服务器主动向客户端推送信息。
+
+这种单向请求的特点，注定了如果服务器有连续的状态变化，客户端要获知就非常麻烦。我们只能使用&quot;轮询&quot;：每隔一段时候，就发出一个询问，了解服务器有没有新的信息。最典型的场景就是聊天室。
+
+轮询的效率低，非常浪费资源（因为必须不停连接，或者 HTTP 连接始终打开）。因此，工程师们一直在思考，有没有更好的方法。WebSocket 就是这样发明的。
+</code></pre><h1 id="二、简介"><a href="#二、简介" class="headerlink" title="二、简介"></a>二、简介</h1><pre><code>WebSocket 协议在2008年诞生，2011年成为国际标准。所有浏览器都已经支持了。
+
+它的最大特点就是，服务器可以主动向客户端推送信息，客户端也可以主动向服务器发送信息，是真正的双向平等对话，属于服务器推送技术的一种。
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/1111111111111111111.png" alt="image"></p>
+<pre><code>其他特点包括：
+
+（1）建立在 TCP 协议之上，服务器端的实现比较容易。
+
+（2）与 HTTP 协议有着良好的兼容性。默认端口也是80和443，并且握手阶段采用 HTTP 协议，因此握手时不容易屏蔽，能通过各种 HTTP 代理服务器。
+
+（3）数据格式比较轻量，性能开销小，通信高效。
+
+（4）可以发送文本，也可以发送二进制数据。
+
+（5）没有同源限制，客户端可以与任意服务器通信。
+
+（6）协议标识符是ws（如果加密，则为wss），服务器网址就是 URL：ws://example.com:80/some/path
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/201807081509.jpg" alt="image"></p>
+<h1 id="三、客户端的简单示例"><a href="#三、客户端的简单示例" class="headerlink" title="三、客户端的简单示例"></a>三、客户端的简单示例</h1><pre><code>WebSocket 的用法相当简单。
+下面是一个网页脚本的例子（点击这里看运行结果），基本上一眼就能明白。
+var ws = new WebSocket(&quot;wss://echo.websocket.org&quot;);
+
+ws.onopen = function(evt) { 
+  console.log(&quot;Connection open ...&quot;); 
+  ws.send(&quot;Hello WebSockets!&quot;);
+};
+
+ws.onmessage = function(evt) {
+  console.log( &quot;Received Message: &quot; + evt.data);
+  ws.close();
+};
+
+ws.onclose = function(evt) {
+  console.log(&quot;Connection closed.&quot;);
+};  
+</code></pre><h1 id="四、客户端的-API"><a href="#四、客户端的-API" class="headerlink" title="四、客户端的 API"></a>四、客户端的 API</h1><pre><code>WebSocket 客户端的 API 如下:
+4.1 WebSocket 构造函数
+    WebSocket 对象作为一个构造函数，用于新建 WebSocket 实例。
+    var ws = new WebSocket(&apos;ws://localhost:8080&apos;);
+
+    执行上面语句之后，客户端就会与服务器进行连接。
+
+    实例对象的所有属性和方法清单，参见这里。
+
+4.2 webSocket.readyState
+    readyState属性返回实例对象的当前状态，共有四种。
+
+        CONNECTING：值为0，表示正在连接。
+        OPEN：值为1，表示连接成功，可以通信了。
+        CLOSING：值为2，表示连接正在关闭。
+        CLOSED：值为3，表示连接已经关闭，或者打开连接失败。
+
+    下面是一个示例:
+    switch (ws.readyState) {
+      case WebSocket.CONNECTING:
+        // do something
+        break;
+      case WebSocket.OPEN:
+        // do something
+        break;
+      case WebSocket.CLOSING:
+        // do something
+        break;
+      case WebSocket.CLOSED:
+        // do something
+        break;
+      default:
+        // this never happens
+        break;
+    }
+
+4.3 webSocket.onopen:
+    实例对象的onopen属性，用于指定连接成功后的回调函数。
+
+    ws.onopen = function () {
+      ws.send(&apos;Hello Server!&apos;);
+    }
+
+    如果要指定多个回调函数，可以使用addEventListener方法:
+    ws.addEventListener(&apos;open&apos;, function (event) {
+      ws.send(&apos;Hello Server!&apos;);
+    });
+
+4.4 webSocket.onclose:
+    实例对象的onclose属性，用于指定连接关闭后的回调函数。
+    ws.onclose = function(event) {
+      var code = event.code;
+      var reason = event.reason;
+      var wasClean = event.wasClean;
+      // handle close event
+    };
+
+    ws.addEventListener(&quot;close&quot;, function(event) {
+      var code = event.code;
+      var reason = event.reason;
+      var wasClean = event.wasClean;
+      // handle close event
+    });
+
+
+4.5 webSocket.onmessage:
+    实例对象的onmessage属性，用于指定收到服务器数据后的回调函数。
+    ws.onmessage = function(event) {
+      var data = event.data;
+      // 处理数据
+    };
+
+    ws.addEventListener(&quot;message&quot;, function(event) {
+      var data = event.data;
+      // 处理数据
+    });
+    注意，服务器数据可能是文本，也可能是二进制数据（blob对象或Arraybuffer对象）。
+    ws.onmessage = function(event){
+      if(typeof event.data === String) {
+        console.log(&quot;Received data string&quot;);
+      }
+
+      if(event.data instanceof ArrayBuffer){
+        var buffer = event.data;
+        console.log(&quot;Received arraybuffer&quot;);
+      }
+    }
+    除了动态判断收到的数据类型，也可以使用binaryType属性，显式指定收到的二进制数据类型。
+    // 收到的是 blob 数据
+    ws.binaryType = &quot;blob&quot;;
+    ws.onmessage = function(e) {
+      console.log(e.data.size);
+    };
+
+    // 收到的是 ArrayBuffer 数据
+    ws.binaryType = &quot;arraybuffer&quot;;
+    ws.onmessage = function(e) {
+      console.log(e.data.byteLength);
+    };
+
+
+
+    4.6 webSocket.send():
+        实例对象的send()方法用于向服务器发送数据。
+
+        发送文本的例子：
+        ws.send(&apos;your message&apos;);
+
+        发送 Blob 对象的例子:
+        var file = document
+          .querySelector(&apos;input[type=&quot;file&quot;]&apos;)
+          .files[0];
+        ws.send(file);
+
+        发送 ArrayBuffer 对象的例子：
+        // Sending canvas ImageData as ArrayBuffer
+        var img = canvas_context.getImageData(0, 0, 400, 320);
+        var binary = new Uint8Array(img.data.length);
+        for (var i = 0; i &lt; img.data.length; i++) {
+          binary[i] = img.data[i];
+        }
+        ws.send(binary.buffer);
+
+    4.7 webSocket.bufferedAmount：
+    实例对象的bufferedAmount属性，表示还有多少字节的二进制数据没有发送出去。它可以用来判断发送是否结束。
+
+    var data = new ArrayBuffer(10000000);
+    socket.send(data);
+
+    if (socket.bufferedAmount === 0) {
+      // 发送完毕
+    } else {
+      // 发送还没结束
+    }
+
+    4.8 webSocket.onerror：
+    实例对象的onerror属性，用于指定报错时的回调函数。
+
+    socket.onerror = function(event) {
+      // handle error event
+    };
+
+    socket.addEventListener(&quot;error&quot;, function(event) {
+      // handle error event
+    });
+</code></pre><h1 id="五、服务端的实现"><a href="#五、服务端的实现" class="headerlink" title="五、服务端的实现"></a>五、服务端的实现</h1><pre><code>websocket简单实现分为以下几个步骤：添加websocket库、编写后台代码、编写前端代码。
+1、添加websocket库
+    在maven中添加websocket库的代码如下所示：
+    &lt;dependency&gt;
+       &lt;groupId&gt;javax.websocket&lt;/groupId&gt;
+       &lt;artifactId&gt;javax.websocket-api&lt;/artifactId&gt;
+       &lt;version&gt;1.1&lt;/version&gt;
+       &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+2、后台实现websocket有两种方式：使用继承类、使用注解；注解方式比较方便，一下代码中使用注解方式来进行演示。
+声明websocket地址类似Spring MVC中的@controller注解类似，websocket使用@ServerEndpoint来进行声明接口：@ServerEndpoint(value=&quot;/websocket/{paraName}&quot;) ; 
+其中 “ { } ”用来表示带参数的连接，如果需要获取{}中的参数在参数列表中增加：@PathParam(&quot;paraName&quot;) Integer userId 。
+则连接地址形如：ws://localhost:8080/project-name/websocket/8，其中每个连接可以设置不同的paraName的值。
+
+注解、成员数据介绍：
+（1）.@OnOpen
+public void onOpen(Session session) throws IOException{ } -------有连接时的触发函数。
+我们可以在用户连接时记录用户的连接带的参数，只需在参数列表中增加参数：@PathParam(&quot;paraName&quot;) String paraName。
+
+（2）.@OnClose
+public void onClose(){ } ------连接关闭时的调用方法。
+
+（3）.@OnMessage
+public void onMessage(String message, Session session) { } -------收到消息时调用的函数，其中Session是每个websocket特有的数据成员，详情见4.
+
+（4）.Session ----每个Session代表了两个web socket断点的会话；当websocket握手成功后，websocket就会提供一个打开的Session，可以通过这个Session来对另一个端点发送数据；
+如果Session关闭后发送数据将会报错。
+
+（5）.Session.getBasicRemote().sendText(&quot;message&quot;) -------向该Session连接的用户发送字符串数据。
+
+（6）.@OnError
+public void onError(Session session, Throwable error) { } --------发生意外错误时调用的函数。
+
+
+例如：
+@ServerEndpoint(value=&quot;/websocketTest/{userId}&quot;)
+public class Test {
+    private Logger logger = LoggerFactory.getLogger(Test.class);
+
+    private static String userId;
+
+    //连接时执行
+    @OnOpen
+    public void onOpen(@PathParam(&quot;userId&quot;) String userId,Session session) throws IOException{
+        this.userId = userId;
+        logger.debug(&quot;新连接：{}&quot;,userId);
+    }
+
+    //关闭时执行
+    @OnClose
+    public void onClose(){
+        logger.debug(&quot;连接：{} 关闭&quot;,this.userId);
+    }
+
+    //收到消息时执行
+    @OnMessage
+    public void onMessage(String message, Session session) throws IOException {
+        logger.debug(&quot;收到用户{}的消息{}&quot;,this.userId,message);
+        session.getBasicRemote().sendText(&quot;收到 &quot;+this.userId+&quot; 的消息 &quot;); //回复用户
+    }
+
+    //连接错误时执行
+    @OnError
+    public void onError(Session session, Throwable error){
+        logger.debug(&quot;用户id为：{}的连接发送错误&quot;,this.userId);
+        error.printStackTrace();
+    }
+
+}
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/十五、WebSocket/">websocket</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 13:59:56</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/十五、WebSocket/" title="websocket">http://yoursite.com/2018/07/14/十五、WebSocket/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/十五、WebSocket/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/八、支付模块/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、为什么需要-WebSocket？"><span class="toc-number">1.</span> <span class="toc-text">一、为什么需要 WebSocket？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、简介"><span class="toc-number">2.</span> <span class="toc-text">二、简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、客户端的简单示例"><span class="toc-number">3.</span> <span class="toc-text">三、客户端的简单示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、客户端的-API"><span class="toc-number">4.</span> <span class="toc-text">四、客户端的 API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、服务端的实现"><span class="toc-number">5.</span> <span class="toc-text">五、服务端的实现</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"websocket　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/十四、模板消息推送（WebSocket使用）/" title="上一篇: 微信点餐系统">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/八、支付模块/" title="下一篇: 微信点餐系统">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
