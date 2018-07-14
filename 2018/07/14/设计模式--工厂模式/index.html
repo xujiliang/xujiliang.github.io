@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="工厂模式">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/设计模式--工厂模式/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="工厂模式">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-14T06:21:37.167Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式">
+<meta name="twitter:description" content="工厂模式">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>设计模式 | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-设计模式--工厂模式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/设计模式--工厂模式/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>工厂模式<br><a id="more"></a></p>
+<h1 id="一、工厂模式的概念"><a href="#一、工厂模式的概念" class="headerlink" title="一、工厂模式的概念"></a>一、工厂模式的概念</h1><pre><code>为什么要使用工厂模式？
+对于一个典型的Java应用而言，应用之间存在着复杂的调用关系(Spring中把这种调用关系称之为依赖关系)。当A对象需要调用B对象时，许多人想到先new
+一个B类的实例，然后再A类实例中调用B实例的方法。从语法角度讲这种做法没有任何问题（这种方式称之为硬编码耦合），但是一旦系统重构：需要使用C类对象替换B类对象且A类的代
+码在多种地方以这种硬编码的方式耦合了B类，则需要每一处都要改动。。这是一件很可怕的事请。
+现在换一种姿势尝试一下：对于A类对象，它只需要调用B类对象的方法，而不关心B对象是如何实现的，如何创建的。于是可以考虑让Blei实现一个IB的
+接口，而A类只需要与IB接口耦合--A类并不直接使用new关键字来创建B，而是重新定义一个B的工厂类IBFactory，专门生成IB的实例；而A类通过调用
+IBFactory的方法得到IB对象实例。如果系统需要重构：需要用C代替B,只需让C也实现IB接口，并改变IBFactory中生产IB实例的方法代码，
+让其生产C（实现IB接口）实例即可，由于所有依赖IB实例的对象都是通过工厂来获取IB实例的，所有他们都将改为获得C的实例，从而完成了重构。
+
+这种将多个类对象交给工厂列来生成的设计方式称为简单工厂模式
+</code></pre><h1 id="二、简单工厂的实现"><a href="#二、简单工厂的实现" class="headerlink" title="二、简单工厂的实现"></a>二、简单工厂的实现</h1><pre><code>有这样一个需求：假设程序中有个个Computer对象需要一个输出设备，现在有两个选择，一是直接让Computer对象依赖一个Printer对象，二是Computer
+依赖一个Output（接口）属性。在这种场景下，使用简单工厂模式是代码具有更好的维护性、可扩展性。根据工厂模式，程序用过让Computer拥有
+一个Output属性，将Computer类与Printer类分离开来。Computer只需要面向Output接口编程即可。具体实现如下：
+1、首先定义一个Output接口，表示任何输出设备都应当拥有的功能即方法
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Output &#123;</span><br><span class="line">    public void out();</span><br><span class="line">    public void getData(String data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>2、定义一个Printer类，表示一个具体厂家的的输出设备--打印机，例如：SONY的，其一定是实现了Output接口的。
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Printer implements Output &#123;</span><br><span class="line"></span><br><span class="line">    private List&lt;String&gt; buffer = new ArrayList&lt;&gt;();</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;这是sony的打印机在执行out方法&quot;+buffer.get(0));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void getData(String data) &#123;</span><br><span class="line">        buffer.add(data);</span><br><span class="line">        System.out.println(&quot;这是sony的打印机在执行getData方法&quot;+data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>3、现在实现了输出设备的标准（Output接口）的具体产品（Printer类）打印机的设计有了，再定义一个生产输出设备的工厂吧：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class OutputFactory &#123;</span><br><span class="line">    public Output getOutput() &#123;</span><br><span class="line">        return new Printer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+OutputFactory工厂的getOutput()方法就是负责生产打印机的方法。
+
+4、在Computer中调用输出设备Output的方法，Computer与接口Output是耦合的:
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class Computer &#123;</span><br><span class="line"></span><br><span class="line">    private Output output;</span><br><span class="line"></span><br><span class="line">    public Computer(Output output) &#123;</span><br><span class="line">        this.output = output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void keyIn(String msg) &#123;</span><br><span class="line">        output.getData(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void print()&#123;</span><br><span class="line">        output.out();</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<pre><code>5、现在可以进行打印了：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    public class main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //创建一个工厂</span><br><span class="line">        OutputFactory of = new OutputFactory();</span><br><span class="line">        //从工厂中生产一件Output标准的产品</span><br><span class="line">        Computer computer = new Computer(of.getOutput());</span><br><span class="line">        //调用</span><br><span class="line">        computer.keyIn(&quot;sssss&quot;);</span><br><span class="line">        computer.print();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>打印结果为：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是一个性能一般的打印机在执行getData方法sssss</span><br><span class="line">这是一个性能一般的打印机在执行out方法sssss</span><br></pre></td></tr></table></figure>
+<pre><code>6、现在sony的打印机已经不能满足我的需求的，需要换一个更好的打印机，于是定义一个BetterPrinter类，实现了Output接口：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class BetterPrinter implements Output &#123;</span><br><span class="line"></span><br><span class="line">    private List&lt;String&gt; buffer = new ArrayList&lt;&gt;();</span><br><span class="line">    @Override</span><br><span class="line">    public void out() &#123;</span><br><span class="line">        System.out.println(&quot;这是一个性能更好的sony的打印机在执行out方法&quot;+buffer.get(0));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void getData(String data) &#123;</span><br><span class="line">        System.out.println(&quot;这是一个性能更好的sony的打印机在执行out方法&quot;+buffer.add(data));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>修改工厂的生产方法，让其生产BetterFactory产品：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class OutputFactory &#123;</span><br><span class="line">    public Output getOutput() &#123;</span><br><span class="line">        return new BetterPrinter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>打印接口：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> public class main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //创建一个工厂</span><br><span class="line">        OutputFactory of = new OutputFactory();</span><br><span class="line">        //从工厂中生产一件Output标准的产品</span><br><span class="line">        Computer computer = new Computer(of.getOutput());</span><br><span class="line">        //调用</span><br><span class="line">        computer.keyIn(&quot;sssss&quot;);</span><br><span class="line">        computer.print();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>简单工厂模式的优势：让对象的调用者和对象的创建过程分离，当调用者需要对象时，直接向工厂请求即可，从而避免了对象的调用者与对象的实现类以硬编码的方式耦合，以提高系统的可维护性、可扩展性。
+缺陷：当产品修改时，工厂类也需要做相应的修改。
+</code></pre><h1 id="三、工厂方法"><a href="#三、工厂方法" class="headerlink" title="三、工厂方法"></a>三、工厂方法</h1><pre><code>简单工厂模式里，系统使用工厂类生产所有产品实例，且该工厂决定生产哪个类的实例，即该工厂负责所有的逻辑判断、实例创建等工作。
+如果不想在工厂里进行逻辑判断，程序可以为不同的产品提供不同的工厂，不同的工厂类生产不同的产品。例如上面的Printer、BetterPrinter
+分别提供PrinterFactory和BetterFactory工厂类，这就无需在工厂类中进行复杂的逻辑判断。
+
+下面展示将一个Outputfactory改为一个接口，并为该接口提供两个实现类：PrinterFactory和BetterPrinterFactory。
+
+1、Outputfactory接口：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface OutputFactory &#123;</span><br><span class="line">  Output getOutput();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<pre><code>2、实现一个PrinterFactory和一个BetterPrinterfactory：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class PrinterFactory implements OutputFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Output getOutput() &#123;</span><br><span class="line">        return new Printer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class BetterPrinterFactory implements OutputFactory &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Output getOutput() &#123;</span><br><span class="line">        return new BetterPrinter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>其中Printer与BetterPrinter实现与上面一样。
+3、Computer实现与上面一样：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class Computer &#123;</span><br><span class="line"></span><br><span class="line">    private Output output;</span><br><span class="line"></span><br><span class="line">    public Computer(Output output) &#123;</span><br><span class="line">        this.output = output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void keyIn(String msg) &#123;</span><br><span class="line">        output.getData(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void print()&#123;</span><br><span class="line">        output.out();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        OutputFactory of = new PrinterFactory();</span><br><span class="line">        Computer computer = new Computer(of.getOutput());</span><br><span class="line">        computer.keyIn(&quot;this is Bob&quot;);</span><br><span class="line">        computer.print();</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<pre><code>运行程序后：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这是一个性能一般的sony打印机在输入数据this is Bob</span><br><span class="line">这是一个性能一般的sony打印机在打印。。this is Bob</span><br></pre></td></tr></table></figure>
+<pre><code>从上面的代码可以看出，对于工厂方法的设计架构，客户端代码成功的与被调用对象的实现类分离，但是带来了另一种耦合：客户端代码与不同工厂的耦合。这依然是一个问题。
+</code></pre><h1 id="四、抽象工厂模式"><a href="#四、抽象工厂模式" class="headerlink" title="四、抽象工厂模式"></a>四、抽象工厂模式</h1><pre><code>为了解决客户端代码与不同工厂类耦合的问题，接着再考虑增加一个工厂类，该工厂类不是生产Output对象，而是生产OutputFactory实例--简而言之，这个工厂不制造具体的被调用对象，而是生产不同工厂对象。这个特殊的工厂类称为抽象工厂类，这种设计方式也被称为抽象工厂模式。
+
+于是，新增一个OutputFactoryFactory工厂类，该工厂类通过了一个getOutputFactory(String type)方法，该方法返回一个OutputFactory工厂实例。下面是该抽象工厂类的实例：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class OutputFactoryFactory &#123;</span><br><span class="line">    public static OutputFactory getOutputFactory(String type) &#123;</span><br><span class="line">        if (type.equalsIgnoreCase(&quot;better&quot;)) &#123;</span><br><span class="line">            return new BetterPrinterFactory();</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            return new PrinterFactory();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>而客户端的调用方式为：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class Computer &#123;</span><br><span class="line"></span><br><span class="line">    private Output output;</span><br><span class="line"></span><br><span class="line">    public Computer(Output output) &#123;</span><br><span class="line">        this.output = output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void keyIn(String msg) &#123;</span><br><span class="line">        output.getData(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void print()&#123;</span><br><span class="line">        output.out();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">       // OutputFactory of = new PrinterFactory();</span><br><span class="line">        OutputFactory of = OutputFactoryFactory.getOutputFactory(&quot;better&quot;);</span><br><span class="line">        Computer computer = new Computer(of.getOutput());</span><br><span class="line">        computer.keyIn(&quot;this is Bob&quot;);</span><br><span class="line">        computer.print();</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<pre><code>通过抽象工厂的设计模式，系统可以让客户端与被调用对象的实现类、具体的工厂类分离。
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/设计模式--工厂模式/">设计模式</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 14:21:37</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/设计模式--工厂模式/" title="设计模式">http://yoursite.com/2018/07/14/设计模式--工厂模式/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/设计模式--工厂模式/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/七、前台页面调试/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/二十一、项目部署/">
+                    微信点餐系统
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、工厂模式的概念"><span class="toc-number">1.</span> <span class="toc-text">一、工厂模式的概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、简单工厂的实现"><span class="toc-number">2.</span> <span class="toc-text">二、简单工厂的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、工厂方法"><span class="toc-number">3.</span> <span class="toc-text">三、工厂方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、抽象工厂模式"><span class="toc-number">4.</span> <span class="toc-text">四、抽象工厂模式</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"设计模式　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/七、前台页面调试/" title="上一篇: 微信点餐系统">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/二十一、项目部署/" title="下一篇: 微信点餐系统">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--代理模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--桥接模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--观察者模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--策略模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--命令模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--单例模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/一、Mysql锁机制/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/性能分析--Explain/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/mysql索引优化/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/索引优化（未完）/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/MySQL的存储引擎/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql--TCL事务控制语言/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/设计模式--工厂模式/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql的系统架构/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--WEB/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--单元测试/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--简介/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--HelloWorld/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
