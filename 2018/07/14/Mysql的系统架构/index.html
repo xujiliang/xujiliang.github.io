@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="MySql系统架构">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/Mysql的系统架构/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="MySql系统架构">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_14-51-49.png">
+<meta property="og:updated_time" content="2018-07-14T06:17:37.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySql">
+<meta name="twitter:description" content="MySql系统架构">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_14-51-49.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>MySql | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Mysql的系统架构" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/Mysql的系统架构/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySql
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/MySql/">MySql</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySql/">MySql</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>MySql系统架构<br><a id="more"></a><br>    mysql的结构分为：连接层、服务层、引擎层、存储层。如下图：</p>
+<p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_14-51-49.png" alt="image"></p>
+<pre><code>1、Connectors：
+指的是不同语言中与SQL的交互；
+
+2、Management Serveices &amp; Utilities： 
+系统管理和控制工具
+
+3、Connection Pool: 连接池
+管理缓冲用户连接，线程处理等需要缓存的需求。负责监听对 MySQL Server 的各种请求，接收连接请求，转发所有连接请求到线程管理模
+块。每一个连接上 MySQL Server 的客户端请求都会被分配（或创建）一个连接线程为其单独服务。而
+连接线程的主要工作就是负责 MySQL Server 与客户端的通信，接受客户端的命令请求，传递 Server 
+端的结果信息等。线程管理模块则负责管理维护这些连接线程。包括线程的创建，线程的 cache 等。
+
+4、SQL Interface: SQL接口
+接受用户的SQL命令，并且返回用户需要查询的结果。比如select from就是调用SQL Interface
+
+5、Parser: 解析器
+SQL命令传递到解析器的时候会被解析器验证和解析。解析器是由Lex和YACC实现的，是一个很长的脚本。
+在 MySQL中我们习惯将所有 Client 端发送给 Server 端的命令都称为 query ，在 MySQL Server 里面，连接线程接收到客户端的一个 Query 后，会直接将该 query 
+传递给专门负责将各种 Query 
+进行分类然后转发给各个对应的处理模块。
+主要功能：
+a . 将SQL语句进行语义和语法的分析，分解成数据结构，然后按照不同的操作类型进行分类，然后做出针对性的转发到后续步骤，以后SQL语句的传递和处理就是基于这个结构的。
+b.  如果在分解构成中遇到错误，那么就说明这个sql语句是不合理的
+
+6、Optimizer: 查询优化器。
+SQL语句在查询之前会使用查询优化器对查询进行优化。就是优化客户端请求的 query（sql语句） ，根据客户端请求的 query 
+语句，和数据库中的一些统计信息，在一系列算法的基础上进行分析，得出一个最优的策略，告诉后面的程序如何取得这个 query 语句的结果。
+他使用的是“选取-投影-联接”策略进行查询。
+用一个例子就可以理解： select uid,name from user where gender = 1;
+   这个select 查询先根据where 语句进行选取，而不是先将表全部查询出来以后再进行gender过滤
+   这个select查询先根据uid和name进行属性投影，而不是将属性全部取出以后再进行过滤
+   将这两个查询条件联接起来生成最终查询结果
+
+7、Cache和Buffer： 查询缓存
+的主要功能是将客户端提交 给MySQL 的 Select 类 query 请求的返回结果集 cache 到内存中，与该 query 的一个 hash 值 
+做一个对应。该 Query 所取数据的基表发生任何数据的变化之后， MySQL 会自动使该 query 的Cache 失效。在读写比例非常高的应用系统中， Query Cache 
+对性能的提高是非常显著的。当然它对内存的消耗也是非常大的。
+如果查询缓存有命中的查询结果，查询语句就可以直接去查询缓存中取数据。这个缓存机制是由一系列小缓存组成的。比如表缓存，记录缓存，key缓存，权限缓存等。
+
+8、存储引擎接口
+存储引擎接口模块可以说是 MySQL 数据库中最有特色的一点了。目前各种数据库产品中，基本上只有 MySQL 可以实现其底层数据存储引擎的插件式管理。这个模块实际
+上只是 一个抽象类，但正是因为它成功地将各种数据处理高度抽象化，才成就了今天 MySQL 可插拔存储引擎的特色。
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/Mysql的系统架构/">MySql</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 14:17:37</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/Mysql的系统架构/" title="MySql">http://yoursite.com/2018/07/14/Mysql的系统架构/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/Mysql的系统架构/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/Mysql--TCL事务控制语言/">
+                    MySql
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/SpringBoot--WEB/">
+                    SpringBoot
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"MySql　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/Mysql--TCL事务控制语言/" title="上一篇: MySql">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/SpringBoot--WEB/" title="下一篇: SpringBoot">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/性能分析--Explain/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/mysql索引优化/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/索引优化（未完）/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/MySQL的存储引擎/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql--TCL事务控制语言/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql的系统架构/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--WEB/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--HelloWorld/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--简介/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--单元测试/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/一、Mysql锁机制/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

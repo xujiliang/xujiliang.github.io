@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="xu" />
+
+
+
+<meta name="description" content="MySql索引优化">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql">
+<meta property="og:url" content="http://yoursite.com/2018/07/14/mysql索引优化/index.html">
+<meta property="og:site_name" content="Kevin">
+<meta property="og:description" content="MySql索引优化">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F.bmp">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-31-32.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-31-24.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-35-04.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-36-30.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-37-18.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-38-04.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-39-30.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-41-07.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-44-28.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-56-39.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F%20%282%29.bmp">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_17-29-34.png">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F%20%283%29.bmp">
+<meta property="og:image" content="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-22_17-56-14.png">
+<meta property="og:updated_time" content="2018-07-14T06:17:20.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySql">
+<meta name="twitter:description" content="MySql索引优化">
+<meta name="twitter:image" content="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F.bmp">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Kevin" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/avatar.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>MySql | Kevin</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: false
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">xu</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">xu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">xu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-mysql索引优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/14/mysql索引优化/" class="article-date">
+      <time datetime="2018-07-13T16:00:00.000Z" itemprop="datePublished">2018-07-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySql
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/MySql/">MySql</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySql/">MySql</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>MySql索引优化<br><a id="more"></a>    </p>
+<h1 id="一、性能下降SQL慢-执行时间长-等待时间长"><a href="#一、性能下降SQL慢-执行时间长-等待时间长" class="headerlink" title="一、性能下降SQL慢 执行时间长 等待时间长"></a>一、性能下降SQL慢 执行时间长 等待时间长</h1><pre><code>原因：
+（1）、查询语句写的烂
+（2）、索引失效：索引分为单值索引和多值索引
+单值索引：
+    create index idx_user_name on user(name);
+多值索引：
+    create index idx_user_nameEmail on user(name,email);
+
+ (3)、关联查询太多join(设计缺陷或不得已的需求；
+（4）、服务器调优及各个参数设置(缓冲\线程数等)。
+</code></pre><h1 id="二、常见的Join查询"><a href="#二、常见的Join查询" class="headerlink" title="二、常见的Join查询"></a>二、常见的Join查询</h1><pre><code>1、SQL的执行顺序：
+手写：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT</span><br><span class="line">	&lt;select_list&gt;</span><br><span class="line">FROM</span><br><span class="line">	&lt;left_table&gt;&lt;join_type&gt;</span><br><span class="line">JOIN &lt;right_table&gt;ON&lt;join_condition&gt;</span><br><span class="line">WHERE</span><br><span class="line">	&lt;where_condition&gt;</span><br><span class="line">GROUP BY</span><br><span class="line">	&lt;group_by_list&gt;</span><br><span class="line">HAVING </span><br><span class="line">	&lt;having_condotion&gt;</span><br><span class="line">ORDER BY</span><br><span class="line">	&lt;order_by_condotion&gt;</span><br><span class="line">LIMIT &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>机读：
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FORM &lt;left_table&gt;</span><br><span class="line">ON &lt;join_condition&gt;</span><br><span class="line">&lt;join_type&gt; JOIN &lt;right_type&gt;</span><br><span class="line">WHERE &lt;where_condition&gt;</span><br><span class="line">GROUP BY &lt;group_by_list&gt;</span><br><span class="line">HAVING &lt;having_condition&gt;</span><br><span class="line">SELECT</span><br><span class="line">DISTINCT &lt;select_list&gt;</span><br><span class="line">ORDER BY &lt;order_by_condition&gt;</span><br><span class="line">LIMIT &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>2、join图
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F.bmp" alt="image"></p>
+<pre><code>两张表：tbl_dept
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-31-32.png" alt="image"></p>
+<pre><code>tbl_emp:
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-31-24.png" alt="image"></p>
+<pre><code>查询结果：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-35-04.png" alt="image"></p>
+<pre><code>中： select * from tbl_emp a inner join tbl_dept b on a.deptId=b.id;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-36-30.png" alt="image"></p>
+<pre><code>左上：select * from tbl_emp a left join tbl_dept b on a.deptId=b.id;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-37-18.png" alt="image"></p>
+<pre><code>右上：select * from tbl_emp a right join tbl_dept b on a.deptId=b.id;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-38-04.png" alt="image"></p>
+<pre><code>左中：select * from tbl_emp a left join tbl_dept b on a.deptId=b.id where b.id is null;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-39-30.png" alt="image"></p>
+<pre><code>右中：select * from tbl_emp a right join tbl_dept b on a.deptId=b.id where a.deptId is null;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-41-07.png" alt="image"></p>
+<pre><code>左下： select * from tbl_emp a left join tbl_dept b on a.deptId=b.id ;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-44-28.png" alt="image"></p>
+<pre><code>右下：SELECT * FROM tbl_emp a LEFT JOIN tbl_dept b ON a.deptId=b.id WHERE b.id IS NULL 
+UNION 
+SELECT * FROM tbl_emp a RIGHT JOIN tbl_dept b ON a.deptId=b.id WHERE a.`deptId` IS NULL ;
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_16-56-39.png" alt="image"></p>
+<h1 id="三、索引"><a href="#三、索引" class="headerlink" title="三、索引"></a>三、索引</h1><pre><code>1、什么是索引
+   Mysql官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。可以得到索引的本质：引是数据结构。目的在于提高查找效率
+   。
+可以理解为“排好序的快速查找数据结构”。
+   数据本身之外,数据库还维护着一个满足特定查找算法的数据结构，这些数据结构以某种方式指向数据，这样就可以在这些数据结构的基础上实现
+   高级查找算法,这种数据结构就是索引。
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F%20%282%29.bmp" alt="image"></p>
+<pre><code>一般来说索引本身也很大，不可能全部存储在内存中，因此索引往往以文件形式存储在硬盘上，如下图的.MYI文件就是索引文件：
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-21_17-29-34.png" alt="image"></p>
+<pre><code> 我们平时所说的索引，如果没有特别指明，都是指B树(多路搜索树，并不一定是二叉树)结构组织的索引。其中聚集索引，次要索引，覆盖索引，
+复合索引，前缀索引，唯一索引默认都是使用B+树索引，统称索引。当然,除了B+树这种类型的索引之外，还有哈希索引(hash index)等。
+
+2、索引的优势
+
+（1）、类似大学图书馆建书目索引，提高数据检索效率，降低数据库的IO成本；
+
+（2）、通过索引列对数据进行排序，降低数据排序成本，降低了CPU的消耗；
+
+3、索引的劣势
+
+（1）、实际上索引也是一张表，该表保存了主键和索引字段，并指向实体表的记录,所以索引列也是要占用空间的；
+
+（2）、虽然索引大大提高了查询速度，同时却会降低更新表的速度,如果对表INSERT,UPDATE和DELETE。因为更新表时，MySQL不仅要不存数据，
+还要保存一下索引文件每次更新添加了索引列的字段，都会调整因为更新所带来的键值变化后的索引信息；
+
+（3）、索引只是提高效率的一个因素，如果你的MySQL有大数据量的表，就需要花时间研究建立优秀的索引，或优化查询语句；
+
+4、索引的分类
+（1）、单值索引：
+即一个索引只包含单个列，一个表可以有多个单列索引。建议一张表索引不要超过5个，优先考虑复合索引。
+
+（2）、唯一索引：
+索引列的值必须唯一，但允许有空值。（unique key）
+
+（3）、复合索引，即一个索引包含多个列。
+
+
+基本语法：
+（1）、创建
+创建表时添加索引：
+CREATE [UNIQUE] INDEX  indexName ON mytable(columnname(length));
+修改表时添加索引：
+ALTER mytable ADD [UNIQUE]  INDEX [indexName] ON(columnname(length));
+
+（2）、删除索引
+DROP INDEX [indexName] ON mytable;
+
+（3）、查看索引
+SHOW INDEX FROM table_name\G
+
+（4）有四种方式来添加数据表的索引
+ALTER TABLE tbl_name ADD PRIMARY KEY(column_list)#该语句添加一个主键，这意味着索引值必须是唯一的，且不能为空
+ALTER TABLE tbl_name ADD UNIQUE index_name(column_list)#这条语句创建的索引值必须是唯一的（除NULL除外，NULL可能会多次出现）
+ALTER TABLE tbl_name ADD INDEX index_name(column_list)#添加普通值索引，索引值可能出现多次
+ALTER TABLE tbl_name ADD FULLTEXT index_name(column_list)#该语句指定索引为fulltext，用于全文索引.
+
+5、mysql索引结构
+（1）、BTree索引
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/%E5%9B%BE%E5%83%8F%20%283%29.bmp" alt="image"></p>
+<pre><code>上图是一颗b+Tree,浅蓝色的块我们称之为一个磁盘块，可以看到每个磁盘块包含几个数据项（深蓝色的所示）和指针（黄色所示），如磁盘块1包含
+数据项17和35，包含指针P1、P2、P3，P1表示小于17的磁盘块，P2表示在17和35之间的磁盘块，P3表示大于35的磁盘块。其实真实的数据存在于叶子
+节点，即3、5、9、10、13、15、28、29、36、60、75、79、90、99，非叶子节点不存储真实的数据，只存储搜索方向的数据项，如：17，35并不真实存在于数据表中。
+查找过程：
+    如果要查找数据项29，那么先把磁盘块1由磁盘加载到内存，此时发生一次IO，在内存中用二分法查找确定29在17和35之间，锁定磁盘块1 
+    的P2指针，内存时间因为非常短（相比磁盘的IO）可以忽略不计，通过磁盘块1的P2指针的磁盘地址把磁盘块3由由磁盘加载到内存，发生第二次IO，
+    29在26和30之间，锁定磁盘块P2指针，通过指针加载磁盘块8到内存，发生第三次IO，同时内存中做二分查找找到29，结束查询，总计三次IO。
+Btree索引(或Balanced Tree)，是一种很普遍的数据库索引结构，oracle默认的索引类型（本文也主要依据oracle来讲）。其特点是定位高效、利用
+率高、自我平衡，特别适用于高基数字段，定位单条或小范围数据非常高效。理论上，使用Btree在亿条数据与100条数据中定位记录的花销相同。
+    数据结构利用率高、定位高效
+
+（2）、Hash索引
+（4）、full-text全文索引
+（5）、R-Tree索引
+
+6、哪些情况需要建索引
+    （1）.主键自动建立唯一索引
+    （2）.频繁作为查询的条件的字段应该创建索引
+    （3）.查询中与其他表关联的字段，外键关系建立索引
+    （4）.频繁更新的字段不适合创建索引，因为每次更新不单单是更新了记录还会更新索引，加重IO负担
+    （5）.Where条件里用不到的字段不创建索引
+    （6）.单间/组合索引的选择问题，who？（在高并发下倾向创建组合索引）
+    （7）.查询中排序的字段，排序字段若通过索引去访问将大大提高排序的速度
+    （8）.查询中统计或者分组字段
+
+7、哪些情况不需要建索引
+（1）、表记录太少
+（2）、经常增删改的表
+原因：提高了查询速度，同时却会降低更新表的速度，比如对表进行INSERT、UPDATE、DELETE.因为更新表时，MySQL不仅要保存数据，还要保存一下索引。
+（3）、数据重复且分布平均的表字段，因此应该只为经常查询和经常排序的数据列建立索引。
+注意，如果某个数据列包含许多重复的内容，为它建立索引就没有太大的实际效果。
+例如：假如一个表有10万行记录，有一个字段A只有T和F两种值，且每个值得分布盖里大概为50%，那么对这种表A建索引一般不会提高数据库的查询速度。  
+    索引的选择性是指索引列中不同值得数目与表中记录数的比，如果一个表中有2000条记录，表索引列有1980个不同的值，那么这个索引的选择性就是1980/2000=0.99.一个索引的选择性越接近于1，这个索引的效率就越高。
+</code></pre><h1 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h1><pre><code>1、MySQL Query Optimizer（查询优化器）
+（1）、MySQL中有专门负责优化SELECT语句的优化器模块，主要功能：通过计算分析系统中收集到 的统计信息，为客户端请求的Query提供认为最优的执行
+计划（它认为的最优的数据检索方式，但不见得是DBA认为是最优的）。
+（2）、当客户端向MySQL请求一条Query，命令解析器模块完成请求分析，区别出是SELECT并转发给MySQL Query Optimizer时，MySQL Query Optimizer首先会对整条Query进行优化，处理掉一些常量表达式预算，直接换算成常量值。并对Query的查询条件进行简化和转换，去掉一条无用或者显而易见的条件、结构调整等。
+2、MySQL常见瓶颈
+（1）、CPU:CPU在饱和的时候一般发生在数据装入在内存或从磁盘上读取数据时候
+（2）、IO:磁盘I/O瓶颈发生在装入数据远大于内存容量时；
+（3）、服务器硬件的性能瓶颈：top,free,iostat和vmstat来查看系统的性能状态；
+
+3、Explain
+
+是什么？
+使用EXPLAIN关键字可以模拟优化器执行SQL语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是结构的性能瓶颈。
+
+能干嘛？
+表的读取顺序；
+数据读取操作的操作类型；
+哪些索引可以使用；
+哪些索引被实际使用；
+表之间的引用；
+每张表有多少行被优化器查询；
+
+怎么用？
+Explain+SQL语句
+</code></pre><p><img src="http://p9hqvn87i.bkt.clouddn.com/Snipaste_2018-06-22_17-56-14.png" alt="image"></p>
+<pre><code>获得：执行计划包含的信息
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/07/14/mysql索引优化/">MySql</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">xu</a></p>
+        <p><span>发布时间:</span>2018-07-14, 00:00:00</p>
+        <p><span>最后更新:</span>2018-07-14, 14:17:20</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/07/14/mysql索引优化/" title="MySql">http://yoursite.com/2018/07/14/mysql索引优化/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/07/14/mysql索引优化/　　作者: xu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/07/14/性能分析--Explain/">
+                    MySql
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/07/14/索引优化（未完）/">
+                    MySql
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、性能下降SQL慢-执行时间长-等待时间长"><span class="toc-number">1.</span> <span class="toc-text">一、性能下降SQL慢 执行时间长 等待时间长</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、常见的Join查询"><span class="toc-number">2.</span> <span class="toc-text">二、常见的Join查询</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、索引"><span class="toc-number">3.</span> <span class="toc-text">三、索引</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#性能分析"><span class="toc-number">4.</span> <span class="toc-text">性能分析</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"MySql　| Kevin　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/14/性能分析--Explain/" title="上一篇: MySql">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/07/14/索引优化（未完）/" title="下一篇: MySql">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二、开发环境的搭建/">二、开发环境的搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十三、权限校验/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/性能分析--Explain/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/mysql索引优化/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/索引优化（未完）/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/MySQL的存储引擎/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql--TCL事务控制语言/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/Mysql的系统架构/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--WEB/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--HelloWorld/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--简介/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/SpringBoot--单元测试/">SpringBoot</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/五、订单部分业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十四、模板消息推送（WebSocket使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/九、认证请求流程/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/七、前台页面调试/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/一、Mysql锁机制/">MySql</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十一、项目部署/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/三、项目搭建与配置/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/二十二、日志框架的使用/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十、分布式系统/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十九、分布式锁/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十五、WebSocket/">websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十六、对异常的统一处理/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十一、干掉状态：从session到token（分布式系统中的session问题）/">干掉状态</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/十二、微信点餐系统登入登出（redis的使用）/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/四、业务逻辑开发/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/八、支付模块/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/六、微信授权/">微信点餐系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis复制的原理与优化/">Redis从出门到高可用--Redis复制原理与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis持久化的取舍和高可用/">Redis从出门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis Sentinel--哨兵/">Redis从出门到高可用--sentinel哨兵模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/25/Redis缓存的设计与优化/">Redis从出门到高可用--Redis缓存设计与优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/08/Redis从入门到高可用--Redis持久化的取舍和高可用/">Redis从入门到高可用--Redis持久化的取舍与高可用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/Redis从入门到高可用--初识/">Redis从入门到高可用--初识</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/test/">test</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis API的使用与理解/">Redis从出门到高可用--Redis API的使用与理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--瑞士军刀Redis/">Redis从出门到高可用--瑞士军刀Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/1Spring-SpringMVC-Mybatis整合/">SSH整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的事务/">Redis的事务</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis从入门到高可用--Redis客户端/">Redis从出门到高可用--Redis客户端</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Mybatis整合第三方缓存----ehcache/">Mybitis整合第三方缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis的持久化--RDB和AOF/">Redis的持久化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/05/Redis集群/">Redis集群的搭建</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 xu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
